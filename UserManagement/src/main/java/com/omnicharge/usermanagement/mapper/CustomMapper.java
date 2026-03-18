@@ -12,8 +12,14 @@ import org.springframework.stereotype.Component;
 public class CustomMapper {
 
     private final PasswordEncoder passwordEncoder;
+    
 
-    public UserResponseDTO toResponseDTO(UserEntity userEntity) {
+    public CustomMapper(PasswordEncoder passwordEncoder) {
+		super();
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	public UserResponseDTO toResponseDTO(UserEntity userEntity) {
         UserResponseDTO dto = new UserResponseDTO();
         dto.setName(userEntity.getName());
         dto.setEmail(userEntity.getEmail());

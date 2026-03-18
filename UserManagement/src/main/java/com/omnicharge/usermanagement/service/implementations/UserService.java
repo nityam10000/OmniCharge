@@ -22,8 +22,16 @@ public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
     private final CustomMapper mapper;
+    
+    
 
-    @Override
+    public UserService(IUserRepository userRepository, CustomMapper mapper) {
+		super();
+		this.userRepository = userRepository;
+		this.mapper = mapper;
+	}
+
+	@Override
     public UserResponseDTO addUser(UserRequestDTO userRequestDTO) {
         if(userRepository.existsByEmail(userRequestDTO.getEmail())){
             throw new UserAlreadyExistsException("User with "+userRequestDTO.getEmail()+" already exixts!");
