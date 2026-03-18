@@ -11,17 +11,6 @@
         <module name="OmniCharge-config-server" />
         <module name="OperatorPlanManagement" />
       </profile>
-      <profile name="Annotation profile for UserManagement" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="UserManagement" />
-        <module name="PaymentService" />
-        <module name="RechargeProcessing" />
-      </profile>
       <profile name="Annotation profile for notification-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -31,10 +20,23 @@
         </processorPath>
         <module name="notification-service" />
       </profile>
+      <profile name="Annotation profile for UserManagement" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="UserManagement" />
+        <module name="APIGateway" />
+        <module name="PaymentService" />
+        <module name="RechargeProcessing" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="APIGateway" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
       <module name="OmniCharge-config-server" options="-parameters" />
       <module name="OperatorPlanManagement" options="-parameters" />
