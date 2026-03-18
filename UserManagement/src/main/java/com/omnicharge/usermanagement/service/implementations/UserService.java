@@ -26,9 +26,12 @@ public class UserService implements IUserService {
     
     
 
-    public UserService(IUserRepository userRepository, CustomMapper mapper) {
+   
+
+	public UserService(IUserRepository userRepository, PasswordEncoder passwordEncoder, CustomMapper mapper) {
 		super();
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 		this.mapper = mapper;
 	}
 

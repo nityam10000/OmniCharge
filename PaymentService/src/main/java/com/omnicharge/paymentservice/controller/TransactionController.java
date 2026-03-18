@@ -17,8 +17,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionController {
     private final ITransactionService transactionService;
+    
+    
 
-    @PostMapping("add")
+    public TransactionController(ITransactionService transactionService) {
+		super();
+		this.transactionService = transactionService;
+	}
+
+	@PostMapping("add")
     public ResponseEntity<TransactionResponseDTO> createTransaction(@Valid @RequestBody TransactionRequestDTO transactionRequestDTO) {
         TransactionResponseDTO transactionResponseDTO = transactionService.createTransaction(transactionRequestDTO);
         return new ResponseEntity<>(transactionResponseDTO, HttpStatus.OK );

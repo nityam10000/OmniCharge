@@ -19,6 +19,40 @@ public class TransactionResponseDTO {
     private TransactionStatus transactionStatus;
     private PaymentMethod paymentMethod;
     private LocalDateTime timestamp;
-
-
+	public Double getAmount() {
+		return amount;
+	}
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+	public TransactionStatus getTransactionStatus() {
+		return transactionStatus;
+	}
+	public void setTransactionStatus(TransactionStatus transactionStatus) {
+		this.transactionStatus = transactionStatus;
+	}
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
+	}
+	public TransactionResponseDTO(Double amount, TransactionStatus transactionStatus, PaymentMethod paymentMethod,
+			LocalDateTime timestamp) {
+		super();
+		this.amount = amount;
+		this.transactionStatus = transactionStatus;
+		this.paymentMethod = paymentMethod;
+		this.timestamp = timestamp;
+	}
+	public TransactionResponseDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }
