@@ -1,7 +1,19 @@
 package com.oprationPlanManagement.operatorPlanService.dto.responseDTO;
 
+<<<<<<< HEAD
 import java.io.Serializable;
 
+=======
+import lombok.*;
+
+import java.io.Serializable;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Getter
+@Setter
+>>>>>>> origin/bhavik
 public class OperatorResponseDTO implements Serializable {
 
 	private final long serialIzableID = 1L;
@@ -12,6 +24,7 @@ public class OperatorResponseDTO implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+<<<<<<< HEAD
 	public OperatorResponseDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -20,5 +33,8 @@ public class OperatorResponseDTO implements Serializable {
 		super();
 		this.name = name;
 	}
+=======
+
+>>>>>>> origin/bhavik
 	
 }

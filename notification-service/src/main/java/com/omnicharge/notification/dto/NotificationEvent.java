@@ -14,6 +14,18 @@
 //}
 package com.omnicharge.notification.dto;
 
+<<<<<<< HEAD
+=======
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+>>>>>>> origin/bhavik
 public class NotificationEvent {
 
     private String message;
@@ -21,6 +33,7 @@ public class NotificationEvent {
     private String phone;
     private String type; // SUCCESS / FAILED
 
+<<<<<<< HEAD
     // Default Constructor
     public NotificationEvent() {
     }
@@ -68,4 +81,6 @@ public class NotificationEvent {
     public void setType(String type) {
         this.type = type;
     }
+=======
+>>>>>>> origin/bhavik
 }

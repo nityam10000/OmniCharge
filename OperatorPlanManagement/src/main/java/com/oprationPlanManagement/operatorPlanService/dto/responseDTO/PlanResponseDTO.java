@@ -1,12 +1,22 @@
 package com.oprationPlanManagement.operatorPlanService.dto.responseDTO;
 
+<<<<<<< HEAD
 
+=======
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+>>>>>>> origin/bhavik
 public class PlanResponseDTO {
 	
 	private Double amount;
 	private String validity;
 	private String description;
 	
+<<<<<<< HEAD
 	public Double getAmount() {
 		return amount;
 	}
@@ -38,4 +48,8 @@ public class PlanResponseDTO {
 	}
 	
 	
+=======
+
+
+>>>>>>> origin/bhavik
 }

@@ -1,13 +1,30 @@
 package com.oprationPlanManagement.operatorPlanService.entity;
 
+<<<<<<< HEAD
 import java.math.BigDecimal;
 
+=======
+>>>>>>> origin/bhavik
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+<<<<<<< HEAD
 
 @Entity
+=======
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.*;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+>>>>>>> origin/bhavik
 public class PlanEntity {
 
 	@Id
@@ -18,6 +35,7 @@ public class PlanEntity {
 	private String validity;
 	private String description;
 	private Long operatorId;
+<<<<<<< HEAD
 	
 	public Long getId() {
 		return id;
@@ -71,4 +89,7 @@ public class PlanEntity {
 	
 	
 	
+=======
+
+>>>>>>> origin/bhavik
 }

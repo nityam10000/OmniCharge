@@ -3,6 +3,12 @@ package com.oprationPlanManagement.operatorPlanService.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+<<<<<<< HEAD
+=======
+import com.oprationPlanManagement.operatorPlanService.mapper.Mapper;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+>>>>>>> origin/bhavik
 import org.springframework.stereotype.Service;
 
 import com.oprationPlanManagement.operatorPlanService.dto.requestDTO.OperatorRequestDTO;
@@ -11,6 +17,7 @@ import com.oprationPlanManagement.operatorPlanService.entity.OperatorEntity;
 import com.oprationPlanManagement.operatorPlanService.repository.IOperatorRepository;
 
 @Service
+<<<<<<< HEAD
 public class OperatorServiceImpl implements IOperatorService {
 
     private final IOperatorRepository operatorRepo;
@@ -22,6 +29,18 @@ public class OperatorServiceImpl implements IOperatorService {
     @Override
     public OperatorResponseDTO saveOper(OperatorRequestDTO dto) {
         OperatorEntity entity = new OperatorEntity(dto.getName());
+=======
+@RequiredArgsConstructor
+public class OperatorServiceImpl implements IOperatorService {
+
+    private final IOperatorRepository operatorRepo;
+    private final Mapper mapper;
+
+
+    @Override
+    public OperatorResponseDTO saveOper(OperatorRequestDTO dto) {
+        OperatorEntity entity = mapper.dtoToOperatorEntity(dto);
+>>>>>>> origin/bhavik
         OperatorEntity saved = operatorRepo.save(entity);
         return mapToResponse(saved);
     }
