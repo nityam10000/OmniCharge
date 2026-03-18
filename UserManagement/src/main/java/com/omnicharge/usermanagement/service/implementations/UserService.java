@@ -21,6 +21,7 @@ import java.util.List;
 public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final CustomMapper mapper;
     
     
@@ -62,10 +63,10 @@ public class UserService implements IUserService {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User Not Exists"));
         userEntity.setName(userRequestDTO.getName());
         userEntity.setEmail(userRequestDTO.getEmail());
-        userEntity.setPassword(userRequestDTO.getPassword());
+        userEntity.setPassword(passwordEncoder.encode((userRequestDTO.getPassword())));
         userEntity.setContactNo(userRequestDTO.getContactNo());
-        UserEntity savedEntity = userRepository.save(userEntity);
-        return mapper.toResponseDTO(savedEntity);
+
+        return mapper.toResponseDTO(userEntity);
     }
 
     @Override
