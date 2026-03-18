@@ -8,7 +8,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Getter
-@RequiredArgsConstructor
 @Setter
 public class OperatorResponseDTO implements Serializable {
 
