@@ -17,7 +17,7 @@ public class Mapper {
 		return new PlanResponseDTO(
 				entity.getAmount(),
 				entity.getValidity(),
-				entity.getData()
+				entity.getDescription()
 				);
 	}
 	
@@ -31,7 +31,7 @@ public class Mapper {
 		return new PlanEntity(
 				dto.getAmount(),
 				dto.getValidity(),
-				dto.getData(),
+				dto.getDescription(),
 				dto.getOperatorId()
 				);
 	}

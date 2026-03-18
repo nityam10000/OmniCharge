@@ -23,9 +23,17 @@ public class RechargeService implements IRechargeService {
 
     private final IRechargeRepository rechargeRepository;
     private final RechargeMapper rechargeMapper;
+    
+    
 
 
-    @Override
+    public RechargeService(IRechargeRepository rechargeRepository, RechargeMapper rechargeMapper) {
+		super();
+		this.rechargeRepository = rechargeRepository;
+		this.rechargeMapper = rechargeMapper;
+	}
+
+	@Override
     public RechargeResponseDTO addRecharge(RechargeRequestDTO rechargeRequestDTO) {
         Recharge recharge = rechargeMapper.toRecharge(rechargeRequestDTO);
         Recharge savedRecharge = rechargeRepository.save(recharge);

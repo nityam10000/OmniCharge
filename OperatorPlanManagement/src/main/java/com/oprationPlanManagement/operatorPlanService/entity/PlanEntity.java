@@ -12,20 +12,21 @@ public class PlanEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 	
-	private BigDecimal amount;
+	private Double amount;
 	private String validity;
-	private String data;
-	private long operatorId;
-	public long getId() {
+	private String description;
+	private Long operatorId;
+	
+	public Long getId() {
 		return id;
 	}
 	
-	public BigDecimal getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	public String getValidity() {
@@ -34,12 +35,19 @@ public class PlanEntity {
 	public void setValidity(String validity) {
 		this.validity = validity;
 	}
-	public String getData() {
-		return data;
+	
+	public String getDescription() {
+		return description;
 	}
-	public void setData(String data) {
-		this.data = data;
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
+
+	public void setOperatorId(Long operatorId) {
+		this.operatorId = operatorId;
+	}
+
 	public long getOperatorId() {
 		return operatorId;
 	}
@@ -53,11 +61,11 @@ public class PlanEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PlanEntity(BigDecimal amount, String validity, String data, long operatorId) {
+	public PlanEntity(Double amount, String validity, String description, Long operatorId) {
 		super();
 		this.amount = amount;
 		this.validity = validity;
-		this.data = data;
+		this.description = description;
 		this.operatorId = operatorId;
 	}
 	

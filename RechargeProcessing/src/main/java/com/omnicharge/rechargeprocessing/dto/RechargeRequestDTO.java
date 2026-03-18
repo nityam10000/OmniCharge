@@ -19,4 +19,38 @@ public class RechargeRequestDTO {
 
     @NotNull(message = "planId required!!!")
     private Long planId;
+
+	public RechargeRequestDTO(RechargeStatus status, @NotNull(message = "userId required!!!") Long userId,
+			@NotNull(message = "planId required!!!") Long planId) {
+		super();
+		this.status = status;
+		this.userId = userId;
+		this.planId = planId;
+	}
+
+	public RechargeStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RechargeStatus status) {
+		this.status = status;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Long getPlanId() {
+		return planId;
+	}
+
+	public void setPlanId(Long planId) {
+		this.planId = planId;
+	}
+    
+    
 }

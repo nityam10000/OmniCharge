@@ -20,8 +20,15 @@ import java.util.List;
 public class RechargeController {
 
     private final IRechargeService rechargeService;
+    
+    
 
-    @PostMapping("/add-recharge")
+    public RechargeController(IRechargeService rechargeService) {
+		super();
+		this.rechargeService = rechargeService;
+	}
+
+	@PostMapping("/add-recharge")
     public ResponseEntity<RechargeResponseDTO> addRecharge(@Valid @RequestBody RechargeRequestDTO rechargeRequestDTO){
         RechargeResponseDTO dto = rechargeService.addRecharge(rechargeRequestDTO);
         return new  ResponseEntity<>(dto, HttpStatus.OK);

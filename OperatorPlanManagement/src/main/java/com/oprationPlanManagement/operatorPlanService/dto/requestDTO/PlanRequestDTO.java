@@ -11,21 +11,22 @@ public class PlanRequestDTO {
 
 	@NotNull(message = "Amount is required")
     @DecimalMin(value = "1.0", message = "Amount must be greater than 0")
-    private BigDecimal amount;
+    private Double amount;
 
     @NotBlank(message = "Validity is required")
     private String validity;
 
     @NotBlank(message = "Data field is required")
-    private String data;
+    private String description;
 
     @Positive(message = "Operator ID must be a positive number")
-    private long operatorId;
+    private Long operatorId;
 
-	public BigDecimal getAmount() {
+	
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	public String getValidity() {
@@ -34,11 +35,12 @@ public class PlanRequestDTO {
 	public void setValidity(String validity) {
 		this.validity = validity;
 	}
-	public String getData() {
-		return data;
+	
+	public String getDescription() {
+		return description;
 	}
-	public void setData(String data) {
-		this.data = data;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public long getOperatorId() {
 		return operatorId;
@@ -46,11 +48,11 @@ public class PlanRequestDTO {
 	public void setOperatorId(long operatorId) {
 		this.operatorId = operatorId;
 	}
-	public PlanRequestDTO(BigDecimal amount, String validity, String data, long operatorId) {
+	public PlanRequestDTO(Double amount, String validity, String description, Long operatorId) {
 		super();
 		this.amount = amount;
 		this.validity = validity;
-		this.data = data;
+		this.description = description;
 		this.operatorId = operatorId;
 	}
 	public PlanRequestDTO() {

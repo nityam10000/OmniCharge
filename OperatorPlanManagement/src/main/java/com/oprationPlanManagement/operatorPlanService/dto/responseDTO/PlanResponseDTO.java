@@ -1,16 +1,16 @@
 package com.oprationPlanManagement.operatorPlanService.dto.responseDTO;
 
-import java.math.BigDecimal;
 
 public class PlanResponseDTO {
 	
-	private BigDecimal amount;
+	private Double amount;
 	private String validity;
-	private String data;
-	public BigDecimal getAmount() {
+	private String description;
+	
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	public String getValidity() {
@@ -19,21 +19,22 @@ public class PlanResponseDTO {
 	public void setValidity(String validity) {
 		this.validity = validity;
 	}
-	public String getData() {
-		return data;
+	
+	public String getDescription() {
+		return description;
 	}
-	public void setData(String data) {
-		this.data = data;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public PlanResponseDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public PlanResponseDTO(BigDecimal amount, String validity, String data) {
+	public PlanResponseDTO(Double amount, String validity, String description) {
 		super();
 		this.amount = amount;
 		this.validity = validity;
-		this.data = data;
+		this.description = description;
 	}
 	
 	

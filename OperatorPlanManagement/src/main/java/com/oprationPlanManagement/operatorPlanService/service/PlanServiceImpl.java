@@ -21,7 +21,7 @@ public class PlanServiceImpl implements IPlanService {
 
     @Override
     public PlanResponseDTO addNewPlan(PlanRequestDTO dto) {
-        PlanEntity entity = new PlanEntity(dto.getAmount(), dto.getValidity(), dto.getData(), dto.getOperatorId());
+        PlanEntity entity = new PlanEntity(dto.getAmount(), dto.getValidity(), dto.getDescription(), dto.getOperatorId());
         PlanEntity saved = planRepo.save(entity);
         return mapToResponse(saved);
     }
@@ -47,7 +47,7 @@ public class PlanServiceImpl implements IPlanService {
                 .orElseThrow(() -> new RuntimeException("Plan not found with id: " + id));
         entity.setAmount(dto.getAmount());
         entity.setValidity(dto.getValidity());
-        entity.setData(dto.getData());
+        entity.setDescription(dto.getDescription());
         entity.setOperatorId(dto.getOperatorId());
         PlanEntity updated = planRepo.save(entity);
         return mapToResponse(updated);
@@ -62,6 +62,6 @@ public class PlanServiceImpl implements IPlanService {
     }
 
     private PlanResponseDTO mapToResponse(PlanEntity entity) {
-        return new PlanResponseDTO(entity.getAmount(), entity.getValidity(), entity.getData());
+        return new PlanResponseDTO(entity.getAmount(), entity.getValidity(), entity.getDescription());
     }
 }
