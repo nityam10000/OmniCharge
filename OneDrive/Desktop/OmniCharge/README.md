@@ -1,2 +1,0 @@
-# OmniCharge
-Sprint Project
