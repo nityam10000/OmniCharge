@@ -1,0 +1,400 @@
+{
+  "info": {
+    "_postman_id": "6e251378-a780-4e35-a22d-213088188914",
+    "name": "OmniCharge - User Service",
+    "description": "## OmniCharge - User Service\n\nThis collection contains the **User Service API** for the **OmniCharge** platform. It covers the complete set of CRUD (Create, Read, Update, Delete) operations for managing users within the system.\n\n**Base URL:** `http://localhost:8081`\n\n---\n\n### Overview\n\nThe User Service is responsible for handling all user-related operations on the OmniCharge platform — from registering new users to retrieving, updating, and removing existing ones. All requests in this collection are organized under the **User Management APIs** folder.\n\n---\n\n### Key Capabilities\n\n| Operation | Method | Endpoint | Description |\n|-----------|--------|----------|-------------|\n| Register User | `POST` | `/users/register` | Create and register a new user in the system |\n| Get All Users | `GET` | `/users` | Retrieve a list of all registered users |\n| Get User By ID | `GET` | `/users/{id}` | Fetch details of a specific user by their ID |\n| Update User | `PUT` | `/users/{id}` | Update the profile information of an existing user |\n| Delete User | `DELETE` | `/users/delete/{id}` | Remove a user from the system by their ID |\n\n---\n\n### Getting Started\n\n1. Ensure the User Service is running locally on port `8081`.\n2. Use the **Register User** request to create a new user account.\n3. Use **Get All Users** or **Get User By ID** to retrieve user data.\n4. Use **Update User** to modify an existing user's details.\n5. Use **Delete User** to remove a user from the system.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52866406",
+    "_collection_link": "https://go.postman.co/collection/52866406-6e251378-a780-4e35-a22d-213088188914?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "User Management APIs",
+      "item": []
+    },
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Aditya Chaudhary\",\r\n  \"email\": \"adi@gmail.com\",\r\n  \"password\": \"Aditya@123\",\r\n  \"contactNo\": \"9876543210\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/users/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "users",
+            "register"
+          ]
+        },
+        "description": "## Register User\n\nRegisters a new user in the system by accepting their personal details. On successful registration, the endpoint returns the newly created user's basic information.\n\n---\n\n### Endpoint Details\n\n| Property | Value |\n|----------|-------|\n| **Method** | `POST` |\n| **URL** | `http://localhost:8081/users/register` |\n| **Content-Type** | `application/json` |\n\n---\n\n### Request Body Parameters\n\n| Field | Type | Description |\n|-------|------|-------------|\n| `name` | `string` | Full name of the user |\n| `email` | `string` | Email address of the user |\n| `password` | `string` | Password for the account (must be strong — include uppercase, lowercase, numbers, and special characters) |\n| `contactNo` | `string` | Contact number of the user |\n\n#### Sample Request Body\n\n```json\n{\n  \"name\": \"Aditya Chaudhary\",\n  \"email\": \"aditya@gmail.com\",\n  \"password\": \"Aditya@1234\",\n  \"contactNo\": \"9876553210\"\n}\n```\n\n---\n\n### Response\n\n#### Success — `200 OK`\n\nOn successful registration, the API returns the registered user's `name`, `email`, and `contactNo`.\n\n```json\n{\n  \"name\": \"Aditya Chaudhary\",\n  \"email\": \"aditya@gmail.com\",\n  \"contactNo\": \"9876553210\"\n}\n```"
+      },
+      "response": [
+        {
+          "name": "Register User",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Aditya Chaudhary\",\r\n  \"email\": \"aditya@gmail.com\",\r\n  \"password\": \"Aditya@1234\",\r\n  \"contactNo\": \"9876553210\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "users",
+                "register"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 09:25:43 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"name\": \"Aditya Chaudhary\",\n    \"email\": \"aditya@gmail.com\",\n    \"contactNo\": \"9876553210\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get All Users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "users"
+          ]
+        },
+        "description": "## Get All Users\n\nRetrieves a list of all registered users in the system.\n\n---\n\n### Request Details\n\n| Property | Value |\n|----------|-------|\n| Method   | `GET` |\n| URL      | `http://localhost:8081/users` |\n\n### Request Body\n\nNo request body required.\n\n---\n\n### Response\n\n**Status:** `200 OK`\n\nReturns a JSON array of user objects.\n\n#### Response Fields\n\n| Field | Type | Description |\n|-------|------|-------------|\n| `name` | string | Full name of the user |\n| `email` | string | Email address of the user |\n| `contactNo` | string | Contact number of the user |\n\n#### Example Response\n\n```json\n[\n  {\n    \"name\": \"Aditya Chaudhary\",\n    \"email\": \"adi@gmail.com\",\n    \"contactNo\": \"9876543210\"\n  }\n]\n```"
+      },
+      "response": [
+        {
+          "name": "Get All Users",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 09:15:20 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[\n    {\n        \"name\": \"Aditya Chaudhary\",\n        \"email\": \"adi@gmail.com\",\n        \"contactNo\": \"9876543210\"\n    }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Get User By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/users/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "users",
+            "2"
+          ]
+        },
+        "description": "## Get User By ID\n\nRetrieves the details of a specific user by their unique ID. Returns user profile information including name, email, and contact number.\n\n---\n\n### Endpoint\n\n**Method:** `GET`\n**URL:** `http://localhost:8081/users/:userId`\n\n---\n\n### Path Parameters\n\n| Parameter | Type   | Required | Description                        |\n|-----------|--------|----------|------------------------------------|\n| `userId`  | number | Yes      | The unique identifier of the user. |\n\n**Example:** `/users/2` — fetches the user with ID `2`.\n\n---\n\n### Sample Response\n\n**Status:** `200 OK`\n\n```json\n{\n  \"name\": \"Aditya Chaudhary\",\n  \"email\": \"adi@gmail.com\",\n  \"contactNo\": \"9876543210\"\n}\n```\n\n---\n\n### Response Fields\n\n| Field       | Type   | Description                              |\n|-------------|--------|------------------------------------------|\n| `name`      | string | Full name of the user.                   |\n| `email`     | string | Email address associated with the user.  |\n| `contactNo` | string | Contact phone number of the user.        |\n\n---\n\n### Notes\n\n- If the user with the given `userId` does not exist, the server may return a `404 Not Found` response.\n- The `contactNo` field is returned as a string to preserve leading zeros and formatting."
+      },
+      "response": [
+        {
+          "name": "Get User By ID",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/users/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "users",
+                "2"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 09:28:42 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"name\": \"Aditya Chaudhary\",\n    \"email\": \"adi@gmail.com\",\n    \"contactNo\": \"9876543210\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Update User",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Aditya Updated\",\r\n  \"email\": \"adi@gmail.com\",\r\n  \"password\": \"Adi@12321\",\r\n  \"contactNo\": \"9999958399\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8081/users/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "users",
+            "2"
+          ]
+        },
+        "description": "## Update User\n\nUpdates the details of an existing user identified by their unique user ID. This endpoint accepts a JSON body with the fields to be updated and returns the updated user object on success.\n\n---\n\n**Method:** `PUT`  \n**URL:** `http://localhost:8081/users/{id}`\n\n> **Note:** The user ID is a **path parameter** embedded in the URL (e.g., `/users/2`). Make sure to replace `{id}` with the actual numeric ID of the user you want to update. \n  \n\n---\n\n### Request Body\n\nThe request body must be sent as `raw JSON` (`application/json`).\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `name` | String | The updated full name of the user. |\n| `email` | String | The updated email address of the user. |\n| `password` | String | The updated password for the user account. |\n| `contactNo` | String | The updated contact/phone number of the user. |\n\n#### Sample Request Body\n\n``` json\n{\n  \"name\": \"Aditya Updated\",\n  \"email\": \"adi@gmail.com\",\n  \"password\": \"Adi@12321\",\n  \"contactNo\": \"9999958399\"\n}\n\n ```\n\n---\n\n### Response\n\n#### `200 OK` — User updated successfully\n\nReturns the updated user object. Note that the `password` field is **not** returned in the response.\n\n``` json\n{\n  \"name\": \"Aditya Updated\",\n  \"email\": \"adi@gmail.com\",\n  \"contactNo\": \"9999958399\"\n}\n\n ```\n\n---\n\n### Notes\n\n- The `id` in the URL path must correspond to a valid, existing user.\n    \n- The `password` field is accepted in the request but is intentionally excluded from the response for security reasons.\n    \n- All fields in the request body are expected to be provided; partial updates may not be supported depending on the server implementation."
+      },
+      "response": [
+        {
+          "name": "Update User",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Aditya Updated\",\r\n  \"email\": \"adi@gmail.com\",\r\n  \"password\": \"Adi@12321\",\r\n  \"contactNo\": \"9999958399\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8081/users/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "users",
+                "2"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 09:31:16 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"name\": \"Aditya Updated\",\n    \"email\": \"adi@gmail.com\",\n    \"contactNo\": \"9999958399\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Delete User",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Aditya Updated\",\r\n  \"email\": \"adi@gmail.com\",\r\n  \"password\": \"Adi@12321\",\r\n  \"contactNo\": \"9999958399\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/users/delete/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8081",
+          "path": [
+            "users",
+            "delete",
+            "3"
+          ]
+        },
+        "description": "## Delete User\n\nDeletes an existing user from the system by their unique ID. Once deleted, the user record is permanently removed.\n\n---\n\n### Method & URL\n\n```\nDELETE http://localhost:8081/users/delete/:id\n```\n\n---\n\n### Path Parameter\n\n| Parameter | Type   | Required | Description                          | Example |\n|-----------|--------|----------|--------------------------------------|---------|\n| `id`      | number | Yes      | The unique ID of the user to delete. | `3`     |\n\n**Example URL:** `http://localhost:8081/users/delete/3`\n\n---\n\n### Response\n\n**200 OK** — Returns a plain text confirmation message upon successful deletion.\n\n```\nUser with Id: 3 has been deleted!\n```\n\n---\n\n### Saved Example\n\nA saved example named **\"Delete User\"** is available under this request. It demonstrates a successful `200 OK` response with the plain text confirmation message returned after deleting the user with ID `3`."
+      },
+      "response": [
+        {
+          "name": "Delete User",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Aditya Updated\",\r\n  \"email\": \"adi@gmail.com\",\r\n  \"password\": \"Adi@12321\",\r\n  \"contactNo\": \"9999958399\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/users/delete/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "users",
+                "delete",
+                "3"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "33"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 09:32:28 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "User with Id: 3 has been deleted!"
+        }
+      ]
+    }
+  ]
+}
