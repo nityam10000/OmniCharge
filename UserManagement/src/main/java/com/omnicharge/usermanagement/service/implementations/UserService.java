@@ -1,5 +1,6 @@
 package com.omnicharge.usermanagement.service.implementations;
 
+import com.omnicharge.usermanagement.dto.RoleUpdateDTO;
 import com.omnicharge.usermanagement.dto.UserRequestDTO;
 import com.omnicharge.usermanagement.dto.UserResponseDTO;
 import com.omnicharge.usermanagement.entity.UserEntity;
@@ -11,6 +12,8 @@ import com.omnicharge.usermanagement.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +30,8 @@ public class UserService implements IUserService {
 
 	@Override
     public UserResponseDTO addUser(UserRequestDTO userRequestDTO) {
-        if(userRepository.existsByEmail(userRequestDTO.getEmail())){
-            throw new UserAlreadyExistsException("User with "+userRequestDTO.getEmail()+" already exixts!");
+        if (userRepository.existsByEmail(userRequestDTO.getEmail())) {
+            throw new UserAlreadyExistsException("User already exists!");
         }
         UserEntity userEntity = mapper.toEntity(userRequestDTO);
 
@@ -45,6 +48,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponseDTO getUserById(Long id) {
+        validateAccess(id);
         UserEntity userEntity = userRepository.findById(id).orElseThrow(()->new UserNotFoundException("User with "+id+" not found!"));
         return mapper.toResponseDTO(userEntity);
     }
@@ -52,14 +56,14 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponseDTO updateUser(Long id,UserRequestDTO userRequestDTO) {
-
+        validateAccess(id);
         UserEntity userEntity = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User Not Exists"));
         userEntity.setName(userRequestDTO.getName());
         userEntity.setEmail(userRequestDTO.getEmail());
         userEntity.setPassword(passwordEncoder.encode((userRequestDTO.getPassword())));
         userEntity.setContactNo(userRequestDTO.getContactNo());
 
-        return mapper.toResponseDTO(userEntity);
+        return mapper.toResponseDTO(userRepository.save(userEntity));
     }
 
     @Override
@@ -67,5 +71,32 @@ public class UserService implements IUserService {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User Not Exists"));
         userRepository.delete(userEntity);
         return "User with Id: "+id+" has been deleted!";
+    }
+
+    @Override
+    public UserResponseDTO updateUserRole(Long userId, RoleUpdateDTO roleUpdateDTO) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        user.setRole(roleUpdateDTO.getRole());
+
+        return mapper.toResponseDTO(userRepository.save(user));
+    }
+
+    private void validateAccess(Long userId) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = auth.getName();
+        String role = auth.getAuthorities().iterator().next().getAuthority();
+
+        if (role.equals("ROLE_ADMIN")) return;
+
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getUserId() != userId) {
+            throw new RuntimeException("Access Denied");
+        }
     }
 }
