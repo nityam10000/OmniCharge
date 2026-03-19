@@ -1,13 +1,14 @@
-package com.omnicharge.paymentservice.dto;
+package com.omnicharge.rechargeprocessing.dto;
 
-import com.omnicharge.paymentservice.enums.PaymentMethod;
-import com.omnicharge.paymentservice.enums.TransactionStatus;
+
+import com.omnicharge.rechargeprocessing.enums.PaymentMethod;
+import com.omnicharge.rechargeprocessing.enums.TransactionStatus;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @AllArgsConstructor
 @NoArgsConstructor

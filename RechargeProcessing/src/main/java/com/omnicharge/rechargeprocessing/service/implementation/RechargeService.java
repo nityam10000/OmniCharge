@@ -3,10 +3,16 @@ package com.omnicharge.rechargeprocessing.service.implementation;
 
 import com.omnicharge.rechargeprocessing.dto.RechargeRequestDTO;
 import com.omnicharge.rechargeprocessing.dto.RechargeResponseDTO;
+import com.omnicharge.rechargeprocessing.dto.TransactionRequestDTO;
+import com.omnicharge.rechargeprocessing.dto.TransactionResponseDTO;
 import com.omnicharge.rechargeprocessing.dto.UserResponseDTO;
 import com.omnicharge.rechargeprocessing.entity.Recharge;
+import com.omnicharge.rechargeprocessing.enums.PaymentMethod;
+import com.omnicharge.rechargeprocessing.enums.RechargeStatus;
+import com.omnicharge.rechargeprocessing.enums.TransactionStatus;
 import com.omnicharge.rechargeprocessing.exception.RechargeNotFoundException;
 import com.omnicharge.rechargeprocessing.exception.UserNotRegisteredException;
+import com.omnicharge.rechargeprocessing.feignClient.PaymentClient;
 import com.omnicharge.rechargeprocessing.feignClient.UserClient;
 import com.omnicharge.rechargeprocessing.mapper.RechargeMapper;
 import com.omnicharge.rechargeprocessing.repository.IRechargeRepository;
@@ -29,21 +35,40 @@ public class RechargeService implements IRechargeService {
     private final IRechargeRepository rechargeRepository;
     private final RechargeMapper rechargeMapper;
     private final UserClient userClient;
+    private final PaymentClient paymentClient;
 
-	@Override
-	public RechargeResponseDTO addRecharge(RechargeRequestDTO rechargeRequestDTO) {
-	    UserResponseDTO user;
-	    try {
-	        user = userClient.getUserById(rechargeRequestDTO.getUserId());
-	    } catch (FeignException.NotFound e) {
-	        throw new UserNotRegisteredException("User not registered. Please register first.");
-	    }
+    @Override
+    public RechargeResponseDTO addRecharge(RechargeRequestDTO rechargeRequestDTO) {
+        // ✅ Validate user existence
+        UserResponseDTO user;
+        try {
+            user = userClient.getUserById(rechargeRequestDTO.getUserId());
+        } catch (FeignException.NotFound e) {
+            throw new UserNotRegisteredException("User not registered. Please register first.");
+        }
 
-	    // ✅ If user exists, save recharge
-	    Recharge recharge = rechargeMapper.toRecharge(rechargeRequestDTO);
-	    Recharge savedRecharge = rechargeRepository.save(recharge);
-	    return rechargeMapper.toRechargeResponseDTO(savedRecharge);
-	}
+        // ✅ Call Payment service before saving recharge
+        TransactionRequestDTO txRequest = new TransactionRequestDTO(
+            100.0, // amount (later fetch from Plan service)
+            null,  // rechargeId not yet created
+            TransactionStatus.SUCCESS,
+            rechargeRequestDTO.getUserId(),
+            PaymentMethod.UPI
+        );
+
+        TransactionResponseDTO txResponse = paymentClient.createTransaction(txRequest);
+
+        if (txResponse.getTransactionStatus() != TransactionStatus.SUCCESS) {
+            throw new RuntimeException("Payment failed: " + txResponse.getTransactionStatus());
+        }
+
+        // ✅ Save recharge only if payment succeeded
+        Recharge recharge = rechargeMapper.toRecharge(rechargeRequestDTO);
+        recharge.setStatus(RechargeStatus.SUCCESS);
+        Recharge savedRecharge = rechargeRepository.save(recharge);
+
+        return rechargeMapper.toRechargeResponseDTO(savedRecharge);
+    }
 
 
 
