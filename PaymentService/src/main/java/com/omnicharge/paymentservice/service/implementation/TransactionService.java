@@ -3,6 +3,7 @@ package com.omnicharge.paymentservice.service.implementation;
 import com.omnicharge.paymentservice.dto.TransactionRequestDTO;
 import com.omnicharge.paymentservice.dto.TransactionResponseDTO;
 import com.omnicharge.paymentservice.entity.Transaction;
+import com.omnicharge.paymentservice.enums.TransactionStatus;
 import com.omnicharge.paymentservice.exception.TransactionNotFoundException;
 import com.omnicharge.paymentservice.mapper.Mapper;
 import com.omnicharge.paymentservice.repository.ITransactionRepository;
@@ -21,9 +22,19 @@ public class TransactionService implements ITransactionService {
     private final Mapper mapper;
     
    
-	@Override
+    @Override
     public TransactionResponseDTO createTransaction(TransactionRequestDTO transactionRequestDTO) {
-        return mapper.toTransactionResponseDTO(transactionRepository.save(mapper.toTransaction(transactionRequestDTO)));
+        Transaction transaction = mapper.toTransaction(transactionRequestDTO);
+
+        // Simple dummy logic for testing
+        if (transactionRequestDTO.getAmount() >= 1) {
+            transaction.setStatus(TransactionStatus.SUCCESS);
+        } else {
+            transaction.setStatus(TransactionStatus.FAILED);
+        }
+
+        Transaction savedTransaction = transactionRepository.save(transaction);
+        return mapper.toTransactionResponseDTO(savedTransaction);
     }
 
     @Override

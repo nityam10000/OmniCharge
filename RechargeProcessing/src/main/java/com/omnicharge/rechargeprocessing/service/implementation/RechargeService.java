@@ -1,6 +1,7 @@
 package com.omnicharge.rechargeprocessing.service.implementation;
 
 
+import com.omnicharge.rechargeprocessing.dto.PlanResponseDTO;
 import com.omnicharge.rechargeprocessing.dto.RechargeRequestDTO;
 import com.omnicharge.rechargeprocessing.dto.RechargeResponseDTO;
 import com.omnicharge.rechargeprocessing.dto.TransactionRequestDTO;
@@ -12,8 +13,9 @@ import com.omnicharge.rechargeprocessing.enums.RechargeStatus;
 import com.omnicharge.rechargeprocessing.enums.TransactionStatus;
 import com.omnicharge.rechargeprocessing.exception.RechargeNotFoundException;
 import com.omnicharge.rechargeprocessing.exception.UserNotRegisteredException;
-import com.omnicharge.rechargeprocessing.feignClient.PaymentClient;
-import com.omnicharge.rechargeprocessing.feignClient.UserClient;
+import com.omnicharge.rechargeprocessing.feignClient.IOperatorPlanClient;
+import com.omnicharge.rechargeprocessing.feignClient.IPaymentClient;
+import com.omnicharge.rechargeprocessing.feignClient.IUserClient;
 import com.omnicharge.rechargeprocessing.mapper.RechargeMapper;
 import com.omnicharge.rechargeprocessing.repository.IRechargeRepository;
 import com.omnicharge.rechargeprocessing.service.IRechargeService;
@@ -34,40 +36,51 @@ public class RechargeService implements IRechargeService {
 
     private final IRechargeRepository rechargeRepository;
     private final RechargeMapper rechargeMapper;
-    private final UserClient userClient;
-    private final PaymentClient paymentClient;
+    private final IUserClient userClient;
+    private final IPaymentClient paymentClient;
+    private final IOperatorPlanClient operatorPlanClient;
 
     @Override
     public RechargeResponseDTO addRecharge(RechargeRequestDTO rechargeRequestDTO) {
         // ✅ Validate user existence
-        UserResponseDTO user;
+    	UserResponseDTO user;
         try {
             user = userClient.getUserById(rechargeRequestDTO.getUserId());
         } catch (FeignException.NotFound e) {
             throw new UserNotRegisteredException("User not registered. Please register first.");
         }
 
-        // ✅ Call Payment service before saving recharge
+        // ✅ Fetch plan details from OperatorPlan service
+        PlanResponseDTO plan = operatorPlanClient.getPlanById(rechargeRequestDTO.getPlanId());
+
+        // ✅ Save recharge first as PENDING
+        Recharge recharge = rechargeMapper.toRecharge(rechargeRequestDTO);
+        recharge.setStatus(RechargeStatus.PENDING);
+        Recharge savedRecharge = rechargeRepository.save(recharge);
+
+        // ✅ Build TransactionRequestDTO using plan amount
         TransactionRequestDTO txRequest = new TransactionRequestDTO(
-            100.0, // amount (later fetch from Plan service)
-            null,  // rechargeId not yet created
-            TransactionStatus.SUCCESS,
+            plan.getAmount(),
+            savedRecharge.getId(),
+            TransactionStatus.PENDING,
             rechargeRequestDTO.getUserId(),
             PaymentMethod.UPI
         );
 
+        // ✅ Call Payment service
         TransactionResponseDTO txResponse = paymentClient.createTransaction(txRequest);
 
-        if (txResponse.getTransactionStatus() != TransactionStatus.SUCCESS) {
-            throw new RuntimeException("Payment failed: " + txResponse.getTransactionStatus());
+        // ✅ Update recharge status based on payment result
+        if (txResponse.getTransactionStatus() == TransactionStatus.SUCCESS) {
+            savedRecharge.setStatus(RechargeStatus.SUCCESS);
+        } else {
+            savedRecharge.setStatus(RechargeStatus.FAILED);
         }
 
-        // ✅ Save recharge only if payment succeeded
-        Recharge recharge = rechargeMapper.toRecharge(rechargeRequestDTO);
-        recharge.setStatus(RechargeStatus.SUCCESS);
-        Recharge savedRecharge = rechargeRepository.save(recharge);
+        rechargeRepository.save(savedRecharge);
 
         return rechargeMapper.toRechargeResponseDTO(savedRecharge);
+
     }
 
 

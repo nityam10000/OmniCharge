@@ -12,7 +12,7 @@ import com.omnicharge.rechargeprocessing.dto.TransactionRequestDTO;
 import com.omnicharge.rechargeprocessing.dto.TransactionResponseDTO;
 
 @FeignClient(name = "payment-service", url = "http://localhost:8084/transaction")
-public interface PaymentClient {
+public interface IPaymentClient {
 	 	@PostMapping("/add")
 	    TransactionResponseDTO createTransaction(@RequestBody TransactionRequestDTO transactionRequestDTO);
 

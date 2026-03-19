@@ -28,16 +28,6 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private Roles role=Roles.USER;
 
-	public UserEntity(Long userId, String name, String email, String contactNo, String password, Roles role) {
-		super();
-		this.userId = userId;
-		this.name = name;
-		this.email = email;
-		this.contactNo = contactNo;
-		this.password = password;
-		this.role = role;
-	}
-
 	public Long getUserId() {
 		return userId;
 	}
@@ -89,11 +79,6 @@ public class UserEntity {
 		this.contactNo = contactNo;
 		this.password = password;
 		this.role = role;
-	}
-
-	public UserEntity() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
     
     
