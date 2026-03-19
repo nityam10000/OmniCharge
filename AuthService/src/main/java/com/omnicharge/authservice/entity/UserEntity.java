@@ -1,21 +1,23 @@
-package com.omnicharge.usermanagement.entity;
+package com.omnicharge.authservice.entity;
 
-import com.omnicharge.usermanagement.enums.Roles;
+
+import com.omnicharge.authservice.enums.Roles;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Entity
 @Table(name = "userentity")
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long userId;
+    private Long userId;
 
     private String name;
 
@@ -27,5 +29,5 @@ public class UserEntity {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Roles role=Roles.USER;
+    private Roles role;
 }

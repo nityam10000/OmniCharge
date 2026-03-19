@@ -1,5 +1,6 @@
 package com.omnicharge.usermanagement.service;
 
+import com.omnicharge.usermanagement.dto.RoleUpdateDTO;
 import com.omnicharge.usermanagement.dto.UserRequestDTO;
 import com.omnicharge.usermanagement.dto.UserResponseDTO;
 import org.springframework.http.ResponseEntity;
@@ -13,4 +14,5 @@ public interface IUserService {
     public UserResponseDTO getUserById(Long id);
     public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO);
     public String deleteUser(Long id);
+    UserResponseDTO updateUserRole(Long userId, RoleUpdateDTO roleUpdateDTO);
 }

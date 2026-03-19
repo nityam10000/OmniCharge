@@ -1,6 +1,7 @@
 package com.omnicharge.usermanagement.controller;
 
 
+import com.omnicharge.usermanagement.dto.RoleUpdateDTO;
 import com.omnicharge.usermanagement.dto.UserRequestDTO;
 import com.omnicharge.usermanagement.dto.UserResponseDTO;
 import com.omnicharge.usermanagement.repository.IUserRepository;
@@ -9,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,28 +29,40 @@ public class UserController {
         return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<UserResponseDTO> list = userService.getAllUsers();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO dto = userService.updateUser(id, userRequestDTO);
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long userId, @Valid @RequestBody UserRequestDTO userRequestDTO) {
+        UserResponseDTO dto = userService.updateUser(userId, userRequestDTO);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
-        UserResponseDTO userResponseDTO = userService.getUserById(id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long userId) {
+        UserResponseDTO userResponseDTO = userService.getUserById(userId);
         return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
-        String status = userService.deleteUser(id);
-        return new ResponseEntity<>(status, HttpStatus.OK);
+    @DeleteMapping("/{userId}")
+    @PreAuthorize("hasRole('ADMIN')") // 🔥 only admin
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.deleteUser(userId));
+    }
+
+
+    // 🔥 ROLE UPDATE ENDPOINT
+    @PutMapping("/{userId}/role")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponseDTO> updateUserRole(
+            @PathVariable Long userId,
+            @RequestBody RoleUpdateDTO roleUpdateDTO) {
+
+        return ResponseEntity.ok(userService.updateUserRole(userId, roleUpdateDTO));
     }
 
 

@@ -14,12 +14,13 @@ public class CustomMapper {
     private final PasswordEncoder passwordEncoder;
 
     public UserResponseDTO toResponseDTO(UserEntity userEntity) {
-        UserResponseDTO dto = new UserResponseDTO();
-        dto.setName(userEntity.getName());
-        dto.setEmail(userEntity.getEmail());
-        dto.setContactNo(userEntity.getContactNo());
-
-        return dto;
+        return UserResponseDTO.builder()
+                .userId(userEntity.getUserId())
+                .name(userEntity.getName())
+                .email(userEntity.getEmail())
+                .contactNo(userEntity.getContactNo())
+                .role(userEntity.getRole())
+                .build();
     }
 
     public UserEntity toEntity(UserRequestDTO dto) {
