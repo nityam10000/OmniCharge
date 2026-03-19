@@ -18,12 +18,6 @@ import java.util.List;
 public class TransactionController {
     private final ITransactionService transactionService;
     
-    
-
-    public TransactionController(ITransactionService transactionService) {
-		super();
-		this.transactionService = transactionService;
-	}
 
 	@PostMapping("add")
     public ResponseEntity<TransactionResponseDTO> createTransaction(@Valid @RequestBody TransactionRequestDTO transactionRequestDTO) {

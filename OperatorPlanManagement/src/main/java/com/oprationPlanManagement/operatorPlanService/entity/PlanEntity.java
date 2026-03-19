@@ -1,18 +1,11 @@
 package com.oprationPlanManagement.operatorPlanService.entity;
 
-<<<<<<< HEAD
 import java.math.BigDecimal;
 
-=======
->>>>>>> origin/bhavik
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-<<<<<<< HEAD
-
-@Entity
-=======
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,7 +17,6 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
->>>>>>> origin/bhavik
 public class PlanEntity {
 
 	@Id
@@ -35,61 +27,5 @@ public class PlanEntity {
 	private String validity;
 	private String description;
 	private Long operatorId;
-<<<<<<< HEAD
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public Double getAmount() {
-		return amount;
-	}
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-	public String getValidity() {
-		return validity;
-	}
-	public void setValidity(String validity) {
-		this.validity = validity;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setOperatorId(Long operatorId) {
-		this.operatorId = operatorId;
-	}
-
-	public long getOperatorId() {
-		return operatorId;
-	}
-	public void setOperatorId(long operatorId) {
-		this.operatorId = operatorId;
-	}
-	
-	
-	public PlanEntity() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public PlanEntity(Double amount, String validity, String description, Long operatorId) {
-		super();
-		this.amount = amount;
-		this.validity = validity;
-		this.description = description;
-		this.operatorId = operatorId;
-	}
-	
-	
-	
-=======
-
->>>>>>> origin/bhavik
 }

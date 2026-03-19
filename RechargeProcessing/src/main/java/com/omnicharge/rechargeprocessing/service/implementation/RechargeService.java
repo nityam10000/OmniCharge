@@ -3,11 +3,16 @@ package com.omnicharge.rechargeprocessing.service.implementation;
 
 import com.omnicharge.rechargeprocessing.dto.RechargeRequestDTO;
 import com.omnicharge.rechargeprocessing.dto.RechargeResponseDTO;
+import com.omnicharge.rechargeprocessing.dto.UserResponseDTO;
 import com.omnicharge.rechargeprocessing.entity.Recharge;
 import com.omnicharge.rechargeprocessing.exception.RechargeNotFoundException;
+import com.omnicharge.rechargeprocessing.exception.UserNotRegisteredException;
+import com.omnicharge.rechargeprocessing.feignClient.UserClient;
 import com.omnicharge.rechargeprocessing.mapper.RechargeMapper;
 import com.omnicharge.rechargeprocessing.repository.IRechargeRepository;
 import com.omnicharge.rechargeprocessing.service.IRechargeService;
+
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.data.domain.Page;
@@ -23,22 +28,24 @@ public class RechargeService implements IRechargeService {
 
     private final IRechargeRepository rechargeRepository;
     private final RechargeMapper rechargeMapper;
-    
-    
-
-
-    public RechargeService(IRechargeRepository rechargeRepository, RechargeMapper rechargeMapper) {
-		super();
-		this.rechargeRepository = rechargeRepository;
-		this.rechargeMapper = rechargeMapper;
-	}
+    private final UserClient userClient;
 
 	@Override
-    public RechargeResponseDTO addRecharge(RechargeRequestDTO rechargeRequestDTO) {
-        Recharge recharge = rechargeMapper.toRecharge(rechargeRequestDTO);
-        Recharge savedRecharge = rechargeRepository.save(recharge);
-        return rechargeMapper.toRechargeResponseDTO(savedRecharge);
-    }
+	public RechargeResponseDTO addRecharge(RechargeRequestDTO rechargeRequestDTO) {
+	    UserResponseDTO user;
+	    try {
+	        user = userClient.getUserById(rechargeRequestDTO.getUserId());
+	    } catch (FeignException.NotFound e) {
+	        throw new UserNotRegisteredException("User not registered. Please register first.");
+	    }
+
+	    // ✅ If user exists, save recharge
+	    Recharge recharge = rechargeMapper.toRecharge(rechargeRequestDTO);
+	    Recharge savedRecharge = rechargeRepository.save(recharge);
+	    return rechargeMapper.toRechargeResponseDTO(savedRecharge);
+	}
+
+
 
     @Override
     public Page<RechargeResponseDTO> getAllRechargs(Pageable pageable) {

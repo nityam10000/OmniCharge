@@ -9,6 +9,4 @@ public interface ITransactionService {
     public TransactionResponseDTO createTransaction(TransactionRequestDTO transactionRequestDTO);
     public List<TransactionResponseDTO> getAllTransactionsByUserId(Long userId);
     public TransactionResponseDTO getTransactionByRechargeId(Long rechargeId) ;
-
-
-    }
+}

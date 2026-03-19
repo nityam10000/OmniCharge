@@ -2,18 +2,16 @@ package com.omnicharge.configServer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-<<<<<<< HEAD
-=======
+
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
->>>>>>> origin/bhavik
+
 import org.springframework.cloud.config.server.EnableConfigServer;
 
 @SpringBootApplication
 @EnableConfigServer
-<<<<<<< HEAD
-=======
+
 @EnableDiscoveryClient
->>>>>>> origin/bhavik
+
 public class OmniChargeConfigServerApplication {
 
 	public static void main(String[] args) {

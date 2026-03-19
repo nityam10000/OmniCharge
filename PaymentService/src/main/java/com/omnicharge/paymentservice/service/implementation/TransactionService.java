@@ -20,15 +20,7 @@ public class TransactionService implements ITransactionService {
     private final ITransactionRepository transactionRepository;
     private final Mapper mapper;
     
-    
-
-
-    public TransactionService(ITransactionRepository transactionRepository, Mapper mapper) {
-		super();
-		this.transactionRepository = transactionRepository;
-		this.mapper = mapper;
-	}
-
+   
 	@Override
     public TransactionResponseDTO createTransaction(TransactionRequestDTO transactionRequestDTO) {
         return mapper.toTransactionResponseDTO(transactionRepository.save(mapper.toTransaction(transactionRequestDTO)));

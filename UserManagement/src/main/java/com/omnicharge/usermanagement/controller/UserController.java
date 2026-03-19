@@ -14,18 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final IUserService userService;
-
-    
-
-    public UserController(IUserService userService) {
-		super();
-		this.userService = userService;
-	}
 
 	@PostMapping("/register")
     public ResponseEntity<UserResponseDTO> addUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
@@ -39,9 +32,9 @@ public class UserController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO dto = userService.updateUser(id, userRequestDTO);
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long userId, @Valid @RequestBody UserRequestDTO userRequestDTO) {
+        UserResponseDTO dto = userService.updateUser(userId, userRequestDTO);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

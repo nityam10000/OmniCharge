@@ -15,18 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("recharge")
+@RequestMapping("/recharge")
 @RequiredArgsConstructor
 public class RechargeController {
 
     private final IRechargeService rechargeService;
     
-    
-
-    public RechargeController(IRechargeService rechargeService) {
-		super();
-		this.rechargeService = rechargeService;
-	}
 
 	@PostMapping("/add-recharge")
     public ResponseEntity<RechargeResponseDTO> addRecharge(@Valid @RequestBody RechargeRequestDTO rechargeRequestDTO){

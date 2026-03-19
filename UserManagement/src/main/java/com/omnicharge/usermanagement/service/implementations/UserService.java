@@ -24,16 +24,6 @@ public class UserService implements IUserService {
     private final PasswordEncoder passwordEncoder;
     private final CustomMapper mapper;
     
-    
-
-   
-
-	public UserService(IUserRepository userRepository, PasswordEncoder passwordEncoder, CustomMapper mapper) {
-		super();
-		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
-		this.mapper = mapper;
-	}
 
 	@Override
     public UserResponseDTO addUser(UserRequestDTO userRequestDTO) {

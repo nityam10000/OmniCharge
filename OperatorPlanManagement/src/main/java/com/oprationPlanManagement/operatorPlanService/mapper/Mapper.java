@@ -6,36 +6,6 @@ import com.oprationPlanManagement.operatorPlanService.dto.responseDTO.OperatorRe
 import com.oprationPlanManagement.operatorPlanService.dto.responseDTO.PlanResponseDTO;
 import com.oprationPlanManagement.operatorPlanService.entity.OperatorEntity;
 import com.oprationPlanManagement.operatorPlanService.entity.PlanEntity;
-<<<<<<< HEAD
-
-public class Mapper {
-
-	public OperatorResponseDTO operatotToDTO(OperatorEntity entity) {
-		return new OperatorResponseDTO(entity.getName());
-	}
-	
-	public PlanResponseDTO planToDTO(PlanEntity entity) {
-		return new PlanResponseDTO(
-				entity.getAmount(),
-				entity.getValidity(),
-				entity.getDescription()
-				);
-	}
-	
-	public OperatorEntity dtoToOperatorEntity(OperatorRequestDTO dto ){
-		return new OperatorEntity(
-				dto.getName()
-				);
-	}
-	
-	public PlanEntity dtoToPlanEntity(PlanRequestDTO dto ){
-		return new PlanEntity(
-				dto.getAmount(),
-				dto.getValidity(),
-				dto.getDescription(),
-				dto.getOperatorId()
-				);
-=======
 import org.springframework.stereotype.Component;
 
 @Component
@@ -68,6 +38,5 @@ public class Mapper {
 		entity.setDescription(dto.getDescription());
 		entity.setOperatorId(dto.getOperatorId());
 		return entity;
->>>>>>> origin/bhavik
 	}
 }

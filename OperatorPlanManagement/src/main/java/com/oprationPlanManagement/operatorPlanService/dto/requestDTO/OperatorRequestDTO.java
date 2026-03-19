@@ -2,22 +2,21 @@ package com.oprationPlanManagement.operatorPlanService.dto.requestDTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-<<<<<<< HEAD
-=======
+
 import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
->>>>>>> origin/bhavik
+
 
 public class OperatorRequestDTO {
 	
 	@NotBlank(message = "Operator name is required")
     @Size(min = 2, max = 50, message = "Operator name must be between 2 and 50 characters")
     private String name;
-<<<<<<< HEAD
+
 
 
 	public String getName() {
@@ -27,13 +26,4 @@ public class OperatorRequestDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public OperatorRequestDTO(String name) {
-		super();
-		this.name = name;
-	}
-	
-	
-=======
->>>>>>> origin/bhavik
 }

@@ -25,15 +25,5 @@ public class RechargeResponseDTO {
 	public void setStatus(RechargeStatus status) {
 		this.status = status;
 	}
-	public RechargeResponseDTO(Long id, RechargeStatus status) {
-		super();
-		this.id = id;
-		this.status = status;
-	}
-	public RechargeResponseDTO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-    
     
 }

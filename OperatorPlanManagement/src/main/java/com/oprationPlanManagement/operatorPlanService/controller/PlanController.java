@@ -7,20 +7,19 @@ import org.springframework.web.bind.annotation.*;
 
 import com.oprationPlanManagement.operatorPlanService.dto.requestDTO.PlanRequestDTO;
 import com.oprationPlanManagement.operatorPlanService.dto.responseDTO.PlanResponseDTO;
+import com.oprationPlanManagement.operatorPlanService.mapper.Mapper;
+import com.oprationPlanManagement.operatorPlanService.repository.IPlanRepository;
 import com.oprationPlanManagement.operatorPlanService.service.IPlanService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/plans")
+@RequiredArgsConstructor
 public class PlanController {
 
     private final IPlanService planService;
-
-    public PlanController(IPlanService planService) {
-        this.planService = planService;
-    }
-
     // Create new plan
     @PostMapping("/create")
     public ResponseEntity<PlanResponseDTO> createPlan(@Valid @RequestBody PlanRequestDTO dto) {

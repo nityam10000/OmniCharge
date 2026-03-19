@@ -2,12 +2,8 @@ package com.oprationPlanManagement.operatorPlanService.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-<<<<<<< HEAD
-=======
 import com.oprationPlanManagement.operatorPlanService.mapper.Mapper;
 import lombok.RequiredArgsConstructor;
->>>>>>> origin/bhavik
 import org.springframework.stereotype.Service;
 
 import com.oprationPlanManagement.operatorPlanService.dto.requestDTO.PlanRequestDTO;
@@ -16,29 +12,15 @@ import com.oprationPlanManagement.operatorPlanService.entity.PlanEntity;
 import com.oprationPlanManagement.operatorPlanService.repository.IPlanRepository;
 
 @Service
-<<<<<<< HEAD
-public class PlanServiceImpl implements IPlanService {
-
-    private final IPlanRepository planRepo;
-
-    public PlanServiceImpl(IPlanRepository planRepo) {
-        this.planRepo = planRepo;
-    }
-
-    @Override
-    public PlanResponseDTO addNewPlan(PlanRequestDTO dto) {
-        PlanEntity entity = new PlanEntity(dto.getAmount(), dto.getValidity(), dto.getDescription(), dto.getOperatorId());
-=======
 @RequiredArgsConstructor
 public class PlanServiceImpl implements IPlanService {
 
     private final IPlanRepository planRepo;
     private final Mapper mapper;
 
-    @Override
+	@Override
     public PlanResponseDTO addNewPlan(PlanRequestDTO dto) {
         PlanEntity entity = mapper.dtoToPlanEntity(dto);
->>>>>>> origin/bhavik
         PlanEntity saved = planRepo.save(entity);
         return mapToResponse(saved);
     }
