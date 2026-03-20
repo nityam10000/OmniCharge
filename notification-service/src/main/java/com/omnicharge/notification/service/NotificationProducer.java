@@ -19,7 +19,7 @@ public class NotificationProducer {
         System.out.println("📤 Sending Notification:");
         System.out.println("Message: " + event.getMessage());
         System.out.println("Email: " + event.getEmail());
-        System.out.println("Phone: " + event.getPhone());
+        System.out.println("Phone: " + event.getPhoneNumber());
         System.out.println("Type: " + event.getType());
 
         rabbitTemplate.convertAndSend(
