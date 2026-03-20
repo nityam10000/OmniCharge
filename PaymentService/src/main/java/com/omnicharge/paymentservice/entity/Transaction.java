@@ -44,5 +44,4 @@ public class Transaction {
     public void setTimestamp() {
         this.timestamp = LocalDateTime.now();
     }
-
 }

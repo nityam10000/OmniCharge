@@ -15,6 +15,13 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND, request.getRequestURI());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+    
+    @ExceptionHandler(UserNotRegisteredException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotRegisteredException(UserNotRegisteredException e, HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND, request.getRequestURI());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {

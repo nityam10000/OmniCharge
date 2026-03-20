@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("transaction")
+@RequestMapping("/transaction")
 @RequiredArgsConstructor
 public class TransactionController {
     private final ITransactionService transactionService;
+    
 
-    @PostMapping("add")
+	@PostMapping("/add")
     public ResponseEntity<TransactionResponseDTO> createTransaction(@Valid @RequestBody TransactionRequestDTO transactionRequestDTO) {
         TransactionResponseDTO transactionResponseDTO = transactionService.createTransaction(transactionRequestDTO);
         return new ResponseEntity<>(transactionResponseDTO, HttpStatus.OK );
@@ -30,7 +31,7 @@ public class TransactionController {
         return new ResponseEntity<>(transactionResponseDTO, HttpStatus.OK );
     }
 
-    @GetMapping("recharge/{rechargeId}")
+    @GetMapping("/recharge/{rechargeId}")
     public ResponseEntity<TransactionResponseDTO> getTransactionByRechargeId(@PathVariable Long rechargeId) {
         TransactionResponseDTO transactionResponseDTO = transactionService.getTransactionByRechargeId(rechargeId);
         return new ResponseEntity<>(transactionResponseDTO, HttpStatus.OK );

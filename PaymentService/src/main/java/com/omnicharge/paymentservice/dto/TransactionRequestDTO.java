@@ -16,7 +16,7 @@ public class TransactionRequestDTO {
     @Min(value = 1, message = "Invalid amount!!")
     private Double amount;
 
-    @NotNull
+//    @NotNull
     private Long rechargeId;
 
     @NotNull
@@ -27,4 +27,6 @@ public class TransactionRequestDTO {
 
     @NotNull
     private PaymentMethod paymentMethod;
+    
+    
 }

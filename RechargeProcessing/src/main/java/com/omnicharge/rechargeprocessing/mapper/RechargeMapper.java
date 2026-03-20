@@ -25,7 +25,7 @@ public class RechargeMapper {
         Recharge recharge = new Recharge();
         recharge.setStatus(rechargeRequestDTO.getStatus());
         recharge.setPlanId(rechargeRequestDTO.getPlanId());
-        recharge.setUserId(rechargeRequestDTO.getUserId());
+
         return recharge;
     }
 }

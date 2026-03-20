@@ -15,10 +15,11 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long userId;
+    private  Long userId;
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private String contactNo;
@@ -27,4 +28,14 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     private Roles role=Roles.USER;
+	public UserEntity(String name, String email, String contactNo, String password, Roles role) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.contactNo = contactNo;
+		this.password = password;
+		this.role = role;
+	}
+    
+    
 }

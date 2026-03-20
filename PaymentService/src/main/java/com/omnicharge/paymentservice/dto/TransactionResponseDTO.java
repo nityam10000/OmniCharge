@@ -19,6 +19,5 @@ public class TransactionResponseDTO {
     private TransactionStatus transactionStatus;
     private PaymentMethod paymentMethod;
     private LocalDateTime timestamp;
-
-
+	
 }

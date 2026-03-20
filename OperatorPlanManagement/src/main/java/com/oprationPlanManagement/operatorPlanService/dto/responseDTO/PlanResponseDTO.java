@@ -12,6 +12,4 @@ public class PlanResponseDTO {
 	private String validity;
 	private String description;
 	
-
-
 }

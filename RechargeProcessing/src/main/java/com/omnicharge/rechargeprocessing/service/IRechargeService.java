@@ -15,4 +15,5 @@ public interface IRechargeService {
     public String deleteRecharge(Long id);
     public List<RechargeResponseDTO> findAllRechargeByUserId(Long userId);
     public List<RechargeResponseDTO> findAllRechargeByPlanId(Long planId);
+    public List<RechargeResponseDTO> getCurrentUserRecharges();
 }

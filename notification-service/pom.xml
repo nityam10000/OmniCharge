@@ -4,6 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- ✅ Spring Boot Parent -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -19,12 +20,12 @@
 
     <properties>
         <java.version>17</java.version>
-        <!-- ✅ Add Spring Cloud version compatible with Boot 3.3.x -->
         <spring-cloud.version>2024.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>
-        <!-- ✅ Spring Web -->
+
+        <!-- ✅ Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -36,28 +37,13 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
-        <!-- ✅ Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- ✅ Devtools (optional) -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-
         <!-- ✅ Email -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-        <!-- ✅ Eureka Discovery Client -->
+        <!-- ✅ Eureka Client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -68,33 +54,39 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
+
+        <!-- ✅ Lombok -->
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.11.0</version>
-            <scope>test</scope>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
+
+        <!-- ✅ DevTools (optional) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-            <version>4.0.3</version>
-            <scope>test</scope>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
+
+        <!-- ✅ ONLY TEST DEPENDENCY -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- ✅ twilio DEPENDENCY -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.12.2</version>
-            <scope>test</scope>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>9.14.0</version>
         </dependency>
+
     </dependencies>
 
-    <!-- ✅ Import Spring Cloud BOM -->
+    <!-- ✅ Spring Cloud BOM -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -109,7 +101,8 @@
 
     <build>
         <plugins>
-            <!-- Lombok support -->
+
+            <!-- ✅ Lombok Support -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -123,11 +116,13 @@
                 </configuration>
             </plugin>
 
-            <!-- Spring Boot plugin -->
+            <!-- ✅ Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
         </plugins>
     </build>
+
 </project>

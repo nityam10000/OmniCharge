@@ -25,4 +25,32 @@ public class Recharge {
     private Long userId;
 
     private Long planId;
+
+	public Long getId() {
+		return id;
+	}
+
+	public RechargeStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RechargeStatus status) {
+		this.status = status;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Long getPlanId() {
+		return planId;
+	}
+
+	public void setPlanId(Long planId) {
+		this.planId = planId;
+	}
 }

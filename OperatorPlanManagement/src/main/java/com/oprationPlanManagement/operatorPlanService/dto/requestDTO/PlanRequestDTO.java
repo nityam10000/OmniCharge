@@ -1,5 +1,9 @@
 package com.oprationPlanManagement.operatorPlanService.dto.requestDTO;
 
+
+import java.math.BigDecimal;
+
+
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +15,7 @@ import lombok.*;
 @Data
 @Getter
 @Setter
+
 public class PlanRequestDTO {
 
 	@NotNull(message = "Amount is required")
@@ -25,8 +30,5 @@ public class PlanRequestDTO {
 
     @Positive(message = "Operator ID must be a positive number")
     private Long operatorId;
-
-
-
-
+	
 }

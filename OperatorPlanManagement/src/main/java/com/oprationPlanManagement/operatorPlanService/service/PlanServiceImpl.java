@@ -2,7 +2,6 @@ package com.oprationPlanManagement.operatorPlanService.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.oprationPlanManagement.operatorPlanService.mapper.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ public class PlanServiceImpl implements IPlanService {
     private final IPlanRepository planRepo;
     private final Mapper mapper;
 
-    @Override
+	@Override
     public PlanResponseDTO addNewPlan(PlanRequestDTO dto) {
         PlanEntity entity = mapper.dtoToPlanEntity(dto);
         PlanEntity saved = planRepo.save(entity);
