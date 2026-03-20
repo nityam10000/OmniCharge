@@ -14,9 +14,6 @@ import lombok.NoArgsConstructor;
 public class RechargeRequestDTO {
     private RechargeStatus status;
 
-    @NotNull(message = "userId required!!!")
-    private Long userId;
-
     @NotNull(message = "planId required!!!")
     private Long planId;
 }

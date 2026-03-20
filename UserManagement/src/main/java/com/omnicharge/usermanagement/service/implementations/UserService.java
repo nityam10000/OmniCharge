@@ -10,12 +10,14 @@ import com.omnicharge.usermanagement.mapper.CustomMapper;
 import com.omnicharge.usermanagement.repository.IUserRepository;
 import com.omnicharge.usermanagement.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -54,8 +56,10 @@ public class UserService implements IUserService {
 
 
     @Override
-    public UserResponseDTO updateUser(Long id,UserRequestDTO userRequestDTO) {
+    public UserResponseDTO updateUser(UserRequestDTO userRequestDTO) {
+        Long id = getCurrentUser().getUserId();
         validateAccess(id);
+
         UserEntity userEntity = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User Not Exists"));
         userEntity.setName(userRequestDTO.getName());
         userEntity.setEmail(userRequestDTO.getEmail());
@@ -65,6 +69,14 @@ public class UserService implements IUserService {
         return mapper.toResponseDTO(userRepository.save(userEntity));
     }
 
+    public UserResponseDTO getUserByEmail(String email) {
+        UserEntity user = userRepository.findByEmail(email).orElseThrow(()->new UserNotFoundException("User with "+email+" not found!"));
+        validateAccess(user.getUserId());
+        return mapper.toResponseDTO(user);
+    }
+
+
+
     @Override
     public String deleteUser(Long id) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User Not Exists"));
@@ -73,13 +85,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponseDTO updateUserRole(Long userId, RoleUpdateDTO roleUpdateDTO) {
+    public String updateUserRole(Long userId, RoleUpdateDTO roleUpdateDTO) {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         user.setRole(roleUpdateDTO.getRole());
 
-        return mapper.toResponseDTO(userRepository.save(user));
+        return user.getName()+" promoted to ADMIN!!";
     }
 
     private void validateAccess(Long userId) {
@@ -97,5 +109,17 @@ public class UserService implements IUserService {
         if (user.getUserId() != userId) {
             throw new RuntimeException("Access Denied");
         }
+    }
+    @Override
+    public UserResponseDTO getCurrentUser() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = auth.getName(); // comes from header
+
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        return mapper.toResponseDTO(user);
     }
 }
