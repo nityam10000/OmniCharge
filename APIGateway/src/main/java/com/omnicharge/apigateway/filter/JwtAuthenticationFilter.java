@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
 @Component
 public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
@@ -31,7 +30,10 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
         String path = exchange.getRequest().getURI().getPath();
 
-        if (PUBLIC_ENDPOINTS.stream().anyMatch(path::contains)) {
+        boolean isPublic = PUBLIC_ENDPOINTS.stream()
+                .anyMatch(path::contains);
+
+        if (isPublic) {
             return chain.filter(exchange);
         }
 
@@ -40,36 +42,34 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
                 .getFirst("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return onError(exchange, "Missing or invalid Authorization header", HttpStatus.UNAUTHORIZED);
+            return Mono.error(new RuntimeException("Missing or invalid Authorization header"));
         }
 
         String token = authHeader.substring(7);
 
+        Claims claims;
+
         try {
-            Claims claims = Jwts.parserBuilder()
+            claims = Jwts.parserBuilder()
                     .setSigningKey(SECRET_KEY)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-
-            String email = claims.getSubject();
-            String role = claims.get("role", String.class);
-
-            ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
-                    .header("X-User-Email", email)
-                    .header("X-User-Role", role)
-                    .build();
-
-            return chain.filter(exchange.mutate().request(mutatedRequest).build());
-
         } catch (Exception e) {
-            return onError(exchange, "Invalid or expired JWT token", HttpStatus.UNAUTHORIZED);
+            return Mono.error(new RuntimeException("Invalid or expired token"));
         }
-    }
 
-    private Mono<Void> onError(ServerWebExchange exchange, String message, HttpStatus status) {
-        exchange.getResponse().setStatusCode(status);
-        return exchange.getResponse().setComplete();
+        String email = claims.getSubject();
+        String role = claims.get("role", String.class);
+        Long userId = claims.get("userId", Long.class); // ✅ FIXED
+
+        ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                .header("X-User-Email", email)
+                .header("X-User-Role", role)
+                .header("X-User-Id", String.valueOf(userId) )
+                .build();
+
+        return chain.filter(exchange.mutate().request(mutatedRequest).build());
     }
 
     @Override

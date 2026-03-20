@@ -39,7 +39,8 @@ public class AuthController {
 
         String token = jwtUtil.generateToken(
                 user.getEmail(),
-                user.getRole().name()
+                user.getRole().name(),
+                user.getUserId()
         );
 
         return ResponseEntity.ok(Map.of("token", token));

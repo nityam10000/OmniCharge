@@ -35,15 +35,23 @@ public class UserController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long userId, @Valid @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO dto = userService.updateUser(userId, userRequestDTO);
+
+    @PutMapping("/profile/update")
+    public ResponseEntity<UserResponseDTO> updateUserProfile(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        UserResponseDTO dto = userService.updateUser(userRequestDTO);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long userId) {
         UserResponseDTO userResponseDTO = userService.getUserById(userId);
+        return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<UserResponseDTO> getUserProfile() {
+        UserResponseDTO userResponseDTO = userService.getCurrentUser();
         return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
     }
 
@@ -53,15 +61,20 @@ public class UserController {
         return ResponseEntity.ok(userService.deleteUser(userId));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(userService.getUserByEmail(email));
+    }
+
 
     // 🔥 ROLE UPDATE ENDPOINT
     @PutMapping("/{userId}/role")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserResponseDTO> updateUserRole(
+    public ResponseEntity<String> updateUserRole(
             @PathVariable Long userId,
             @RequestBody RoleUpdateDTO roleUpdateDTO) {
-
-        return ResponseEntity.ok(userService.updateUserRole(userId, roleUpdateDTO));
+    String status = userService.updateUserRole(userId, roleUpdateDTO);
+        return new ResponseEntity<>(status, HttpStatus.OK);
     }
 
 

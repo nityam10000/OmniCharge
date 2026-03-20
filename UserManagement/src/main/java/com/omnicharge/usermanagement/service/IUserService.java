@@ -12,7 +12,9 @@ public interface IUserService {
     public UserResponseDTO addUser(UserRequestDTO userRequestDTO);
     public List<UserResponseDTO> getAllUsers();
     public UserResponseDTO getUserById(Long id);
-    public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO);
+    public UserResponseDTO updateUser(UserRequestDTO userRequestDTO);
     public String deleteUser(Long id);
-    UserResponseDTO updateUserRole(Long userId, RoleUpdateDTO roleUpdateDTO);
+    String updateUserRole(Long userId, RoleUpdateDTO roleUpdateDTO);
+    public UserResponseDTO getCurrentUser();
+    public UserResponseDTO getUserByEmail(String email);
 }
