@@ -4,7 +4,7 @@ public class NotificationEvent {
 
     private String message;
     private String email;
-    private String phoneNumber; // ✅ fixed (important)
+    private String phoneNumber;
     private String type;
 
     // Constructors

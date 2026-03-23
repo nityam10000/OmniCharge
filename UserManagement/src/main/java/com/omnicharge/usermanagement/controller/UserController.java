@@ -76,8 +76,4 @@ public class UserController {
     String status = userService.updateUserRole(userId, roleUpdateDTO);
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
-
-
-
-
 }

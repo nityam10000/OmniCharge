@@ -1,7 +1,6 @@
-package com.omnicharge.usermanagement.configuration;
+package com.omnicharge.paymentservice.configuration;
 
-
-import com.omnicharge.usermanagement.filter.HeaderAuthenticationFilter;
+import com.omnicharge.paymentservice.filter.HeaderAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,20 +13,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final HeaderAuthenticationFilter headerAuthenticationFilter;
 
-    private final HeaderAuthenticationFilter headerFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf(csrf -> csrf.disable())
-
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(headerFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(headerAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // 🔥 IMPORTANT
 
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable());

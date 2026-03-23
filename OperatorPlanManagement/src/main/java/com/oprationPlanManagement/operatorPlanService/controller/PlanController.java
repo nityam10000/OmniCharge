@@ -34,7 +34,6 @@ public class PlanController {
         return ResponseEntity.ok(planService.getPlanList());
     }
 
-    // Get plan by ID
     @GetMapping("/{id}")
     public ResponseEntity<PlanResponseDTO> getPlan(@PathVariable long id) {
         return ResponseEntity.ok(planService.getPlan(id));
