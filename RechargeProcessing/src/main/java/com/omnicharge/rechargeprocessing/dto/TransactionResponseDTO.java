@@ -1,6 +1,7 @@
 package com.omnicharge.rechargeprocessing.dto;
 
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.omnicharge.rechargeprocessing.enums.PaymentMethod;
@@ -19,11 +20,12 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class TransactionResponseDTO {
+public class TransactionResponseDTO implements Serializable{
+	private final long serialIzableID = 1L;
     private Double amount;
     private TransactionStatus transactionStatus;
     private PaymentMethod paymentMethod;
     private LocalDateTime timestamp;
-	
+    private Long rechargeId;
 }
 

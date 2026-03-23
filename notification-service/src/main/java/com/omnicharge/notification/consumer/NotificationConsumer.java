@@ -26,13 +26,26 @@ public class NotificationConsumer {
         System.out.println("Email: " + event.getEmail());
         System.out.println("Phone: " + event.getPhoneNumber());
 
-        // ✅ Email send
-        emailService.sendEmail(event.getEmail(), event.getMessage());
+        // ✅ Email — wrapped in try/catch so failure doesn't requeue the message
+        try {
+            emailService.sendEmail(event.getEmail(), event.getMessage());
+        } catch (Exception e) {
+            System.err.println("❌ Failed to send email to " + event.getEmail() + ": " + e.getMessage());
+        }
 
-        // ✅ WhatsApp send
-        whatsAppService.sendWhatsAppMessage(
-                event.getPhoneNumber(),
-                event.getMessage()
-        );
+        // ✅ WhatsApp — wrapped separately so Twilio failure never affects email
+        // and never causes message requeue
+        try {
+            if (event.getPhoneNumber() != null && !event.getPhoneNumber().isBlank()) {
+                whatsAppService.sendWhatsAppMessage(
+                        event.getPhoneNumber(),
+                        event.getMessage()
+                );
+            } else {
+                System.out.println("⚠️ No phone number provided — skipping WhatsApp");
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Failed to send WhatsApp: " + e.getMessage());
+        }
     }
 }

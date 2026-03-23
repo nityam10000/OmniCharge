@@ -9,21 +9,13 @@ import org.springframework.stereotype.Component;
 public class Mapper {
 
     public TransactionResponseDTO toTransactionResponseDTO(Transaction transaction) {
-        TransactionResponseDTO transactionResponseDTO = new TransactionResponseDTO();
-        transactionResponseDTO.setAmount(transaction.getAmount());
-        transactionResponseDTO.setPaymentMethod(transaction.getPaymentMethod());
-        transactionResponseDTO.setTimestamp(transaction.getTimestamp());
-        transactionResponseDTO.setTransactionStatus(transaction.getStatus());
-        return transactionResponseDTO;
+        return TransactionResponseDTO.builder()
+                .amount(transaction.getAmount())
+                .paymentMethod(transaction.getPaymentMethod())
+                .timestamp(transaction.getTimestamp())
+                .transactionStatus(transaction.getStatus())
+                .rechargeId(transaction.getRechargeId())  // NEW
+                .build();
     }
 
-    public Transaction toTransaction(TransactionRequestDTO transactionRequestDTO) {
-        Transaction transaction = new Transaction();
-        transaction.setAmount(transactionRequestDTO.getAmount());
-        transaction.setPaymentMethod(transactionRequestDTO.getPaymentMethod());
-        transaction.setRechargeId(transactionRequestDTO.getRechargeId());
-        transaction.setStatus(transactionRequestDTO.getStatus());
-        transaction.setUserId(transactionRequestDTO.getUserId());
-        return transaction;
-    }
 }

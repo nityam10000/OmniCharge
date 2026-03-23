@@ -10,22 +10,21 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 
-@Data
 @Component
 public class RechargeMapper {
 
     public RechargeResponseDTO toRechargeResponseDTO(Recharge recharge) {
-        RechargeResponseDTO rechargeResponseDTO = new RechargeResponseDTO();
-        rechargeResponseDTO.setId(recharge.getId());
-        rechargeResponseDTO.setStatus(recharge.getStatus());
-        return rechargeResponseDTO;
+        return RechargeResponseDTO.builder()
+                .rechargeId(recharge.getId())
+                .status(recharge.getStatus())
+                .planId(recharge.getPlanId())
+                .build();
     }
 
-    public Recharge toRecharge(RechargeRequestDTO rechargeRequestDTO) {
+    public Recharge toRecharge(RechargeRequestDTO dto) {
         Recharge recharge = new Recharge();
-        recharge.setStatus(rechargeRequestDTO.getStatus());
-        recharge.setPlanId(rechargeRequestDTO.getPlanId());
-
+        recharge.setPlanId(dto.getPlanId());
+        recharge.setStatus(null); // always set manually in service
         return recharge;
     }
 }

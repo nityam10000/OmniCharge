@@ -1,0 +1,45 @@
+2026-03-23 15:09:47.438 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans, Method: GET
+2026-03-23 15:09:47.439 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans, Validating JWT token
+2026-03-23 15:09:47.462 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans
+2026-03-23 15:09:47.462 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans
+2026-03-23 15:09:47.468 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans
+2026-03-23 15:10:08.727 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans, Method: GET
+2026-03-23 15:10:08.728 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans, Validating JWT token
+2026-03-23 15:10:08.730 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans
+2026-03-23 15:10:08.730 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans
+2026-03-23 15:10:08.730 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans
+2026-03-23 15:10:14.736 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans/1, Method: GET
+2026-03-23 15:10:14.736 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans/1, Validating JWT token
+2026-03-23 15:10:14.738 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans/1
+2026-03-23 15:10:14.738 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans/1
+2026-03-23 15:10:14.739 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans/1
+2026-03-23 15:10:18.015 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans/1, Method: GET
+2026-03-23 15:10:18.015 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans/1, Validating JWT token
+2026-03-23 15:10:18.017 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans/1
+2026-03-23 15:10:18.017 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans/1
+2026-03-23 15:10:18.017 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans/1
+2026-03-23 15:10:20.080 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans/1, Method: GET
+2026-03-23 15:10:20.081 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans/1, Validating JWT token
+2026-03-23 15:10:20.082 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans/1
+2026-03-23 15:10:20.082 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans/1
+2026-03-23 15:10:20.083 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans/1
+2026-03-23 15:10:27.817 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans/2, Method: GET
+2026-03-23 15:10:27.817 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans/2, Validating JWT token
+2026-03-23 15:10:27.819 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans/2
+2026-03-23 15:10:27.819 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans/2
+2026-03-23 15:10:27.820 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans/2
+2026-03-23 15:10:34.610 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans/3, Method: GET
+2026-03-23 15:10:34.610 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans/3, Validating JWT token
+2026-03-23 15:10:34.613 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans/3
+2026-03-23 15:10:34.613 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans/3
+2026-03-23 15:10:34.613 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans/3
+2026-03-23 15:10:38.039 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans/3, Method: GET
+2026-03-23 15:10:38.040 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans/3, Validating JWT token
+2026-03-23 15:10:38.042 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans/3
+2026-03-23 15:10:38.042 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans/3
+2026-03-23 15:10:38.043 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans/3
+2026-03-23 15:10:48.608 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans/2, Method: GET
+2026-03-23 15:10:48.608 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans/2, Validating JWT token
+2026-03-23 15:10:48.610 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans/2
+2026-03-23 15:10:48.610 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans/2
+2026-03-23 15:10:48.611 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans/2

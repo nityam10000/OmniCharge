@@ -3,7 +3,6 @@ package com.omnicharge.paymentservice.entity;
 import com.omnicharge.paymentservice.enums.TransactionStatus;
 import com.omnicharge.paymentservice.enums.PaymentMethod;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID transactionId;
 
-
     private Double amount;
 
     @Enumerated(EnumType.STRING)
@@ -37,11 +35,17 @@ public class Transaction {
 
     private Long userId;
 
-    private String failureReason;
+    // ✅ Stored at createOrder() time so notifications always go to the correct user,
+    //    not whoever happens to be in the SecurityContext at verify time.
+    private String userEmail;
 
+    private String failureReason;
 
     @PrePersist
     public void setTimestamp() {
         this.timestamp = LocalDateTime.now();
     }
+
+    private String razorpayOrderId;
+    private String razorpayPaymentId;
 }

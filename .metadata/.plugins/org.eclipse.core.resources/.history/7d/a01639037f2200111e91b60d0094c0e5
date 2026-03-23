@@ -1,0 +1,67 @@
+package com.oprationPlanManagement.operatorPlanService.entity;
+
+import java.math.BigDecimal;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class PlanEntity {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	private Double amount;
+	private String validity;
+	private String description;
+	private Long operatorId;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public Double getAmount() {
+		return amount;
+	}
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+	public String getValidity() {
+		return validity;
+	}
+	public void setValidity(String validity) {
+		this.validity = validity;
+	}
+	public String getData() {
+		return description;
+	}
+	public void setData(String data) {
+		this.description = data;
+	}
+	public long getOperatorId() {
+		return operatorId;
+	}
+	public void setOperatorId(long operatorId) {
+		this.operatorId = operatorId;
+	}
+	
+	
+	public PlanEntity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public PlanEntity(Double amount, String validity, String description, Long operatorId) {
+		super();
+		this.amount = amount;
+		this.validity = validity;
+		this.description = description;
+		this.operatorId = operatorId;
+	}
+	
+	
+	
+}

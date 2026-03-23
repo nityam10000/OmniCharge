@@ -1,0 +1,22 @@
+spring.application.name=OperatorPlanManagement
+
+server.port=8086
+
+spring.datasource.url= jdbc:postgresql://localhost:5433/operatorPlan
+spring.datasource.username=postgres
+spring.datasource.password=nityam
+server.servlet.context-path=/operatormanagement
+
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=true
+
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+
+spring.cache.type = redis
+spring.redis.host= localhost
+spring.redis.port= 6379
+#spring.cache.redis.time-to-live=60000
+
+spring.config.import=optional:configserver:http://localhost:9999/config

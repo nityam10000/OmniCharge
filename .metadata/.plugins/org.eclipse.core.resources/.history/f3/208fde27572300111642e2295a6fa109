@@ -1,0 +1,8 @@
+package com.omnicharge.rechargeprocessing.feignClient;
+
+@FeignClient(name = "user-service", url = "http://localhost:8081/users")
+public interface UserClient {
+
+    @GetMapping("/{id}")
+    UserResponseDTO getUserById(@PathVariable("id") Long id);
+}

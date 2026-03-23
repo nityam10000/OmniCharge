@@ -1,0 +1,25 @@
+package com.omnicharge.rechargeprocessing.dto;
+
+
+import java.time.LocalDateTime;
+
+import com.omnicharge.rechargeprocessing.enums.PaymentMethod;
+import com.omnicharge.rechargeprocessing.enums.TransactionStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+
+public class TransactionResponseDTO {
+    private Double amount;
+    private TransactionStatus transactionStatus;
+    private PaymentMethod paymentMethod;
+    private LocalDateTime timestamp;
+	
+}
+

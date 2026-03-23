@@ -2,6 +2,7 @@ package com.omnicharge.rechargeprocessing.dto;
 
 
 import com.omnicharge.rechargeprocessing.enums.PaymentMethod;
+import com.omnicharge.rechargeprocessing.enums.RechargeStatus;
 import com.omnicharge.rechargeprocessing.enums.TransactionStatus;
 
 import jakarta.validation.constraints.Min;
@@ -10,24 +11,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class TransactionRequestDTO {
-    @Min(value = 1, message = "Invalid amount!!")
     private Double amount;
-
-//    @NotNull
     private Long rechargeId;
-
-    @NotNull
-    private TransactionStatus status;
-
-    @NotNull
-    private Long userId;
-
-    @NotNull
-    private PaymentMethod paymentMethod;
-    
-    
+    private TransactionStatus status;        // "PENDING"
+    private PaymentMethod paymentMethod; // "UPI", "CARD", "NETBANKING"
 }
