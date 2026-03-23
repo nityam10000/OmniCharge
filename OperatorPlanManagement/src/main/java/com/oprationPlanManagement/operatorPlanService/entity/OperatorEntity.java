@@ -1,5 +1,7 @@
 package com.oprationPlanManagement.operatorPlanService.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +17,8 @@ import lombok.*;
 @Getter
 @Setter
 
-public class OperatorEntity {
+public class OperatorEntity implements Serializable{
+	private static final long serialVersionUID = 2L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

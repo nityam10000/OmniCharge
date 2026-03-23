@@ -1,5 +1,6 @@
 package com.oprationPlanManagement.operatorPlanService.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import jakarta.persistence.Entity;
@@ -17,7 +18,8 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PlanEntity {
+public class PlanEntity implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

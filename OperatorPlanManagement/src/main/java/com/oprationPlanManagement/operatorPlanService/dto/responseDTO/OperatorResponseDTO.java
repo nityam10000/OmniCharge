@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Setter
 public class OperatorResponseDTO implements Serializable {
 
-	private final long serialIzableID = 1L;
+	private final long serialIzableID = 2L;
 	private String name;
 	
 }
