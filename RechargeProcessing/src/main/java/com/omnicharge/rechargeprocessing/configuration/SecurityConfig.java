@@ -21,13 +21,10 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
-
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().authenticated()
                 )
-
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
-
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable());
 

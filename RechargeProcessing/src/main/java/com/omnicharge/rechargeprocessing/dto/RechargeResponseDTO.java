@@ -1,3 +1,4 @@
+
 package com.omnicharge.rechargeprocessing.dto;
 
 import java.io.Serializable;
@@ -20,4 +21,5 @@ public class RechargeResponseDTO implements Serializable{
 	private Double amount;
 	private Long planId;
 	private String transactionStatus;
+	private Long userId;  // exposed so PaymentService can validate ownership
 }

@@ -1,0 +1,6 @@
+2026-03-23 15:10:14.778 [http-nio-8086-exec-3] INFO  c.o.o.service.PlanServiceImpl - Fetching plan with ID: 1
+2026-03-23 15:10:14.858 [http-nio-8086-exec-3] INFO  c.o.o.service.PlanServiceImpl - Plan retrieved successfully with ID: 1
+2026-03-23 15:10:34.619 [http-nio-8086-exec-7] INFO  c.o.o.service.PlanServiceImpl - Fetching plan with ID: 3
+2026-03-23 15:10:34.622 [http-nio-8086-exec-7] ERROR c.o.o.service.PlanServiceImpl - Plan not found with id: 3
+2026-03-23 15:10:38.051 [http-nio-8086-exec-8] INFO  c.o.o.service.PlanServiceImpl - Fetching plan with ID: 3
+2026-03-23 15:10:38.054 [http-nio-8086-exec-8] ERROR c.o.o.service.PlanServiceImpl - Plan not found with id: 3

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlanResponseDTO implements Serializable{
-	
+	private final long serialIzableID = 1L;
 	private Double amount;
 	private String validity;
 	private String description;

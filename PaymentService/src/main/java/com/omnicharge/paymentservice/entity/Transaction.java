@@ -35,9 +35,10 @@ public class Transaction {
 
     private Long userId;
 
-    // ✅ Stored at createOrder() time so notifications always go to the correct user,
-    //    not whoever happens to be in the SecurityContext at verify time.
+
     private String userEmail;
+
+    private String userContactNo;
 
     private String failureReason;
 

@@ -33,34 +33,25 @@ public class RechargeService implements IRechargeService {
     private final IRechargeRepository rechargeRepository;
     private final RechargeMapper rechargeMapper;
     private final IOperatorPlanClient operatorPlanClient;
-    // IPaymentClient intentionally removed — RechargeService no longer calls PaymentService
-    // directly. The Transaction is created by the frontend via POST /transaction/create-order.
 
     @Override
     @Retry(name = "OPERATORPLANMANAGEMENT", fallbackMethod = "addRechargeFallback")
     public RechargeResponseDTO addRecharge(RechargeRequestDTO rechargeRequestDTO) {
 
         Long userId = getLoggedInUserId();
-
-        // Validate the plan exists (retried via OPERATORPLANMANAGEMENT circuit breaker)
         PlanResponseDTO plan = operatorPlanClient.getPlanById(rechargeRequestDTO.getPlanId());
 
-        // Only save the recharge as PENDING here.
-        // The Transaction is created separately when the frontend calls POST /transaction/create-order.
-        // This avoids the duplicate PENDING transaction bug.
         Recharge recharge = new Recharge();
         recharge.setUserId(userId);
         recharge.setPlanId(rechargeRequestDTO.getPlanId());
         recharge.setStatus(RechargeStatus.PENDING);
         Recharge saved = rechargeRepository.save(recharge);
 
-        return RechargeResponseDTO.builder()
-                .rechargeId(saved.getId())
-                .status(saved.getStatus())
-                .amount(plan.getAmount())
-                .planId(saved.getPlanId())
-                .transactionStatus(String.valueOf(TransactionStatus.PENDING))
-                .build();
+        // FIX: use mapper so userId (and all fields) are correctly populated
+        RechargeResponseDTO response = rechargeMapper.toRechargeResponseDTO(saved);
+        response.setAmount(plan.getAmount());
+        response.setTransactionStatus(String.valueOf(TransactionStatus.PENDING));
+        return response;
     }
 
     public RechargeResponseDTO addRechargeFallback(RechargeRequestDTO rechargeRequestDTO, Exception e) {

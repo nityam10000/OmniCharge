@@ -15,3 +15,4 @@ public interface ITransactionRepository extends JpaRepository<Transaction, UUID>
     Optional<Transaction> findByRechargeId(Long rechargeId);
     Optional<Transaction> findByRazorpayOrderId(String razorpayOrderId);
 }
+

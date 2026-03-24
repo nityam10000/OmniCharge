@@ -1,3 +1,4 @@
+
 package com.omnicharge.rechargeprocessing.feignClient;
 
 import com.omnicharge.rechargeprocessing.feignClient.fallback.IUserClientFallback;

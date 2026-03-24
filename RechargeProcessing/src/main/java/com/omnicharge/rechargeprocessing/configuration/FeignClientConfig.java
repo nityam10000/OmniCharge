@@ -18,12 +18,9 @@ public class FeignClientConfig {
 
             if (attributes != null) {
                 HttpServletRequest request = attributes.getRequest();
-
-                // Forward all three headers that Gateway injects
                 String email = request.getHeader("X-User-Email");
                 String role  = request.getHeader("X-User-Role");
                 String userId = request.getHeader("X-User-Id");
-
                 if (email  != null) requestTemplate.header("X-User-Email", email);
                 if (role   != null) requestTemplate.header("X-User-Role",  role);
                 if (userId != null) requestTemplate.header("X-User-Id",    userId);

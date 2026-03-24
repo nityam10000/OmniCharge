@@ -27,8 +27,6 @@ public class SecurityConfig {
                         .requestMatchers("/users/register").permitAll()
                         .anyRequest().authenticated()
                 )
-
-                // 🔥 IMPORTANT LINE
                 .addFilterBefore(headerFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .formLogin(form -> form.disable())

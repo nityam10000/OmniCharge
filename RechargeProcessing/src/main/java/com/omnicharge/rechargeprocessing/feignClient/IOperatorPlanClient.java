@@ -13,3 +13,4 @@ public interface IOperatorPlanClient {
     @GetMapping("/plans/{id}")
     PlanResponseDTO getPlanById(@PathVariable("id") Long id);
 }
+

@@ -18,9 +18,6 @@ public class TransactionController {
 
     private final ITransactionService transactionService;
 
-    // ⚠️ REMOVED: POST /transaction/add — it created a duplicate PENDING transaction
-    // alongside createOrder(). Use POST /transaction/create-order instead.
-
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<TransactionResponseDTO>> getAllTransactionsByUserId(
@@ -48,7 +45,6 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.createOrder(dto));
     }
 
-    // @Valid triggers @NotBlank checks on PaymentVerifyRequestDTO
     @PostMapping("/verify")
     public ResponseEntity<TransactionResponseDTO> verifyPayment(
             @Valid @RequestBody PaymentVerifyRequestDTO dto) {

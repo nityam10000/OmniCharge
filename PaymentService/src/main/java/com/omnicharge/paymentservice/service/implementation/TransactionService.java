@@ -8,6 +8,7 @@ import com.omnicharge.paymentservice.enums.TransactionStatus;
 import com.omnicharge.paymentservice.exception.TransactionNotFoundException;
 import com.omnicharge.paymentservice.feignClient.IOperatorPlanClient;
 import com.omnicharge.paymentservice.feignClient.IRechargeClient;
+import com.omnicharge.paymentservice.feignClient.IUserClient;
 import com.omnicharge.paymentservice.mapper.Mapper;
 import com.omnicharge.paymentservice.repository.ITransactionRepository;
 import com.omnicharge.paymentservice.service.ITransactionService;
@@ -17,8 +18,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -42,6 +41,7 @@ public class TransactionService implements ITransactionService {
     private final Mapper mapper;
     private final IRechargeClient rechargeClient;
     private final IOperatorPlanClient operatorPlanClient;
+    private final IUserClient userClient;
     private final RabbitTemplate rabbitTemplate;
 
     @Value("${razorpay.key.id}")
@@ -53,19 +53,17 @@ public class TransactionService implements ITransactionService {
     @Override
     public TransactionResponseDTO createTransaction(TransactionRequestDTO dto) {
         throw new UnsupportedOperationException(
-            "Use POST /transaction/create-order to initiate a Razorpay payment."
+                "Use POST /transaction/create-order to initiate a Razorpay payment."
         );
     }
 
     @Override
-    @Cacheable(value = "transactionsByUser", key = "#userId")
     public List<TransactionResponseDTO> getAllTransactionsByUserId(Long userId) {
         List<Transaction> transactions = transactionRepository.findByUserId(userId);
         return transactions.stream().map(mapper::toTransactionResponseDTO).collect(Collectors.toList());
     }
 
     @Override
-    @Cacheable(value = "transactionByRecharge", key = "#rechargeId")
     public TransactionResponseDTO getTransactionByRechargeId(Long rechargeId) {
         Transaction transaction = transactionRepository.findByRechargeId(rechargeId)
                 .orElseThrow(() -> new TransactionNotFoundException("Transaction Not Found!!"));
@@ -73,7 +71,6 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    @Cacheable(value = "myTransactions", key = "#root.target.getLoggedInUserId()")
     public List<TransactionResponseDTO> getMyTransactions() {
         Long userId = getLoggedInUserId();
         List<Transaction> transactions = transactionRepository.findByUserId(userId);
@@ -87,23 +84,29 @@ public class TransactionService implements ITransactionService {
     public RazorpayOrderResponseDTO createOrder(RazorpayOrderRequestDTO dto) {
         try {
             Long userId = getLoggedInUserId();
-            String userRole = getLoggedInUserRole();
-
-            // Capture the email HERE — at request time — when we know exactly who is
-            // initiating the order. Stored on the Transaction so verifyPayment always
-            // sends the notification to the correct user, not whoever is in the
-            // SecurityContext at verify time.
             String userEmail = getLoggedInUserEmail();
+            String userRole = getLoggedInUserRole();
 
             RechargeResponseDTO recharge = rechargeClient.getRechargeById(userRole, userEmail, dto.getRechargeId());
             if (recharge == null) {
                 throw new RuntimeException("Recharge not found for id: " + dto.getRechargeId());
             }
 
+            // Security: ensure the recharge belongs to the logged-in user
+            if (!userId.equals(recharge.getUserId())) {
+                log.warn("Ownership violation: userId={} attempted to pay for rechargeId={} owned by userId={}",
+                        userId, dto.getRechargeId(), recharge.getUserId());
+                throw new RuntimeException("Access denied: recharge does not belong to the current user.");
+            }
+
             PlanResponseDTO plan = operatorPlanClient.getPlanById(userRole, userEmail, recharge.getPlanId());
             if (plan == null || plan.getAmount() == null) {
                 throw new RuntimeException("Plan not found or has no amount for planId: " + recharge.getPlanId());
             }
+
+            // Fetch contactNo here — user is authenticated and request context is live.
+            // Stored on the Transaction so notifications don't need a Feign call later.
+            String contactNo = fetchContactNo(userEmail, userRole);
 
             Double amount = plan.getAmount();
             log.info("Server-side amount fetched: {} for rechargeId={}, planId={}", amount, dto.getRechargeId(), recharge.getPlanId());
@@ -116,7 +119,6 @@ public class TransactionService implements ITransactionService {
 
             Order razorpayOrder = client.orders.create(orderRequest);
             String razorpayOrderId = razorpayOrder.get("id");
-
             log.info("Razorpay order created: orderId={}, amount={}, rechargeId={}", razorpayOrderId, amount, dto.getRechargeId());
 
             Transaction txn = new Transaction();
@@ -125,15 +127,26 @@ public class TransactionService implements ITransactionService {
             txn.setStatus(TransactionStatus.PENDING);
             txn.setRechargeId(dto.getRechargeId());
             txn.setUserId(userId);
-            txn.setUserEmail(userEmail); // persist the owner's email
+            txn.setUserEmail(userEmail);
+            txn.setUserContactNo(contactNo);
             txn.setRazorpayOrderId(razorpayOrderId);
             transactionRepository.save(txn);
 
-            return new RazorpayOrderResponseDTO(razorpayOrderId, amount, "INR", dto.getRechargeId());
+            return new RazorpayOrderResponseDTO(razorpayOrderId, amount, "INR");
 
         } catch (Exception e) {
             log.error("Razorpay order creation failed: {}", e.getMessage(), e);
             throw new RuntimeException("Razorpay order creation failed: " + e.getMessage());
+        }
+    }
+
+    private String fetchContactNo(String email, String role) {
+        try {
+            UserResponseDTO user = userClient.getUserByEmail(role, email, email);
+            return user != null ? user.getContactNo() : null;
+        } catch (Exception e) {
+            log.warn("Could not fetch contactNo for email={}: {}", email, e.getMessage());
+            return null;
         }
     }
 
@@ -143,7 +156,6 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    @Cacheable(value = "transactionByOrder", key = "#dto.razorpayOrderId")
     public TransactionResponseDTO verifyPayment(PaymentVerifyRequestDTO dto) {
         log.info("=== verifyPayment called ===");
 
@@ -166,7 +178,6 @@ public class TransactionService implements ITransactionService {
                 dto.getRazorpayPaymentId(),
                 dto.getRazorpaySignature()
         );
-
         log.info("Signature verification result: {}", signatureValid);
 
         if (signatureValid) {
@@ -192,12 +203,6 @@ public class TransactionService implements ITransactionService {
 
         return mapper.toTransactionResponseDTO(saved);
     }
-    
-    @CacheEvict(value = "transactionByOrder", key = "#orderId")
-    public void evictTransactionCache(String orderId) {
-        log.info("Evicted transaction cache for orderId={}", orderId);
-    }
-
 
     @Retry(name = "RECHARGEPROCESSING", fallbackMethod = "updateRechargeStatusFallback")
     public void updateRechargeStatusWithRetry(Long rechargeId, String status) {
@@ -212,23 +217,15 @@ public class TransactionService implements ITransactionService {
 
     private void sendPaymentSuccessNotification(Transaction txn) {
         try {
-            // Read email from the transaction entity — NOT from SecurityContextHolder.
-            // getLoggedInUserEmail() would return whoever is authenticated RIGHT NOW,
-            // which could be a different user if verify is called by someone else.
-            String userEmail = txn.getUserEmail();
-
             NotificationEvent event = new NotificationEvent(
                     "Your recharge of Rs." + txn.getAmount() + " was successful! " +
-                            "Transaction ID: " + txn.getTransactionId() + ". " +
-                            "Your plan is now active.",
-                    userEmail,
-                    null,
+                            "Transaction ID: " + txn.getTransactionId() + ". Your plan is now active.",
+                    txn.getUserEmail(),
+                    txn.getUserContactNo(),
                     "PAYMENT_SUCCESS"
             );
-
             rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, event);
-            log.info("Success notification published for transactionId={}, email={}", txn.getTransactionId(), userEmail);
-
+            log.info("Success notification published for transactionId={}, email={}", txn.getTransactionId(), txn.getUserEmail());
         } catch (Exception e) {
             log.error("Failed to publish success notification: {}", e.getMessage());
         }
@@ -236,20 +233,15 @@ public class TransactionService implements ITransactionService {
 
     private void sendPaymentFailedNotification(Transaction txn) {
         try {
-            // Same fix — read from entity, not security context
-            String userEmail = txn.getUserEmail();
-
             NotificationEvent event = new NotificationEvent(
                     "Your recharge payment of Rs." + txn.getAmount() + " failed. " +
                             "Please try again. If money was deducted, it will be refunded in 5-7 business days.",
-                    userEmail,
-                    null,
+                    txn.getUserEmail(),
+                    txn.getUserContactNo(),
                     "PAYMENT_FAILED"
             );
-
             rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, event);
             log.info("Failed notification published for transactionId={}", txn.getTransactionId());
-
         } catch (Exception e) {
             log.error("Failed to publish failed notification: {}", e.getMessage());
         }
@@ -261,7 +253,6 @@ public class TransactionService implements ITransactionService {
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(new SecretKeySpec(razorpayKeySecret.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
             byte[] hash = mac.doFinal(payload.getBytes(StandardCharsets.UTF_8));
-
             StringBuilder hexString = new StringBuilder();
             for (byte b : hash) {
                 String hex = Integer.toHexString(0xff & b);
@@ -269,13 +260,9 @@ public class TransactionService implements ITransactionService {
                 hexString.append(hex);
             }
             String computedSignature = hexString.toString();
-
             boolean match = computedSignature.equals(signature);
-            if (!match) {
-                log.warn("SIGNATURE MISMATCH — computed: {} | received: {}", computedSignature, signature);
-            }
+            if (!match) log.warn("SIGNATURE MISMATCH — computed: {} | received: {}", computedSignature, signature);
             return match;
-
         } catch (Exception e) {
             log.error("Exception during signature verification: {}", e.getMessage(), e);
             return false;
@@ -284,12 +271,9 @@ public class TransactionService implements ITransactionService {
 
     private Long getLoggedInUserId() {
         HttpServletRequest request =
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                        .getRequest();
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String userId = request.getHeader("X-User-Id");
-        if (userId == null || userId.isBlank()) {
-            throw new RuntimeException("X-User-Id header is missing");
-        }
+        if (userId == null || userId.isBlank()) throw new RuntimeException("X-User-Id header is missing");
         return Long.parseLong(userId);
     }
 
