@@ -1,3 +1,0 @@
-spring.application.name=OmniCharge-config-server
-
-server.servlet.context-path=/config

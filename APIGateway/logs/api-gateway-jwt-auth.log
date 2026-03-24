@@ -43,3 +43,13 @@
 2026-03-23 15:10:48.610 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans/2
 2026-03-23 15:10:48.610 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans/2
 2026-03-23 15:10:48.611 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans/2
+2026-03-23 15:42:07.748 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans/2, Method: GET
+2026-03-23 15:42:07.749 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans/2, Validating JWT token
+2026-03-23 15:42:07.775 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans/2
+2026-03-23 15:42:07.775 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans/2
+2026-03-23 15:42:07.781 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans/2
+2026-03-23 15:42:24.357 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Incoming request - Path: /plans, Method: GET
+2026-03-23 15:42:24.357 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Protected endpoint accessed - Path: /plans, Validating JWT token
+2026-03-23 15:42:24.359 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT token validated successfully for path: /plans
+2026-03-23 15:42:24.360 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - JWT claims extracted - Email: test@gmail.com, Role: ROLE_ADMIN, UserId: 3, Path: /plans
+2026-03-23 15:42:24.360 [reactor-http-nio-3] INFO  c.o.a.filter.JwtAuthenticationFilter - Request headers mutated with user information - Email: test@gmail.com, Role: ROLE_ADMIN, Path: /plans
