@@ -19,4 +19,5 @@ public class TransactionRequestDTO {
     private Long rechargeId;
     private TransactionStatus status;        // "PENDING"
     private PaymentMethod paymentMethod; // "UPI", "CARD", "NETBANKING"
+
 }

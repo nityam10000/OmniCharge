@@ -1,3 +1,4 @@
+
 package com.oprationPlanManagement.operatorPlanService.controller;
 
 import java.util.List;
@@ -8,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.oprationPlanManagement.operatorPlanService.dto.requestDTO.PlanRequestDTO;
 import com.oprationPlanManagement.operatorPlanService.dto.responseDTO.PlanResponseDTO;
-import com.oprationPlanManagement.operatorPlanService.mapper.Mapper;
-import com.oprationPlanManagement.operatorPlanService.repository.IPlanRepository;
 import com.oprationPlanManagement.operatorPlanService.service.IPlanService;
 
 import jakarta.validation.Valid;
@@ -34,7 +33,6 @@ public class PlanController {
         return ResponseEntity.ok(planService.getPlanList());
     }
 
-    // Get plan by ID
     @GetMapping("/{id}")
     public ResponseEntity<PlanResponseDTO> getPlan(@PathVariable long id) {
         return ResponseEntity.ok(planService.getPlan(id));
@@ -54,4 +52,5 @@ public class PlanController {
         planService.deletePlan(id, dto);
         return ResponseEntity.noContent().build();
     }
+
 }

@@ -22,6 +22,7 @@ public class UserEntity {
     @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
     private String contactNo;
 
     private String password;
@@ -35,7 +36,5 @@ public class UserEntity {
 		this.contactNo = contactNo;
 		this.password = password;
 		this.role = role;
-	}
-    
-    
+	}   
 }

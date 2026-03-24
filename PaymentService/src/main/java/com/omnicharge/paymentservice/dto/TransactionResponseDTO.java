@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 
-public class TransactionResponseDTO implements Serializable{
+public class TransactionResponseDTO {
     private Double amount;
     private TransactionStatus transactionStatus;
     private PaymentMethod paymentMethod;

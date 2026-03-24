@@ -32,14 +32,10 @@ public class RabbitMQConfig {
     public Binding notificationBinding(Queue notificationQueue, DirectExchange notificationExchange) {
         return BindingBuilder.bind(notificationQueue).to(notificationExchange).with(ROUTING_KEY);
     }
-
-    // ✅ JacksonJsonMessageConverter — the correct replacement for Jackson2JsonMessageConverter in Spring AMQP 4.0
     @Bean
     public JacksonJsonMessageConverter messageConverter() {
         return new JacksonJsonMessageConverter();
     }
-
-    // ✅ Wire the converter into RabbitTemplate so messages are sent as JSON
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
                                          JacksonJsonMessageConverter messageConverter) {

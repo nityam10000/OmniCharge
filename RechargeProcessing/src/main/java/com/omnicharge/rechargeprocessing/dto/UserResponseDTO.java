@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class UserResponseDTO implements Serializable{
+	private final long serialIzableID = 1L;
     private Long userId;
     private String name;
     private String email;
