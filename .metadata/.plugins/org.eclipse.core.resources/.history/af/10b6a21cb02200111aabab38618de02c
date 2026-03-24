@@ -1,9 +1,0 @@
-spring.application.name=PaymentService
-server.port=8084
-
-spring.datasource.url=jdbc:postgresql://localhost:5433/paymentservicedb
-spring.datasource.username=postgres
-spring.datasource.password=nityam
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=update

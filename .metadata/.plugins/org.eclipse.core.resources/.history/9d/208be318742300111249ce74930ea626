@@ -1,5 +1,0 @@
-package com.omnicharge.rechargeprocessing.feignClient;
-
-public interface PaymentClient {
-
-}
