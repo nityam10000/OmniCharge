@@ -17,7 +17,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PlanEntity {
+public class PlanEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

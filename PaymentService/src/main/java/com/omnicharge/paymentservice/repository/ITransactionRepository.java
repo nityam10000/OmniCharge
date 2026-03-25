@@ -13,4 +13,6 @@ import java.util.UUID;
 public interface ITransactionRepository extends JpaRepository<Transaction, UUID> {
     List<Transaction> findByUserId(Long userId);
     Optional<Transaction> findByRechargeId(Long rechargeId);
+    Optional<Transaction> findByRazorpayOrderId(String razorpayOrderId);
 }
+

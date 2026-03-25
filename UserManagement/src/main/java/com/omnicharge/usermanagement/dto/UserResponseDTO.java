@@ -1,5 +1,7 @@
 package com.omnicharge.usermanagement.dto;
 
+import java.io.Serializable;
+
 import com.omnicharge.usermanagement.enums.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class UserResponseDTO {
+public class UserResponseDTO implements Serializable{
+	private final long serialIzableID = 1L;
     private Long userId;
     private String name;
     private String email;

@@ -17,3 +17,4 @@ public class OperatorResponseDTO implements Serializable {
 	private String name;
 	
 }
+

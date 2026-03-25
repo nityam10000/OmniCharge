@@ -21,18 +21,27 @@ public class NotificationConsumer {
     @RabbitListener(queues = "notification_queue")
     public void consume(NotificationEvent event) {
 
-        System.out.println("📩 Notification Received:");
+        System.out.println("Notification Received:");
         System.out.println("Message: " + event.getMessage());
         System.out.println("Email: " + event.getEmail());
         System.out.println("Phone: " + event.getPhoneNumber());
 
-        // ✅ Email send
-        emailService.sendEmail(event.getEmail(), event.getMessage());
-
-        // ✅ WhatsApp send
-        whatsAppService.sendWhatsAppMessage(
-                event.getPhoneNumber(),
-                event.getMessage()
-        );
+        try {
+            emailService.sendEmail(event.getEmail(), event.getMessage());
+        } catch (Exception e) {
+            System.err.println("Failed to send email to " + event.getEmail() + ": " + e.getMessage());
+        }
+        try {
+            if (event.getPhoneNumber() != null && !event.getPhoneNumber().isBlank()) {
+                whatsAppService.sendWhatsAppMessage(
+                        event.getPhoneNumber(),
+                        event.getMessage()
+                );
+            } else {
+                System.out.println("No phone number provided — skipping WhatsApp");
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to send WhatsApp: " + e.getMessage());
+        }
     }
 }

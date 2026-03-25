@@ -9,6 +9,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 
 @SpringBootApplication
 @EnableConfigServer
+@EnableDiscoveryClient
 
 public class OmniChargeConfigServerApplication {
 

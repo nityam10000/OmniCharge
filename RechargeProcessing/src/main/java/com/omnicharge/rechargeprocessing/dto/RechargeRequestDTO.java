@@ -1,5 +1,7 @@
+
 package com.omnicharge.rechargeprocessing.dto;
 
+import com.omnicharge.rechargeprocessing.enums.PaymentMethod;
 import com.omnicharge.rechargeprocessing.enums.RechargeStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,10 +18,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RechargeRequestDTO {
-    private RechargeStatus status;
 
     @NotNull(message = "planId required!!!")
     private Long planId;
+
+    @NotNull(message = "paymentMethod required!")
+    private PaymentMethod paymentMethod;
     
     
 }
+

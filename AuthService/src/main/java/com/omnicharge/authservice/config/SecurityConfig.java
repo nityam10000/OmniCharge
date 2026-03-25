@@ -1,5 +1,6 @@
 package com.omnicharge.authservice.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,10 +13,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableMethodSecurity
+@Slf4j
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        log.info("Configuring security filter chain");
 
         http
                 .csrf(csrf -> csrf.disable())
@@ -26,16 +29,19 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable());
 
+        log.info("Security filter chain configured successfully");
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        log.info("Initializing BCryptPasswordEncoder");
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        log.info("Initializing AuthenticationManager");
         return config.getAuthenticationManager();
     }
 }
