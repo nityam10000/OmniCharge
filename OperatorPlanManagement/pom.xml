@@ -109,6 +109,26 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
+
+		<!-- Zipkin & Distributed Tracing Dependencies -->
+		<!-- Micrometer Tracing: Core tracing abstraction layer with Brave bridge -->
+		<!-- This replaces the deprecated spring-cloud-starter-sleuth -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+		</dependency>
+
+		<!-- Zipkin Reporter: Sends traces to Zipkin server -->
+		<dependency>
+			<groupId>io.zipkin.reporter2</groupId>
+			<artifactId>zipkin-reporter-brave</artifactId>
+		</dependency>
+
+		<!-- Zipkin Sender: HTTP transport for sending traces -->
+		<dependency>
+			<groupId>io.zipkin.reporter2</groupId>
+			<artifactId>zipkin-sender-okhttp3</artifactId>
+		</dependency>
     </dependencies>
 
 

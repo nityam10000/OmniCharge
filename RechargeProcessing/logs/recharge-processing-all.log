@@ -2907,3 +2907,239 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:619)
 	at java.base/java.lang.Thread.run(Thread.java:1447)
 2026-03-23 15:16:46.115 [RMI TCP Connection(21)-127.0.0.1] INFO  c.netflix.discovery.DiscoveryClient - Completed shut down of DiscoveryClient
+2026-03-24 12:01:00.740 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Starting RechargeProcessingApplication using Java 24.0.2 with PID 26260 (C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing\target\classes started by nitya in C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing)
+2026-03-24 12:01:00.740 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Starting RechargeProcessingApplication using Java 24.0.2 with PID 26260 (C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing\target\classes started by nitya in C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing)
+2026-03-24 12:01:00.742 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-24 12:01:00.742 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-24 12:01:00.784 [restartedMain] INFO  o.s.c.c.c.ConfigServerConfigDataLoader - Fetching config from server at : http://localhost:9999/config
+2026-03-24 12:01:00.784 [restartedMain] INFO  o.s.c.c.c.ConfigServerConfigDataLoader - Located environment: name=RechargeProcessing, profiles=[default], label=null, version=219ceb5e1749ced897d4da590a83f0b9128a81fa, state=
+2026-03-24 12:01:00.786 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-03-24 12:01:00.786 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-03-24 12:01:01.873 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-24 12:01:01.874 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-24 12:01:01.978 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 95 ms. Found 1 JPA repository interface.
+2026-03-24 12:01:01.994 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-24 12:01:01.994 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-03-24 12:01:02.008 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.omnicharge.rechargeprocessing.repository.IRechargeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-24 12:01:02.008 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2026-03-24 12:01:02.370 [restartedMain] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=46c64503-5498-31f2-a9be-c17298484240
+2026-03-24 12:01:03.087 [restartedMain] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8083 (http)
+2026-03-24 12:01:03.101 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-24 12:01:03.101 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-03-24 12:01:03.150 [restartedMain] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2363 ms
+2026-03-24 12:01:04.384 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-24 12:01:04.412 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-03-24 12:01:04.542 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@65854ba0
+2026-03-24 12:01:04.543 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-03-24 12:01:04.574 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-24 12:01:05.329 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-24 12:01:05.510 [restartedMain] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-24 12:01:05.910 [restartedMain] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-24 12:01:06.137 [restartedMain] INFO  o.s.c.o.FeignClientFactoryBean - For 'OPERATORPLANMANAGEMENT' URL not provided. Will try picking an instance via load-balancing.
+2026-03-24 12:01:06.549 [restartedMain] WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 2bcb8002-4b94-4fcf-b66a-dd8f52d2daed
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-03-24 12:01:06.558 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-03-24 12:01:08.702 [restartedMain] INFO  o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses RestClient.
+2026-03-24 12:01:08.768 [restartedMain] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-03-24 12:01:08.791 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 29 endpoints beneath base path '/actuator'
+2026-03-24 12:01:08.906 [restartedMain] INFO  o.s.c.n.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2026-03-24 12:01:08.928 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2026-03-24 12:01:08.931 [restartedMain] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2026-03-24 12:01:08.937 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Disable delta property : false
+2026-03-24 12:01:08.937 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Single vip registry refresh property : null
+2026-03-24 12:01:08.938 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Force full registry fetch : false
+2026-03-24 12:01:08.938 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Application is null : false
+2026-03-24 12:01:08.938 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Registered Applications size is zero : true
+2026-03-24 12:01:08.938 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Application version is -1: true
+2026-03-24 12:01:08.938 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Getting all instance registry info from the eureka server
+2026-03-24 12:01:09.161 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - The response status is 200
+2026-03-24 12:01:09.163 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Starting heartbeat executor: renew interval is: 30
+2026-03-24 12:01:09.165 [restartedMain] INFO  c.n.discovery.InstanceInfoReplicator - InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-03-24 12:01:09.166 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1774333869166 with initial instances count: 6
+2026-03-24 12:01:09.181 [restartedMain] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Registering application RECHARGEPROCESSING with eureka with status UP
+2026-03-24 12:01:09.182 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1774333869182, current=UP, previous=STARTING]
+2026-03-24 12:01:09.184 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083: registering service...
+2026-03-24 12:01:09.201 [restartedMain] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8083 (http) with context path '/'
+2026-03-24 12:01:09.202 [restartedMain] INFO  o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 8083
+2026-03-24 12:01:09.221 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Started RechargeProcessingApplication in 10.156 seconds (process running for 10.939)
+2026-03-24 12:01:09.221 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Started RechargeProcessingApplication in 10.156 seconds (process running for 10.939)
+2026-03-24 12:01:09.223 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083 - registration status: 204
+2026-03-24 12:01:09.230 [restartedMain] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-03-24 12:01:09.231 [restartedMain] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-03-24 12:01:09.821 [RMI TCP Connection(5)-127.0.0.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-24 12:01:09.822 [RMI TCP Connection(5)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-03-24 12:01:09.824 [RMI TCP Connection(5)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-03-24 12:06:08.941 [AsyncResolver-bootstrap-executor-%d] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2026-03-24 12:08:07.955 [http-nio-8083-exec-1] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-03-24 12:11:08.942 [AsyncResolver-bootstrap-executor-%d] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2026-03-24 12:13:35.643 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2026-03-24 12:13:35.646 [Thread-1] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Unregistering application RECHARGEPROCESSING with eureka with status DOWN
+2026-03-24 12:13:35.647 [Thread-1] INFO  c.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1774334615647, current=DOWN, previous=UP]
+2026-03-24 12:13:35.647 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083: registering service...
+2026-03-24 12:13:35.654 [Thread-1] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-24 12:13:35.663 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083 - registration status: 204
+2026-03-24 12:13:35.664 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-24 12:13:35.687 [Thread-1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-24 12:13:35.691 [Thread-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-03-24 12:13:35.695 [Thread-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-03-24 12:13:35.708 [Thread-1] INFO  c.netflix.discovery.DiscoveryClient - Shutting down DiscoveryClient ...
+2026-03-24 12:13:38.710 [Thread-1] INFO  c.netflix.discovery.DiscoveryClient - Unregistering ...
+2026-03-24 12:13:38.716 [Thread-1] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083 - deregister  status: 200
+2026-03-24 12:13:38.717 [Thread-1] INFO  c.netflix.discovery.DiscoveryClient - Completed shut down of DiscoveryClient
+2026-03-24 12:13:39.974 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Starting RechargeProcessingApplication using Java 24.0.2 with PID 26260 (C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing\target\classes started by nitya in C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing)
+2026-03-24 12:13:39.974 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Starting RechargeProcessingApplication using Java 24.0.2 with PID 26260 (C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing\target\classes started by nitya in C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing)
+2026-03-24 12:13:39.974 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-24 12:13:39.974 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-24 12:13:39.976 [restartedMain] INFO  o.s.c.c.c.ConfigServerConfigDataLoader - Fetching config from server at : http://localhost:9999/config
+2026-03-24 12:13:39.976 [restartedMain] INFO  o.s.c.c.c.ConfigServerConfigDataLoader - Located environment: name=RechargeProcessing, profiles=[default], label=null, version=219ceb5e1749ced897d4da590a83f0b9128a81fa, state=
+2026-03-24 12:13:40.438 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-24 12:13:40.439 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-24 12:13:40.448 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8 ms. Found 1 JPA repository interface.
+2026-03-24 12:13:40.452 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-24 12:13:40.452 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-03-24 12:13:40.457 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.omnicharge.rechargeprocessing.repository.IRechargeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-24 12:13:40.457 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2026-03-24 12:13:40.581 [restartedMain] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=46c64503-5498-31f2-a9be-c17298484240
+2026-03-24 12:13:40.806 [restartedMain] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8083 (http)
+2026-03-24 12:13:40.807 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-24 12:13:40.807 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-03-24 12:13:40.860 [restartedMain] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 882 ms
+2026-03-24 12:13:41.300 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-24 12:13:41.303 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2026-03-24 12:13:41.340 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@6f2e1f26
+2026-03-24 12:13:41.341 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2026-03-24 12:13:41.347 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-24 12:13:41.403 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-24 12:13:41.708 [restartedMain] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-24 12:13:41.868 [restartedMain] INFO  o.s.c.o.FeignClientFactoryBean - For 'OPERATORPLANMANAGEMENT' URL not provided. Will try picking an instance via load-balancing.
+2026-03-24 12:13:42.198 [restartedMain] WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 3e106e96-0989-42c1-9c8a-6673aa023bba
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-03-24 12:13:42.203 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-03-24 12:13:43.798 [restartedMain] INFO  o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses RestClient.
+2026-03-24 12:13:43.854 [restartedMain] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-03-24 12:13:43.872 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 29 endpoints beneath base path '/actuator'
+2026-03-24 12:13:43.929 [restartedMain] INFO  o.s.c.n.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2026-03-24 12:13:43.934 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2026-03-24 12:13:43.935 [restartedMain] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2026-03-24 12:13:43.935 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Disable delta property : false
+2026-03-24 12:13:43.935 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Single vip registry refresh property : null
+2026-03-24 12:13:43.935 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Force full registry fetch : false
+2026-03-24 12:13:43.935 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Application is null : false
+2026-03-24 12:13:43.935 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Registered Applications size is zero : true
+2026-03-24 12:13:43.935 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Application version is -1: true
+2026-03-24 12:13:43.935 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Getting all instance registry info from the eureka server
+2026-03-24 12:13:43.954 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - The response status is 200
+2026-03-24 12:13:43.954 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Starting heartbeat executor: renew interval is: 30
+2026-03-24 12:13:43.954 [restartedMain] INFO  c.n.discovery.InstanceInfoReplicator - InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-03-24 12:13:43.954 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1774334623954 with initial instances count: 8
+2026-03-24 12:13:43.972 [restartedMain] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Registering application RECHARGEPROCESSING with eureka with status UP
+2026-03-24 12:13:43.972 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1774334623972, current=UP, previous=STARTING]
+2026-03-24 12:13:43.972 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083: registering service...
+2026-03-24 12:13:43.975 [restartedMain] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8083 (http) with context path '/'
+2026-03-24 12:13:43.975 [restartedMain] INFO  o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 8083
+2026-03-24 12:13:43.982 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083 - registration status: 204
+2026-03-24 12:13:43.986 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Started RechargeProcessingApplication in 5.204 seconds (process running for 765.705)
+2026-03-24 12:13:43.986 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Started RechargeProcessingApplication in 5.204 seconds (process running for 765.705)
+2026-03-24 12:13:43.988 [restartedMain] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-03-24 12:13:43.988 [restartedMain] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-03-24 12:13:43.990 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-03-24 12:13:44.942 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 37 class path changes (0 additions, 0 deletions, 37 modifications)
+2026-03-24 12:13:44.943 [Thread-7] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Unregistering application RECHARGEPROCESSING with eureka with status DOWN
+2026-03-24 12:13:44.943 [Thread-7] INFO  c.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1774334624943, current=DOWN, previous=UP]
+2026-03-24 12:13:44.943 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083: registering service...
+2026-03-24 12:13:44.944 [Thread-7] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-24 12:13:44.947 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083 - registration status: 204
+2026-03-24 12:13:44.950 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-24 12:13:44.955 [Thread-7] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-24 12:13:44.956 [Thread-7] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2026-03-24 12:13:44.957 [Thread-7] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2026-03-24 12:13:44.964 [Thread-7] INFO  c.netflix.discovery.DiscoveryClient - Shutting down DiscoveryClient ...
+2026-03-24 12:13:47.965 [Thread-7] INFO  c.netflix.discovery.DiscoveryClient - Unregistering ...
+2026-03-24 12:13:47.970 [Thread-7] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083 - deregister  status: 200
+2026-03-24 12:13:47.971 [Thread-7] INFO  c.netflix.discovery.DiscoveryClient - Completed shut down of DiscoveryClient
+2026-03-24 12:13:49.165 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Starting RechargeProcessingApplication using Java 24.0.2 with PID 26260 (C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing\target\classes started by nitya in C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing)
+2026-03-24 12:13:49.165 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Starting RechargeProcessingApplication using Java 24.0.2 with PID 26260 (C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing\target\classes started by nitya in C:\Users\nitya\OneDrive\Desktop\Sprint_Project\OmniCharge\RechargeProcessing)
+2026-03-24 12:13:49.165 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-24 12:13:49.165 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-24 12:13:49.167 [restartedMain] INFO  o.s.c.c.c.ConfigServerConfigDataLoader - Fetching config from server at : http://localhost:9999/config
+2026-03-24 12:13:49.167 [restartedMain] INFO  o.s.c.c.c.ConfigServerConfigDataLoader - Located environment: name=RechargeProcessing, profiles=[default], label=null, version=219ceb5e1749ced897d4da590a83f0b9128a81fa, state=
+2026-03-24 12:13:49.518 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-24 12:13:49.518 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-24 12:13:49.527 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 1 JPA repository interface.
+2026-03-24 12:13:49.530 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-03-24 12:13:49.530 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-03-24 12:13:49.534 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.omnicharge.rechargeprocessing.repository.IRechargeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-03-24 12:13:49.534 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2026-03-24 12:13:49.642 [restartedMain] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=46c64503-5498-31f2-a9be-c17298484240
+2026-03-24 12:13:49.857 [restartedMain] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8083 (http)
+2026-03-24 12:13:49.858 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-24 12:13:49.858 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-03-24 12:13:49.893 [restartedMain] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 726 ms
+2026-03-24 12:13:50.230 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-24 12:13:50.231 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+2026-03-24 12:13:50.265 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@797d3771
+2026-03-24 12:13:50.265 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+2026-03-24 12:13:50.270 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-24 12:13:50.314 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-24 12:13:50.602 [restartedMain] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-24 12:13:50.769 [restartedMain] INFO  o.s.c.o.FeignClientFactoryBean - For 'OPERATORPLANMANAGEMENT' URL not provided. Will try picking an instance via load-balancing.
+2026-03-24 12:13:51.064 [restartedMain] WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 73aa45a2-9d41-42e0-9b44-f0e79c4d9ff9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-03-24 12:13:51.069 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-03-24 12:13:52.577 [restartedMain] INFO  o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration - Eureka HTTP Client uses RestClient.
+2026-03-24 12:13:52.634 [restartedMain] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-03-24 12:13:52.651 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 29 endpoints beneath base path '/actuator'
+2026-03-24 12:13:52.704 [restartedMain] INFO  o.s.c.n.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2026-03-24 12:13:52.708 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2026-03-24 12:13:52.709 [restartedMain] INFO  c.n.d.s.r.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2026-03-24 12:13:52.709 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Disable delta property : false
+2026-03-24 12:13:52.709 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Single vip registry refresh property : null
+2026-03-24 12:13:52.709 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Force full registry fetch : false
+2026-03-24 12:13:52.709 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Application is null : false
+2026-03-24 12:13:52.709 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Registered Applications size is zero : true
+2026-03-24 12:13:52.709 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Application version is -1: true
+2026-03-24 12:13:52.709 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Getting all instance registry info from the eureka server
+2026-03-24 12:13:52.722 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - The response status is 200
+2026-03-24 12:13:52.724 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Starting heartbeat executor: renew interval is: 30
+2026-03-24 12:13:52.724 [restartedMain] INFO  c.n.discovery.InstanceInfoReplicator - InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-03-24 12:13:52.724 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1774334632724 with initial instances count: 8
+2026-03-24 12:13:52.735 [restartedMain] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Registering application RECHARGEPROCESSING with eureka with status UP
+2026-03-24 12:13:52.735 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1774334632735, current=UP, previous=STARTING]
+2026-03-24 12:13:52.735 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083: registering service...
+2026-03-24 12:13:52.739 [restartedMain] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8083 (http) with context path '/'
+2026-03-24 12:13:52.739 [restartedMain] INFO  o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 8083
+2026-03-24 12:13:52.745 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083 - registration status: 204
+2026-03-24 12:13:52.749 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Started RechargeProcessingApplication in 4.719 seconds (process running for 774.468)
+2026-03-24 12:13:52.749 [restartedMain] INFO  c.o.r.RechargeProcessingApplication - Started RechargeProcessingApplication in 4.719 seconds (process running for 774.468)
+2026-03-24 12:13:52.751 [restartedMain] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-03-24 12:13:52.751 [restartedMain] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-03-24 12:13:52.751 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-03-24 12:18:30.974 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 38 class path changes (0 additions, 5 deletions, 33 modifications)
+2026-03-24 12:18:30.976 [Thread-13] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Unregistering application RECHARGEPROCESSING with eureka with status DOWN
+2026-03-24 12:18:30.976 [Thread-13] INFO  c.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1774334910976, current=DOWN, previous=UP]
+2026-03-24 12:18:30.976 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083: registering service...
+2026-03-24 12:18:30.978 [Thread-13] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-24 12:18:30.982 [DiscoveryClient-InstanceInfoReplicator-%d] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083 - registration status: 204
+2026-03-24 12:18:30.986 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-24 12:18:30.992 [Thread-13] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-24 12:18:30.993 [Thread-13] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2026-03-24 12:18:30.997 [Thread-13] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown completed.
+2026-03-24 12:18:31.008 [Thread-13] INFO  c.netflix.discovery.DiscoveryClient - Shutting down DiscoveryClient ...
+2026-03-24 12:18:34.009 [Thread-13] INFO  c.netflix.discovery.DiscoveryClient - Unregistering ...
+2026-03-24 12:18:34.013 [Thread-13] INFO  c.netflix.discovery.DiscoveryClient - DiscoveryClient_RECHARGEPROCESSING/10.34.1.193:RechargeProcessing:8083 - deregister  status: 200
+2026-03-24 12:18:34.013 [Thread-13] INFO  c.netflix.discovery.DiscoveryClient - Completed shut down of DiscoveryClient
