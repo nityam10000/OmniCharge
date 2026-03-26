@@ -1,0 +1,8 @@
+2026-03-26 01:25:45.339 [http-nio-8081-exec-6] INFO  c.o.u.s.implementations.UserService - Fetching user with ID: 4
+2026-03-26 01:25:45.410 [http-nio-8081-exec-6] ERROR c.o.u.s.implementations.UserService - User not found with id: 4
+2026-03-26 01:26:24.745 [http-nio-8081-exec-10] INFO  c.o.u.s.implementations.UserService - Fetching user with ID: 4
+2026-03-26 01:26:24.748 [http-nio-8081-exec-10] ERROR c.o.u.s.implementations.UserService - User not found with id: 4
+2026-03-26 01:26:25.722 [http-nio-8081-exec-1] INFO  c.o.u.s.implementations.UserService - Fetching user with ID: 4
+2026-03-26 01:26:25.734 [http-nio-8081-exec-1] ERROR c.o.u.s.implementations.UserService - User not found with id: 4
+2026-03-26 01:26:28.307 [http-nio-8081-exec-2] INFO  c.o.u.s.implementations.UserService - Fetching user with ID: 4
+2026-03-26 01:26:28.310 [http-nio-8081-exec-2] ERROR c.o.u.s.implementations.UserService - User not found with id: 4
