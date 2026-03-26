@@ -82,6 +82,12 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!-- Prometheus Metrics -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+
 		<!-- RabbitMQ — to publish notification events -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

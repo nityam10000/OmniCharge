@@ -28,17 +28,44 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
             "/users/register"
     );
 
+    private static final List<String> ACTUATOR_ENDPOINT_PREFIXES = List.of(
+            "/auth/actuator",
+            "/users/actuator",
+            "/recharge/actuator",
+            "/transaction/actuator",
+            "/operators/actuator",
+            "/plans/actuator",
+            "/notifications/actuator",
+            "/auth/metrics",
+            "/users/metrics",
+            "/recharge/metrics",
+            "/transaction/metrics",
+            "/operators/metrics",
+            "/plans/metrics",
+            "/notifications/metrics"
+    );
+
+    private boolean isPublicPath(String path) {
+        return PUBLIC_ENDPOINTS.stream().anyMatch(publicPath ->
+                path.equals(publicPath) || path.startsWith(publicPath + "/"));
+    }
+
+    private boolean isActuatorPath(String path) {
+        return ACTUATOR_ENDPOINT_PREFIXES.stream().anyMatch(prefix ->
+                path.equals(prefix) || path.startsWith(prefix + "/"));
+    }
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
         String path = exchange.getRequest().getURI().getPath();
         log.info("Incoming request - Path: {}, Method: {}", path, exchange.getRequest().getMethod());
 
-        boolean isPublic = PUBLIC_ENDPOINTS.stream()
-                .anyMatch(path::contains);
+        boolean isPublic = isPublicPath(path);
+        boolean isActuator = isActuatorPath(path);
 
-        if (isPublic) {
-            log.info("Public endpoint accessed - Path: {}, No JWT validation required", path);
+        if (isPublic || isActuator) {
+            log.info("Bypassing JWT validation - Path: {}", path);
             return chain.filter(exchange);
         }
 

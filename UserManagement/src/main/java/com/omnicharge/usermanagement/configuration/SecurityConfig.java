@@ -24,7 +24,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register").permitAll()
+                        .requestMatchers("/users/register", "/users/metrics").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(headerFilter, UsernamePasswordAuthenticationFilter.class)
@@ -35,3 +36,4 @@ public class SecurityConfig {
         return http.build();
     }
 }
+
