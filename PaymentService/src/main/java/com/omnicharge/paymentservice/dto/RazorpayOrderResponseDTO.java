@@ -12,5 +12,4 @@ public class RazorpayOrderResponseDTO {
     private Double amount;
     private String currency;
     // rechargeId intentionally omitted — client only needs razorpayOrderId to proceed
-
 }

@@ -1,4 +1,3 @@
-
 package com.omnicharge.paymentservice.dto;
 
 import lombok.AllArgsConstructor;
@@ -15,5 +14,4 @@ public class RechargeResponseDTO {
     private Long planId;
     private String transactionStatus;
     private Long userId;  // used for ownership validation in PaymentService
-
 }

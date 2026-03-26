@@ -1,7 +1,4 @@
-
 package com.omnicharge.rechargeprocessing.dto;
-
-import java.io.Serializable;
 
 import com.omnicharge.rechargeprocessing.enums.RechargeStatus;
 import lombok.AllArgsConstructor;
@@ -13,9 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class RechargeResponseDTO implements Serializable{
-	private final long serialIzableID = 1L;
-
+public class RechargeResponseDTO {
 	private Long rechargeId;
 	private RechargeStatus status;
 	private Double amount;

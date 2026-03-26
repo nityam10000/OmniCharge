@@ -1,0 +1,2 @@
+2026-03-26 20:35:59.243 [http-nio-8089-exec-2] INFO  c.o.a.service.MyUserDetailsService - Loading user details for email: test@gmail.com
+2026-03-26 20:35:59.914 [http-nio-8089-exec-2] INFO  c.o.a.service.MyUserDetailsService - User details loaded successfully for email: test@gmail.com

@@ -1,4 +1,3 @@
-
 package com.omnicharge.paymentservice.dto;
 
 import lombok.AllArgsConstructor;
@@ -12,5 +11,4 @@ public class PlanResponseDTO {
     private Double amount;
     private String validity;
     private String description;
-
 }
