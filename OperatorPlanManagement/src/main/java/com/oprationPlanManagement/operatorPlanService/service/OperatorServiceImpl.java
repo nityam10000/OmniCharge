@@ -25,7 +25,6 @@ public class OperatorServiceImpl implements IOperatorService {
 
     private final IOperatorRepository operatorRepo;
     private final Mapper mapper;
-    
 	@Override
     public OperatorResponseDTO saveOper(OperatorRequestDTO dto) {
         log.info("Saving new operator with name: {}", dto.getName());
@@ -33,6 +32,7 @@ public class OperatorServiceImpl implements IOperatorService {
         OperatorEntity saved = operatorRepo.save(entity);
         log.info("Operator saved successfully with ID: {}, Name: {}", saved.getId(), saved.getName());
         return mapToResponse(saved);
+
     }
 
     @Override
@@ -46,8 +46,8 @@ public class OperatorServiceImpl implements IOperatorService {
                 });
         log.info("Operator retrieved successfully with ID: {}, Name: {}", entity.getId(), entity.getName());
         return mapToResponse(entity);
-    }
 
+    }
     @Override
     @Cacheable(value = "operatorList")
     public List<OperatorResponseDTO> getOperList() {
@@ -89,6 +89,7 @@ public class OperatorServiceImpl implements IOperatorService {
         }
         operatorRepo.deleteById(id);
         log.info("Operator deleted successfully with ID: {}", id);
+
     }
 
     private OperatorResponseDTO mapToResponse(OperatorEntity entity) {

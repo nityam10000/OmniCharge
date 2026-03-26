@@ -23,7 +23,15 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers("/auth/login", "/actuator/health", "/actuator/info", "/actuator/**").permitAll()
+                        .requestMatchers(
+                                "/auth/login",
+                                "/auth/send-otp",
+                                "/auth/verify-otp",
+                                "/auth/forgot-password",
+                                "/auth/reset-password"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form.disable())

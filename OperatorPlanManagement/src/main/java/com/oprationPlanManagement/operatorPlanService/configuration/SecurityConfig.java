@@ -1,3 +1,4 @@
+
 package com.oprationPlanManagement.operatorPlanService.configuration;
 
 import com.oprationPlanManagement.operatorPlanService.filter.HeaderAuthenticationFilter;
@@ -31,4 +32,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }

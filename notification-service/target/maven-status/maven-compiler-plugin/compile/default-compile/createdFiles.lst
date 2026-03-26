@@ -1,7 +1,10 @@
-com/omnicharge/notification/dto/NotificationEvent.class
-com/omnicharge/notification/configuration/RabbitMQConfig.class
-com/omnicharge/notification/Application.class
-com/omnicharge/notification/controller/NotificationController.class
-com/omnicharge/notification/consumer/NotificationConsumer.class
-com/omnicharge/notification/service/EmailService.class
-com/omnicharge/notification/service/NotificationProducer.class
+com\omnicharge\notification\service\EmailService.class
+com\omnicharge\notification\configuration\RabbitMQConfig.class
+com\omnicharge\notification\controller\NotificationController.class
+com\omnicharge\notification\Application.class
+com\omnicharge\notification\configuration\TwilioConfig.class
+com\omnicharge\notification\dto\NotificationEvent.class
+com\omnicharge\notification\service\WhatsAppService.class
+com\omnicharge\notification\consumer\NotificationConsumer.class
+com\omnicharge\notification\service\EmailService$EmailContent.class
+com\omnicharge\notification\service\NotificationProducer.class

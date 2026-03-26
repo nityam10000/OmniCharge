@@ -3,7 +3,7 @@ package com.omnicharge.rechargeprocessing.dto;
 
 import java.io.Serializable;
 
-import com.omnicharge.rechargeprocessing.enums.Roles;
+import com.omnicharge.usermanagement.enums.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +21,3 @@ public class UserResponseDTO implements Serializable{
     private String contactNo;
     private Roles role;
 }
-

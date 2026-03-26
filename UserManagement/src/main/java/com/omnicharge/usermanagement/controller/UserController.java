@@ -44,7 +44,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{userId}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable("userId") Long userId) {
+
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long userId) {
         UserResponseDTO userResponseDTO = userService.getUserById(userId);
         return new ResponseEntity<>(userResponseDTO, HttpStatus.OK);
     }
@@ -57,12 +58,14 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasRole('ADMIN')") // 🔥 only admin
-    public ResponseEntity<String> deleteUser(@PathVariable("userId") Long userId) {
+
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.deleteUser(userId));
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable("email") String email) {
+
+    public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email) {
         return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
@@ -71,7 +74,8 @@ public class UserController {
     @PutMapping("/{userId}/role")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> updateUserRole(
-            @PathVariable("userId") Long userId,
+
+            @PathVariable Long userId,
             @RequestBody RoleUpdateDTO roleUpdateDTO) {
     String status = userService.updateUserRole(userId, roleUpdateDTO);
         return new ResponseEntity<>(status, HttpStatus.OK);

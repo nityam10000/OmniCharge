@@ -1,3 +1,4 @@
+
 package com.omnicharge.authservice.dto;
 
 
@@ -8,4 +9,5 @@ import lombok.Data;
 @Builder
 public class LoginResponseDTO {
     private String token;
+
 }

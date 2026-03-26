@@ -18,6 +18,7 @@ import java.util.List;
 
 @Component
 @Slf4j
+
 public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
     private static final SecretKey SECRET_KEY =
@@ -60,6 +61,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
         String path = exchange.getRequest().getURI().getPath();
         log.info("Incoming request - Path: {}, Method: {}", path, exchange.getRequest().getMethod());
+
 
         boolean isPublic = isPublicPath(path);
         boolean isActuator = isActuatorPath(path);

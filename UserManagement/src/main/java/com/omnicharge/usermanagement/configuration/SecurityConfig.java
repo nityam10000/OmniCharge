@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/register", "/users/metrics").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/users/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(headerFilter, UsernamePasswordAuthenticationFilter.class)
@@ -36,4 +37,3 @@ public class SecurityConfig {
         return http.build();
     }
 }
-

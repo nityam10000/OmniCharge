@@ -15,7 +15,6 @@ public class JwtUtil {
 
     private static final SecretKey SECRET_KEY =
             Keys.hmacShaKeyFor("mysecretkeymysecretkeymysecretkey123".getBytes());
-
     public String generateToken(String email, String role,  Long userId) {
         log.info("Generating JWT token for email: {}, role: {}, userId: {}", email, role, userId);
         

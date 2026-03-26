@@ -1,3 +1,4 @@
+
 package com.omnicharge.authservice.dto;
 
 import lombok.Data;
@@ -6,4 +7,5 @@ import lombok.Data;
 public class LoginRequestDTO {
     private String email;
     private String password;
+
 }

@@ -1,3 +1,4 @@
+
 package com.omnicharge.usermanagement.dto;
 
 import com.omnicharge.usermanagement.enums.Roles;

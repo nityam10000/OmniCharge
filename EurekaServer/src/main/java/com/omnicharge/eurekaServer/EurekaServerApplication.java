@@ -1,3 +1,4 @@
+
 package com.omnicharge.eurekaServer;
 
 import org.springframework.boot.SpringApplication;
