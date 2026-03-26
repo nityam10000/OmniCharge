@@ -1,0 +1,315 @@
+{
+  "info": {
+    "_postman_id": "40628c06-bde5-4351-953f-63a5a6f2cf58",
+    "name": "OmniCharge - Payment Service",
+    "description": "StartFragment\n\n# **OmniCharge - Payment Service**\n\nThis collection contains the Payment (Transaction) API for the OmniCharge platform. It manages all transaction-related operations linked to recharge payments.\n\n**Base URL:** `http://localhost:8084`\n\n---\n\n## **Overview**\n\nThe Payment Service is responsible for handling financial transactions within the OmniCharge platform. It allows creating transactions, retrieving transaction history for users, and fetching transaction details based on recharge.\n\nAll requests in this collection are organized under the **Transaction Management APIs** folder.\n\n---\n\n## **Key Capabilities**\n\n| Operation | Method | Endpoint | Description |\n| --- | --- | --- | --- |\n| Create Transaction | POST | `/transaction/add` | Create a new payment transaction |\n| Get Transactions By User ID | GET | `/transaction/user/{userId}` | Retrieve all transactions for a specific user |\n| Get Transaction By Recharge ID | GET | `/transaction/recharge/{rechargeId}` | Fetch transaction details for a specific recharge |\n\n---\n\n## **Getting Started**\n\n- Ensure the Payment Service is running locally on port **8084**\n    \n- Use **Create Transaction** to initiate a new payment transaction\n    \n- Use **Get Transactions By User ID** to view all transactions of a user\n    \n- Use **Get Transaction By Recharge ID** to fetch transaction details for a recharge",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52866406",
+    "_collection_link": "https://go.postman.co/collection/52866406-40628c06-bde5-4351-953f-63a5a6f2cf58?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Create Transaction",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 600,\r\n  \"rechargeId\": 20,\r\n  \"userId\": 2,\r\n  \"status\": \"SUCCESS\",\r\n  \"paymentMethod\": \"UPI\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8084/transaction/add",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8084",
+          "path": [
+            "transaction",
+            "add"
+          ]
+        },
+        "description": "StartFragment\n\n# **Create Transaction**\n\nCreates a new transaction for a recharge. This represents the payment process for a recharge request.\n\n---\n\n### **Method:** POST\n\n### **URL:** `http://localhost:8084/transaction/add`\n\n---\n\n## **Request Body**\n\nThe request body must be sent as raw JSON (`application/json`).\n\n| Field | Type | Description |\n| --- | --- | --- |\n| amount | Double | Transaction amount (must be ≥ 1) |\n| rechargeId | Long | ID of the recharge |\n| userId | Long | ID of the user |\n| status | String | Transaction status |\n| paymentMethod | String | Mode of payment |\n\n---\n\n## **Validation Rules**\n\n- `amount` must be **greater than or equal to 1**\n    \n- `rechargeId`, `userId`, `status`, `paymentMethod` → **required (not null)**\n    \n\n---\n\n## **Enums**\n\n### **TransactionStatus**\n\nAllowed values (must match exactly):\n\n- SUCCESS\n    \n- FAILED\n    \n- _(PENDING if implemented)_\n    \n\n---\n\n### **PaymentMethod**\n\nAllowed values depend on backend enum, typically:\n\n- UPI\n    \n- CARD\n    \n- NETBANKING\n    \n- WALLET\n    \n\n---\n\n## **Sample Request Body**\n\n```\n{  \"amount\": 500,  \"rechargeId\": 10,  \"userId\": 1,  \"status\": \"SUCCESS\",  \"paymentMethod\": \"UPI\"}\n\n ```\n\n---\n\n## **Response**\n\n### **200 OK — Transaction created successfully**\n\n```\n{  \"id\": 1,  \"amount\": 500,  \"rechargeId\": 10,  \"userId\": 1,  \"status\": \"SUCCESS\",  \"paymentMethod\": \"UPI\"}\n\n ```\n\n---\n\n## **Notes**\n\n- Enum values must be **uppercase and exact**\n    \n- All fields are mandatory\n    \n- Backend does not currently auto-handle status (manual input required)\n    \n\nEndFragment"
+      },
+      "response": [
+        {
+          "name": "Create Transaction",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 500,\r\n  \"rechargeId\": 10,\r\n  \"userId\": 1,\r\n  \"status\": \"SUCCESS\",\r\n  \"paymentMethod\": \"UPI\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8084/transaction/add",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8084",
+              "path": [
+                "transaction",
+                "add"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 10:53:00 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"amount\": 500,\n    \"transactionStatus\": \"SUCCESS\",\n    \"paymentMethod\": \"UPI\",\n    \"timestamp\": \"2026-03-18T16:23:00.7086194\"\n}"
+        },
+        {
+          "name": "Create Transaction",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 600,\r\n  \"rechargeId\": 20,\r\n  \"userId\": 2,\r\n  \"status\": \"SUCCESS\",\r\n  \"paymentMethod\": \"UPI\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8084/transaction/add",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8084",
+              "path": [
+                "transaction",
+                "add"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 10:58:19 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"amount\": 600,\n    \"transactionStatus\": \"SUCCESS\",\n    \"paymentMethod\": \"UPI\",\n    \"timestamp\": \"2026-03-18T16:28:19.8175502\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get Transaction by User",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 500,\r\n  \"rechargeId\": 10,\r\n  \"userId\": 1,\r\n  \"status\": \"SUCCESS\",\r\n  \"paymentMethod\": \"UPI\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8084/transaction/user/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8084",
+          "path": [
+            "transaction",
+            "user",
+            "1"
+          ]
+        },
+        "description": "StartFragment\n\n# **Get Transactions by User ID**\n\nFetches all transactions associated with a specific user.\n\n---\n\n### **Method:** GET\n\n### **URL:** `http://localhost:8084/transaction/user/{userId}`\n\n---\n\n## **Path Parameter**\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| userId | Long | Unique ID of the user |\n\n---\n\n## **Response**\n\n### **200 OK**\n\n```\n[  {    \"id\": 1,    \"amount\": 500,    \"rechargeId\": 10,    \"userId\": 1,    \"status\": \"SUCCESS\",    \"paymentMethod\": \"UPI\"  }]\n\n ```\n\n---\n\n## **Notes**\n\n- Returns an empty list if no transactions exist for the given user\n    \n\nEndFragment"
+      },
+      "response": [
+        {
+          "name": "Get Transaction by User",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 500,\r\n  \"rechargeId\": 10,\r\n  \"userId\": 1,\r\n  \"status\": \"SUCCESS\",\r\n  \"paymentMethod\": \"UPI\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8084/transaction/user/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8084",
+              "path": [
+                "transaction",
+                "user",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 10:55:14 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[\n    {\n        \"amount\": 500,\n        \"transactionStatus\": \"SUCCESS\",\n        \"paymentMethod\": \"UPI\",\n        \"timestamp\": \"2026-03-18T16:23:00.708619\"\n    }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Get Transaction by Recharge ID",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 500,\r\n  \"rechargeId\": 10,\r\n  \"userId\": 1,\r\n  \"status\": \"SUCCESS\",\r\n  \"paymentMethod\": \"UPI\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8084/transaction/recharge/20",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8084",
+          "path": [
+            "transaction",
+            "recharge",
+            "20"
+          ]
+        },
+        "description": "StartFragment\n\n# **Get Transaction by Recharge ID**\n\nFetches the transaction associated with a specific recharge.\n\n---\n\n### **Method:** GET\n\n### **URL:** `http://localhost:8084/transaction/recharge/{rechargeId}`\n\n---\n\n## **Path Parameter**\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| rechargeId | Long | Unique ID of the recharge |\n\n---\n\n## **Response**\n\n### **200 OK**\n\n```\n{  \"id\": 1,  \"amount\": 500,  \"rechargeId\": 10,  \"userId\": 1,  \"status\": \"SUCCESS\",  \"paymentMethod\": \"UPI\"}\n\n ```\n\n---\n\n## **Notes**\n\n- Returns transaction linked to the given recharge ID\n    \n- If no transaction exists, an error may be returned depending on implementation\n    \n\nEndFragment"
+      },
+      "response": [
+        {
+          "name": "Get Transaction by Recharge ID",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 500,\r\n  \"rechargeId\": 10,\r\n  \"userId\": 1,\r\n  \"status\": \"SUCCESS\",\r\n  \"paymentMethod\": \"UPI\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8084/transaction/recharge/20",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8084",
+              "path": [
+                "transaction",
+                "recharge",
+                "20"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 11:00:23 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"amount\": 600,\n    \"transactionStatus\": \"SUCCESS\",\n    \"paymentMethod\": \"UPI\",\n    \"timestamp\": \"2026-03-18T16:28:19.81755\"\n}"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,801 @@
+{
+  "info": {
+    "_postman_id": "8c74e0d8-11a5-42e4-92e4-8df9f1d7a72a",
+    "name": "OmniCharge - Operator Plan Management",
+    "description": "StartFragment\n\n# OmniCharge – Operator Plan Management\n\nThis collection contains APIs for managing **Operators** and their associated **Recharge Plans** in the OmniCharge microservices system.\n\nIt allows users to:\n\n- Register telecom operators (e.g., Jio, Airtel)\n    \n- Manage operator details (view, update, delete)\n    \n- Create and manage recharge plans linked to operators\n    \n\n---\n\n## 📌 Base URL\n\n```\nhttp://localhost:8086/aperatormanagement\n\n ```\n\n---\n\n## 📂 Collection Structure\n\n### 🔹 Operator APIs\n\n- Create Operator\n    \n- Get All Operators\n    \n- Get Operator by ID\n    \n- Update Operator\n    \n- Delete Operator\n    \n\n### 🔹 Plan APIs\n\n- Create Plan\n    \n- Get All Plans\n    \n- Get Plan by ID\n    \n- Update Plan\n    \n- Delete Plan\n    \n\n---\n\n## 🔄 Recommended Execution Flow\n\n1. Create Operator\n    \n2. Fetch Operators\n    \n3. Update Operator (if needed)\n    \n4. Create Plan (linked to operator)\n    \n5. Fetch Plans\n    \n6. Update Plan\n    \n7. Delete Plan\n    \n8. Delete Operator\n    \n\n---\n\n## ⚠️ Important Notes\n\n- A **Plan must always be linked to an existing Operator**\n    \n- Use valid `operatorId` while creating or updating plans\n    \n- Delete **Plans before Operators** to avoid dependency issues\n    \n- API responses do not include IDs (handled internally in database)\n    \n\n---\n\n## 🛠️ Environment Setup (Recommended)\n\nCreate a Postman Environment variable:\n\n```\nbase_url = http://localhost:8086/aperatormanagement\n\n ```\n\nThen use:\n\n```\n{{base_url}}/operators/register\n\n ```\n\n---\n\n## ✅ Status Codes\n\n| Code | Meaning |\n| --- | --- |\n| 200 | Request successful |\n| 204 | Resource deleted successfully |\n| 400 | Bad request / validation error |\n| 500 |",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52866406",
+    "_collection_link": "https://go.postman.co/collection/52866406-8c74e0d8-11a5-42e4-92e4-8df9f1d7a72a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Create Operator",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Airtel\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/operators/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "operators",
+            "register"
+          ]
+        },
+        "description": "StartFragment\n\n# Register Operator\n\nRegisters a new operator in the system. This operator will be used later while creating recharge plans.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| --- | --- |\n| Method | POST |\n| URL | [http://localhost:8086/aperatormanagement/operators/register](http://localhost:8086/aperatormanagement/operators/register) |\n| Content-Type | application/json |\n\n---\n\n## Request Body Parameters\n\n| Field | Type | Description |\n| name | string | Name of the operator (e.g., Jio, Airtel) |\n\n---\n\n## Sample Request Body\n\n```\n{\n  \"name\": \"Jio\"\n}\n\n ```\n\n---\n\n## Response\n\n### ✅ Success — 200 OK\n\n```\n{\n  \"name\": \"Jio\"\n}\n\n ```"
+      },
+      "response": [
+        {
+          "name": "Create Operator",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Airtel\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/operators/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "operators",
+                "register"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:02:55 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"serialIzableID\": 1,\n    \"name\": \"Airtel\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get All Operators",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/operators/getList",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "operators",
+            "getList"
+          ]
+        },
+        "description": "StartFragment\n\n# Get All Operators\n\nFetches a list of all operators available in the system.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| Method | GET |\n| URL | [http://localhost:8086/aperatormanagement/operators/getList](http://localhost:8086/aperatormanagement/operators/getList) |\n\n---\n\n## Response\n\n### ✅ Success — 200 OK\n\n```\n[\n  {\n    \"name\": \"Jio\"\n  },\n  {\n    \"name\": \"Airtel\"\n  }\n]\n\n ```"
+      },
+      "response": [
+        {
+          "name": "Get All Operators",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/operators/getList",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "operators",
+                "getList"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:08:26 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[\n    {\n        \"serialIzableID\": 1,\n        \"name\": \"Jio\"\n    },\n    {\n        \"serialIzableID\": 1,\n        \"name\": \"Airtel\"\n    }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Get Operator By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/operators/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "operators",
+            "2"
+          ]
+        },
+        "description": "StartFragment\n\n# Get Operator by ID\n\nFetches details of a specific operator using its unique ID.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| Method | GET |\n| URL | [http://localhost:8086/aperatormanagement/operators/id/{id](http://localhost:8086/aperatormanagement/operators/id/{id)} |\n\n---\n\n## Path Parameters\n\n| Parameter | Type | Description |\n| id | long | Unique ID of the operator |\n\n---\n\n## Sample Request\n\n```\nhttp://localhost:8086/aperatormanagement/operators/id/1\n\n ```\n\n---\n\n## Response\n\n### ✅ Success — 200 OK\n\n```\n{\n  \"name\": \"Jio\"\n}\n\n ```"
+      },
+      "response": [
+        {
+          "name": "Get Operator By ID",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/operators/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "operators",
+                "2"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:09:26 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"serialIzableID\": 1,\n    \"name\": \"Airtel\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Update Operator",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Idea\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/operators/update/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "operators",
+            "update",
+            "1"
+          ]
+        },
+        "description": "StartFragment\n\n# Update Operator\n\nUpdates the details of an existing operator.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| Method | PUT |\n| URL | [http://localhost:8086/aperatormanagement/operators/update/{id](http://localhost:8086/aperatormanagement/operators/update/{id)} |\n| Content-Type | application/json |\n\n---\n\n## Path Parameters\n\n| Parameter | Type | Description |\n| id | long | ID of the operator to update |\n\n---\n\n## Request Body Parameters\n\n| Field | Type | Description |\n| name | string | Updated name of the operator |\n\n---\n\n## Sample Request Body\n\n```\n{\n  \"name\": \"Airtel\"\n}\n\n ```\n\n---\n\n## Response\n\n### ✅ Success — 200 OK\n\n```\n{\n  \"name\": \"Airtel\"\n}\n\n ```"
+      },
+      "response": [
+        {
+          "name": "Update Operator",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Idea\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/operators/update/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "operators",
+                "update",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:10:21 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"serialIzableID\": 1,\n    \"name\": \"Idea\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Create Plan",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 599,\r\n  \"validity\": \"56 days\",\r\n  \"description\": \"1.5GB/day\",\r\n  \"operatorId\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/plans/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "plans",
+            "create"
+          ]
+        },
+        "description": "StartFragment\n\n# Create Plan\n\nCreates a new recharge plan associated with a specific operator. Each plan must be linked to a valid operator using `operatorId`.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| --- | --- |\n| Method | POST |\n| URL | [http://localhost:8086/aperatormanagement/plans/create](http://localhost:8086/aperatormanagement/plans/create) |\n| Content-Type | application/json |\n\n---\n\n## Request Body Parameters\n\n| Field | Type | Description |\n| amount | number | Price of the recharge plan |\n| validity | string | Validity period (e.g., 28 days) |\n| description | string | Details of the plan (e.g., data, calls) |\n| operatorId | long | ID of the operator to which this plan belongs |\n\n---\n\n## Sample Request Body\n\n```\n{\n  \"amount\": 199,\n  \"validity\": \"28 days\",\n  \"description\": \"1.5GB/day\",\n  \"operatorId\": 1\n}\n\n ```\n\n---\n\n## Response\n\n### ✅ Success — 200 OK\n\n```\n{\n  \"amount\": 199,\n  \"validity\": \"28 days\",\n  \"description\": \"1.5GB/day\"\n}\n\n ```\n\n---\n\n## ⚠️ Notes\n\n- `operatorId` must exist in the system\n    \n- Always create operator before creating a plan"
+      },
+      "response": [
+        {
+          "name": "Create Plan",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 599,\r\n  \"validity\": \"56 days\",\r\n  \"description\": \"1.5GB/day\",\r\n  \"operatorId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/plans/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "plans",
+                "create"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:13:40 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"amount\": 599,\n    \"validity\": \"56 days\",\n    \"description\": \"1.5GB/day\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get All Plans",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 599,\r\n  \"validity\": \"56 days\",\r\n  \"description\": \"1.5GB/day\",\r\n  \"operatorId\": 2\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/plans",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "plans"
+          ]
+        },
+        "description": "StartFragment\n\n# Get All Plans\n\nFetches a list of all recharge plans available in the system.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| Method | GET |\n| URL | [http://localhost:8086/aperatormanagement/plans](http://localhost:8086/aperatormanagement/plans) |\n\n---\n\n## Response\n\n### ✅ Success — 200 OK\n\n```\n[\n  {\n    \"amount\": 199,\n    \"validity\": \"28 days\",\n    \"description\": \"1.5GB/day\"\n  },\n  {\n    \"amount\": 249,\n    \"validity\": \"28 days\",\n    \"description\": \"2GB/day\"\n  }\n]\n\n ```"
+      },
+      "response": [
+        {
+          "name": "Get All Plans",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 599,\r\n  \"validity\": \"56 days\",\r\n  \"description\": \"1.5GB/day\",\r\n  \"operatorId\": 2\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/plans",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "plans"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:15:14 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[\n    {\n        \"amount\": 199,\n        \"validity\": \"28 days\",\n        \"description\": \"1.5GB/day\"\n    },\n    {\n        \"amount\": 599,\n        \"validity\": \"56 days\",\n        \"description\": \"1.5GB/day\"\n    }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Get Plan by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/plans/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "plans",
+            "1"
+          ]
+        },
+        "description": "StartFragment\n\n# Get Plan by ID\n\nFetches details of a specific recharge plan using its unique ID.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| Method | GET |\n| URL | [http://localhost:8086/aperatormanagement/plans/id/{id](http://localhost:8086/aperatormanagement/plans/id/{id)} |\n\n---\n\n## Path Parameters\n\n| Parameter | Type | Description |\n| id | long | Unique ID of the plan |\n\n---\n\n## Sample Request\n\n```\nhttp://localhost:8086/aperatormanagement/plans/id/1\n\n ```\n\n---\n\n## Response\n\n### ✅ Success — 200 OK\n\n```\n{\n  \"amount\": 199,\n  \"validity\": \"28 days\",\n  \"description\": \"1.5GB/day\"\n}\n\n ```"
+      },
+      "response": [
+        {
+          "name": "Get Plan by ID",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/plans/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "plans",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:16:10 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"amount\": 199,\n    \"validity\": \"28 days\",\n    \"description\": \"1.5GB/day\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Update Plan",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 249,\r\n  \"validity\": \"28 days\",\r\n  \"description\": \"2GB/day\",\r\n  \"operatorId\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/plans/update/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "plans",
+            "update",
+            "1"
+          ]
+        },
+        "description": "StartFragment\n\n# Update Plan\n\nUpdates the details of an existing recharge plan.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| Method | PUT |\n| URL | [http://localhost:8086/aperatormanagement/plans/update/{id](http://localhost:8086/aperatormanagement/plans/update/{id)} |\n| Content-Type | application/json |\n\n---\n\n## Path Parameters\n\n| Parameter | Type | Description |\n| id | long | ID of the plan to update |\n\n---\n\n## Request Body Parameters\n\n| Field | Type | Description |\n| amount | number | Updated price of the plan |\n| validity | string | Updated validity period |\n| description | string | Updated plan details |\n| operatorId | long | Operator ID associated with the plan |\n\n---\n\n## Sample Request Body\n\n```\n{\n  \"amount\": 249,\n  \"validity\": \"28 days\",\n  \"description\": \"2GB/day\",\n  \"operatorId\": 1\n}\n\n ```\n\n---\n\n## Response\n\n### ✅ Success — 200 OK\n\n```\n{\n  \"amount\": 249,\n  \"validity\": \"28 days\",\n  \"description\": \"2GB/day\"\n}\n\n ```"
+      },
+      "response": [
+        {
+          "name": "Update Plan",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 249,\r\n  \"validity\": \"28 days\",\r\n  \"description\": \"2GB/day\",\r\n  \"operatorId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/plans/update/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "plans",
+                "update",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:17:42 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"amount\": 249,\n    \"validity\": \"28 days\",\n    \"description\": \"2GB/day\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Delete Plan",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 249,\r\n  \"validity\": \"28 days\",\r\n  \"description\": \"2GB/day\",\r\n  \"operatorId\": 1\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/plans/delete/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "plans",
+            "delete",
+            "2"
+          ]
+        },
+        "description": "StartFragment\n\n# Delete Plan\n\nDeletes a recharge plan from the system.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| Method | DELETE |\n| URL | [http://localhost:8086/aperatormanagement/plans/delete/{id}](http://localhost:8086/aperatormanagement/plans/delete/{id}) |\n\n---\n\n## Path Parameters\n\n| Parameter | Type | Description |\n| id | long | ID of the plan to delete |\n\n---\n\n## Response\n\n### ✅ Success — 204 No Content\n\nNo response body is returned.\n\n---\n\n## ⚠️ Notes\n\n- Plan should be deleted before deleting its operator\n    \n- If plan does not exist → error may occur"
+      },
+      "response": [
+        {
+          "name": "Delete Plan",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 249,\r\n  \"validity\": \"28 days\",\r\n  \"description\": \"2GB/day\",\r\n  \"operatorId\": 1\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/plans/delete/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "plans",
+                "delete",
+                "2"
+              ]
+            }
+          },
+          "status": "No Content",
+          "code": 204,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:18:27 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": null
+        }
+      ]
+    },
+    {
+      "name": "Delete Operator",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 249,\r\n  \"validity\": \"28 days\",\r\n  \"description\": \"2GB/day\",\r\n  \"operatorId\": 1\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8086/aperatormanagement/operators/delete/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8086",
+          "path": [
+            "aperatormanagement",
+            "operators",
+            "delete",
+            "2"
+          ]
+        },
+        "description": "StartFragment\n\n# Delete Operator\n\nDeletes an operator from the system.\n\n---\n\n## Endpoint Details\n\n| Property | Value |\n| Method | DELETE |\n| URL | [http://localhost:8086/aperatormanagement/operators/delete/{id](http://localhost:8086/aperatormanagement/operators/delete/{id)} |\n\n---\n\n## Path Parameters\n\n| Parameter | Type | Description |\n| id | long | ID of the operator to delete |\n\n---\n\n## Response\n\n### ✅ Success — 204 No Content\n\nNo response body is returned.\n\n---\n\n## ⚠️ Note\n\n- Ensure all related plans are deleted before deleting an operator."
+      },
+      "response": [
+        {
+          "name": "Delete Operator",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"amount\": 249,\r\n  \"validity\": \"28 days\",\r\n  \"description\": \"2GB/day\",\r\n  \"operatorId\": 1\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8086/aperatormanagement/operators/delete/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "aperatormanagement",
+                "operators",
+                "delete",
+                "2"
+              ]
+            }
+          },
+          "status": "No Content",
+          "code": 204,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 07:19:20 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": null
+        }
+      ]
+    }
+  ]
+}
