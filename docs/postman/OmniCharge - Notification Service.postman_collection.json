@@ -1,0 +1,95 @@
+{
+  "info": {
+    "_postman_id": "9be223b0-ec56-426b-b95f-dbf7b058003c",
+    "name": "OmniCharge - Notification Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52866406",
+    "_collection_link": "https://go.postman.co/collection/52866406-9be223b0-ec56-426b-b95f-dbf7b058003c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Send Notification",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"message\": \"Recharge successful\",\r\n  \"email\": \"test@gmail.com\",\r\n  \"phone\": \"9876543210\",\r\n  \"type\": \"EMAIL\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8085/notify",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8085",
+          "path": [
+            "notify"
+          ]
+        },
+        "description": "## Send Notification\n\nSends a notification to a user via the specified channel (e.g., EMAIL or SMS). This endpoint is used to trigger post-action notifications such as recharge confirmations, alerts, or updates.\n\n---\n\n### Method & URL\n\n```\nPOST http://localhost:8085/notify\n\n ```\n\n---\n\n### Request Body\n\nThe request body must be sent as **raw JSON** with the `Content-Type: application/json` header.\n\n| Field | Type | Required | Description |\n| --- | --- | --- | --- |\n| `message` | String | Yes | The notification message to be sent to the user. |\n| `email` | String | No\\* | The recipient's email address. Required if `type` is `EMAIL`. |\n| `phone` | String | No\\* | The recipient's phone number. Required if `type` is `SMS`. |\n| `type` | String | Yes | The notification channel. Accepted values: `EMAIL`, `SMS`. |\n\n> \\* Either `email` or `phone` must be provided depending on the `type` field. \n  \n\n---\n\n### Example Request Body\n\n``` json\n{\n  \"message\": \"Recharge successful\",\n  \"email\": \"test@gmail.com\",\n  \"phone\": \"9876543210\",\n  \"type\": \"EMAIL\"\n}\n\n ```\n\n---\n\n### Expected Response\n\n**Status:** `200 OK`\n\n**Body:**\n\n```\nNotification sent successfully!\n\n ```"
+      },
+      "response": [
+        {
+          "name": "Send Notification",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"message\": \"Recharge successful\",\r\n  \"email\": \"test@gmail.com\",\r\n  \"phone\": \"9876543210\",\r\n  \"type\": \"EMAIL\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8085/notify",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "notify"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "31"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 19 Mar 2026 14:08:11 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "Notification sent successfully!"
+        }
+      ]
+    }
+  ]
+}

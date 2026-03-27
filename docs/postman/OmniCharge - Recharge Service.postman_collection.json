@@ -1,0 +1,394 @@
+{
+  "info": {
+    "_postman_id": "d3caed06-e61c-4169-a57a-f0eb5d0034db",
+    "name": "OmniCharge - Recharge Service",
+    "description": "StartFragment\n\n# **OmniCharge - Recharge Service**\n\nThis collection contains the Recharge Processing API for the OmniCharge platform. It handles all operations related to creating and managing recharge requests made by users.\n\n**Base URL:** `http://localhost:8082`\n\n---\n\n## **Overview**\n\nThe Recharge Service is responsible for handling recharge-related operations — including creating a recharge request, fetching recharge details, and deleting recharge records. It also allows filtering recharges based on user and plan.\n\nAll requests in this collection are organized under the **Recharge Management APIs** folder.\n\n---\n\n## **Key Capabilities**\n\n| Operation | Method | Endpoint | Description |\n| --- | --- | --- | --- |\n| Add Recharge | POST | `/recharge/add-recharge` | Create a new recharge request |\n| Get All Recharges | GET | `/recharge` | Retrieve paginated list of all recharges |\n| Get Recharge By User ID | GET | `/recharge/user/{userId}` | Fetch all recharges for a specific user |\n| Get Recharge By Plan ID | GET | `/recharge/plan/{planId}` | Fetch all recharges for a specific plan |\n| Delete Recharge | DELETE | `/recharge/delete-recharge/{id}` | Delete a recharge by ID |\n\n---\n\n## **Getting Started**\n\n- Ensure the Recharge Service is running locally on port **8082**\n    \n- Use **Add Recharge** to create a new recharge request\n    \n- Use **Get All Recharges** to view all recharge records (supports pagination)\n    \n- Use **Get Recharge By User ID** to filter user-specific recharges\n    \n- Use **Get Recharge By Plan ID** to filter plan-specific recharges\n    \n- Use **Delete Recharge** to remove a recharge record",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52866406",
+    "_collection_link": "https://go.postman.co/collection/52866406-d3caed06-e61c-4169-a57a-f0eb5d0034db?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Add Recharge",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"userId\": 2,\r\n  \"planId\": 301,\r\n  \"status\": \"FAILED\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8082/recharge/add-recharge",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "recharge",
+            "add-recharge"
+          ]
+        },
+        "description": "StartFragment\n\n# **Add Recharge**\n\nCreates a new recharge request for a user with a selected plan.\n\n---\n\n### **Method:** POST\n\n### **URL:** `http://localhost:8082/recharge/add-recharge`\n\n---\n\n## **Request Body**\n\nThe request body must be sent as raw JSON (`application/json`).\n\n| Field | Type | Description |\n| --- | --- | --- |\n| userId | Long | ID of the user (required) |\n| planId | Long | ID of the recharge plan (required) |\n| status | String | Recharge status (optional: SUCCESS, FAILED, CANCELLED) |\n\n---\n\n### **Sample Request Body**\n\n```\n{  \"userId\": 1,  \"planId\": 101,  \"status\": \"SUCCESS\"}\n\n ```\n\n---\n\n## **Response**\n\n### **200 OK — Recharge created successfully**\n\n```\n{  \"id\": 1,  \"status\": \"SUCCESS\"}\n\n ```\n\n---\n\n## **Notes**\n\n- `userId` and `planId` are mandatory.\n    \n- `status` must match enum values: `SUCCESS`, `FAILED`, `CANCELLED`.\n    \n- If `status` is not provided, backend may assign a default value.\n    \n\nEndFragment"
+      },
+      "response": [
+        {
+          "name": "Add Recharge",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": 2,\r\n  \"planId\": 301,\r\n  \"status\": \"FAILED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/recharge/add-recharge",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "recharge",
+                "add-recharge"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 10:23:35 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"id\": 3,\n    \"status\": \"FAILED\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get All Recharges",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/recharge?page=0&size=10",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "recharge"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            }
+          ]
+        },
+        "description": "StartFragment\n\n# **Get All Recharges**\n\nRetrieves a paginated list of all recharge records.\n\n---\n\n### **Method:** GET\n\n### **URL:** `http://localhost:8082/recharge`\n\n---\n\n## **Query Parameters**\n\n| Param | Type | Description |\n| --- | --- | --- |\n| page | int | Page number (default: 0) |\n| size | int | Number of records per page |\n\n---\n\n### **Example Request**\n\n```\nhttp://localhost:8082/recharge?page=0&size=10\n\n ```\n\n---\n\n## **Response**\n\n### **200 OK — Recharges fetched successfully**\n\n```\n{  \"content\": [    {      \"id\": 1,      \"status\": \"SUCCESS\"    }  ],  \"totalPages\": 1,  \"totalElements\": 1,  \"size\": 10,  \"number\": 0}\n\n ```\n\n---\n\n## **Notes**\n\n- Uses Spring Boot pagination.\n    \n- Returns empty list if no data exists.\n    \n\nEndFragment"
+      },
+      "response": [
+        {
+          "name": "Get All Recharges",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/recharge?page=0&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "recharge"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 10:26:23 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"status\": null\n        },\n        {\n            \"id\": 2,\n            \"status\": \"SUCCESS\"\n        },\n        {\n            \"id\": 3,\n            \"status\": \"FAILED\"\n        }\n    ],\n    \"empty\": false,\n    \"first\": true,\n    \"last\": true,\n    \"number\": 0,\n    \"numberOfElements\": 3,\n    \"pageable\": {\n        \"offset\": 0,\n        \"pageNumber\": 0,\n        \"pageSize\": 10,\n        \"paged\": true,\n        \"sort\": [],\n        \"unpaged\": false\n    },\n    \"size\": 10,\n    \"sort\": [],\n    \"totalElements\": 3,\n    \"totalPages\": 1\n}"
+        }
+      ]
+    },
+    {
+      "name": "Delete Recharge",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/recharge/delete-recharge/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "recharge",
+            "delete-recharge",
+            "3"
+          ]
+        },
+        "description": "StartFragment\n\n# **Delete Recharge**\n\nDeletes a recharge record by its unique ID.\n\n---\n\n### **Method:** DELETE\n\n### **URL:** `http://localhost:8082/recharge/delete-recharge/{id}`\n\n---\n\n## **Path Parameter**\n\n| Param | Type | Description |\n| --- | --- | --- |\n| id | Long | Recharge ID |\n\n---\n\n## **Response**\n\n### **200 OK — Recharge deleted successfully**\n\n```\n\"Recharge deleted successfully\"\n\n ```\n\n---\n\n## **Notes**\n\n- The recharge ID must exist.\n    \n- This action is irreversible.\n    \n\nEndFragment"
+      },
+      "response": [
+        {
+          "name": "Delete Request",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/recharge/delete-recharge/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "recharge",
+                "delete-recharge",
+                "3"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain;charset=UTF-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "18"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 10:27:57 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "Recharge deleted!!"
+        }
+      ]
+    },
+    {
+      "name": "Get Recharges by User ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/recharge/user/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "recharge",
+            "user",
+            "2"
+          ]
+        },
+        "description": "StartFragment\n\n# **Get Recharges by User ID**\n\nFetches all recharge records associated with a specific user.\n\n---\n\n### **Method:** GET\n\n### **URL:** `http://localhost:8082/recharge/user/{userId}`\n\n---\n\n## **Path Parameter**\n\n| Param | Type | Description |\n| --- | --- | --- |\n| userId | Long | ID of the user |\n\n---\n\n## **Response**\n\n### **200 OK — Recharges fetched successfully**\n\n```\n[  {    \"id\": 1,    \"status\": \"SUCCESS\"  }]\n\n ```\n\n---\n\n## **Notes**\n\n- Returns empty list if no records found.\n    \n\nEndFragment"
+      },
+      "response": [
+        {
+          "name": "Get Recharges by User ID",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/recharge/user/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "recharge",
+                "user",
+                "2"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 10:30:22 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[]"
+        }
+      ]
+    },
+    {
+      "name": "Get Recharges by Plan ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/recharge/plan/301",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "recharge",
+            "plan",
+            "301"
+          ]
+        },
+        "description": "StartFragment\n\n# **Get Recharges by Plan ID**\n\nFetches all recharge records associated with a specific plan.\n\n---\n\n### **Method:** GET\n\n### **URL:** `http://localhost:8082/recharge/plan/{planId}`\n\n---\n\n## **Path Parameter**\n\n| Param | Type | Description |\n| --- | --- | --- |\n| planId | Long | ID of the recharge plan |\n\n---\n\n## **Response**\n\n### **200 OK — Recharges fetched successfully**\n\n```\n[  {    \"id\": 1,    \"status\": \"SUCCESS\"  }]\n\n ```\n\n---\n\n## **Notes**\n\n- Returns empty list if no records found.\n    \n\nEndFragment"
+      },
+      "response": [
+        {
+          "name": "Get Recharges by Plan ID",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8082/recharge/plan/301",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "recharge",
+                "plan",
+                "301"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 18 Mar 2026 10:31:52 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "[]"
+        }
+      ]
+    }
+  ]
+}
