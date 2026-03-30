@@ -34,20 +34,20 @@ public class PlanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PlanResponseDTO> getPlan(@PathVariable long id) {
+    public ResponseEntity<PlanResponseDTO> getPlan(@PathVariable("id") long id) {
         return ResponseEntity.ok(planService.getPlan(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
-    public ResponseEntity<PlanResponseDTO> updatePlan(@Valid @PathVariable long id,
+    public ResponseEntity<PlanResponseDTO> updatePlan(@Valid @PathVariable("id") long id,
                                                       @RequestBody PlanRequestDTO dto) {
         return ResponseEntity.ok(planService.updatePlan(id, dto));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deletePlan(@PathVariable long id,
+    public ResponseEntity<Void> deletePlan(@PathVariable("id") long id,
                                            @RequestBody(required = false) PlanRequestDTO dto) {
         planService.deletePlan(id, dto);
         return ResponseEntity.noContent().build();

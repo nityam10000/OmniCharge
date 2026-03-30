@@ -3,7 +3,7 @@ package com.omnicharge.rechargeprocessing.dto;
 
 import java.io.Serializable;
 
-import com.omnicharge.usermanagement.enums.Roles;
+import com.omnicharge.rechargeprocessing.enums.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

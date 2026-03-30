@@ -1,6 +1,9 @@
-2026-03-23 15:10:14.778 [http-nio-8086-exec-3] INFO  c.o.o.service.PlanServiceImpl - Fetching plan with ID: 1
-2026-03-23 15:10:14.858 [http-nio-8086-exec-3] INFO  c.o.o.service.PlanServiceImpl - Plan retrieved successfully with ID: 1
-2026-03-23 15:10:34.619 [http-nio-8086-exec-7] INFO  c.o.o.service.PlanServiceImpl - Fetching plan with ID: 3
-2026-03-23 15:10:34.622 [http-nio-8086-exec-7] ERROR c.o.o.service.PlanServiceImpl - Plan not found with id: 3
-2026-03-23 15:10:38.051 [http-nio-8086-exec-8] INFO  c.o.o.service.PlanServiceImpl - Fetching plan with ID: 3
-2026-03-23 15:10:38.054 [http-nio-8086-exec-8] ERROR c.o.o.service.PlanServiceImpl - Plan not found with id: 3
+2026-03-28 09:57:15.201 [http-nio-8086-exec-1] INFO  c.o.o.service.PlanServiceImpl - Adding new plan with details - Operator ID: 2, Amount: 999.0, Validity: 200 days
+2026-03-28 09:57:15.293 [http-nio-8086-exec-1] INFO  c.o.o.service.PlanServiceImpl - Plan added successfully with ID: 152
+2026-03-28 09:58:32.499 [http-nio-8086-exec-3] INFO  c.o.o.service.PlanServiceImpl - Adding new plan with details - Operator ID: 2, Amount: 999.0, Validity: 200 days
+2026-03-28 09:59:12.274 [http-nio-8086-exec-3] INFO  c.o.o.service.PlanServiceImpl - Adding new plan with details - Operator ID: 2, Amount: 999.0, Validity: 200 days
+2026-03-28 09:59:12.347 [http-nio-8086-exec-3] INFO  c.o.o.service.PlanServiceImpl - Plan added successfully with ID: 202
+2026-03-28 10:17:22.841 [http-nio-8086-exec-1] INFO  c.o.o.service.PlanServiceImpl - Fetching plan with ID: 202
+2026-03-28 10:17:22.917 [http-nio-8086-exec-1] INFO  c.o.o.service.PlanServiceImpl - Plan retrieved successfully with ID: 202
+2026-03-28 10:26:22.558 [http-nio-8086-exec-2] INFO  c.o.o.service.PlanServiceImpl - Fetching plan with ID: 202
+2026-03-28 10:26:22.562 [http-nio-8086-exec-2] INFO  c.o.o.service.PlanServiceImpl - Plan retrieved successfully with ID: 202

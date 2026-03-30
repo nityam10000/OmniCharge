@@ -1,8 +1,7 @@
-2026-03-26 01:25:45.339 [http-nio-8081-exec-6] INFO  c.o.u.s.implementations.UserService - Fetching user with ID: 4
-2026-03-26 01:25:45.410 [http-nio-8081-exec-6] ERROR c.o.u.s.implementations.UserService - User not found with id: 4
-2026-03-26 01:26:24.745 [http-nio-8081-exec-10] INFO  c.o.u.s.implementations.UserService - Fetching user with ID: 4
-2026-03-26 01:26:24.748 [http-nio-8081-exec-10] ERROR c.o.u.s.implementations.UserService - User not found with id: 4
-2026-03-26 01:26:25.722 [http-nio-8081-exec-1] INFO  c.o.u.s.implementations.UserService - Fetching user with ID: 4
-2026-03-26 01:26:25.734 [http-nio-8081-exec-1] ERROR c.o.u.s.implementations.UserService - User not found with id: 4
-2026-03-26 01:26:28.307 [http-nio-8081-exec-2] INFO  c.o.u.s.implementations.UserService - Fetching user with ID: 4
-2026-03-26 01:26:28.310 [http-nio-8081-exec-2] ERROR c.o.u.s.implementations.UserService - User not found with id: 4
+2026-03-28 09:28:51.648 [http-nio-8081-exec-5] INFO  c.o.u.s.implementations.UserService - Attempting to add new user with email: nityamsalgotra900@gmail.com
+2026-03-28 09:28:52.563 [http-nio-8081-exec-5] INFO  c.o.u.s.implementations.UserService - User with email nityamsalgotra900@gmail.com has been created successfully
+2026-03-28 09:28:52.715 [http-nio-8081-exec-5] INFO  c.o.u.s.implementations.UserService - Welcome notification published for new user: email=nityamsalgotra900@gmail.com
+2026-03-28 10:26:22.930 [http-nio-8081-exec-6] INFO  c.o.u.s.implementations.UserService - Fetching user with email: nityamsalgotra900@gmail.com
+2026-03-28 10:26:23.041 [http-nio-8081-exec-6] INFO  c.o.u.s.implementations.UserService - User retrieved successfully with email: nityamsalgotra900@gmail.com
+2026-03-28 11:09:56.928 [http-nio-8081-exec-1] INFO  c.o.u.s.implementations.UserService - Fetching current logged-in user with email: nityamsalgotra900@gmail.com
+2026-03-28 11:09:57.661 [http-nio-8081-exec-1] INFO  c.o.u.s.implementations.UserService - Current user retrieved successfully with email: nityamsalgotra900@gmail.com

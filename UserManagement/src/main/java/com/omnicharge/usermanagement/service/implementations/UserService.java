@@ -33,11 +33,11 @@ public class UserService implements IUserService {
     private final IUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomMapper mapper;
-    private final RabbitTemplate rabbitTemplate; // ← NEW
+    private final RabbitTemplate rabbitTemplate;
 
-    // ─────────────────────────────────────────────────────────────
-    //  addUser — UPDATED: sends welcome email after registration
-    // ─────────────────────────────────────────────────────────────
+
+    //  addUser — sends welcome email after registration
+
 
     @Override
     @CachePut(value = "user", key = "#userRequestDTO.email")
@@ -55,15 +55,14 @@ public class UserService implements IUserService {
 
         log.info("User with email {} has been created successfully", userRequestDTO.getEmail());
 
-        // ── NEW: Publish welcome notification ─────────────────────────────
         sendWelcomeNotification(savedUser);
 
         return savedUser;
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  All other methods — unchanged
-    // ─────────────────────────────────────────────────────────────
+
+    //  getAllUsers
+
 
     @Override
     @Cacheable(value = "userList")
@@ -74,6 +73,10 @@ public class UserService implements IUserService {
         log.info("Successfully retrieved {} users", users.size());
         return users;
     }
+
+
+    //  getUserById
+
 
     @Override
     @Cacheable(value = "user", key = "#id")
@@ -87,6 +90,10 @@ public class UserService implements IUserService {
         log.info("User retrieved successfully with ID: {}", id);
         return mapper.toResponseDTO(userEntity);
     }
+
+
+    //  updateUser
+
 
     @Override
     @Caching(
@@ -103,7 +110,6 @@ public class UserService implements IUserService {
         });
         userEntity.setName(userRequestDTO.getName());
         userEntity.setEmail(userRequestDTO.getEmail());
-
         userEntity.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         userEntity.setContactNo(userRequestDTO.getContactNo());
 
@@ -111,6 +117,10 @@ public class UserService implements IUserService {
         log.info("User with ID: {} updated successfully", id);
         return updated;
     }
+
+
+    //  getUserByEmail
+
 
     @Cacheable(value = "user", key = "#email")
     public UserResponseDTO getUserByEmail(String email) {
@@ -124,11 +134,14 @@ public class UserService implements IUserService {
         return mapper.toResponseDTO(user);
     }
 
+
+    //  deleteUser
+
+
     @Override
     @Caching(evict = {
             @CacheEvict(value = "user", key = "#id"),
             @CacheEvict(value = "userList", allEntries = true)
-
     })
     public String deleteUser(Long id) {
         log.info("Deleting user with ID: {}", id);
@@ -138,9 +151,12 @@ public class UserService implements IUserService {
         });
         userRepository.delete(userEntity);
         log.info("User with ID: {} deleted successfully", id);
-
         return "User with Id: " + id + " has been deleted!";
     }
+
+
+    //  updateUserRole
+
 
     @Override
     @Caching(
@@ -159,11 +175,11 @@ public class UserService implements IUserService {
         return user.getName() + " promoted to " + roleUpdateDTO.getRole() + "!!";
     }
 
+
     @Override
-    @Cacheable(value = "user", key = "#root.target.getLoggedInUserEmail()")
+    @Cacheable(value = "user", key = "#root.target.getAuthenticatedEmail()")
     public UserResponseDTO getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
+        String email = getAuthenticatedEmail();
         log.info("Fetching current logged-in user with email: {}", email);
         UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> {
             log.error("Current logged-in user not found with email: {}", email);
@@ -173,15 +189,12 @@ public class UserService implements IUserService {
         return mapper.toResponseDTO(user);
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  Private helpers
-    // ─────────────────────────────────────────────────────────────
 
-    /**
-     * Publishes a WELCOME notification event to notification_exchange.
-     * notification-service consumes it and sends a welcome email.
-     * Failure is swallowed — a broken notification must never roll back registration.
-     */
+    public String getAuthenticatedEmail() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+
     private void sendWelcomeNotification(UserResponseDTO user) {
         try {
             String message = "Hi " + user.getName() + ", welcome to OmniCharge! " +
@@ -206,7 +219,6 @@ public class UserService implements IUserService {
             log.info("Welcome notification published for new user: email={}", user.getEmail());
 
         } catch (Exception e) {
-            // Never let notification failure break the registration response
             log.error("Failed to publish welcome notification for email={}: {}",
                     user.getEmail(), e.getMessage());
         }
@@ -219,7 +231,7 @@ public class UserService implements IUserService {
         if (role.equals("ROLE_ADMIN")) return;
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        if (user.getUserId() != userId) {
+        if (!user.getUserId().equals(userId)) {
             throw new RuntimeException("Access Denied");
         }
     }

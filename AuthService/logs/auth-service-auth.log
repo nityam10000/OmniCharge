@@ -1,2 +1,6 @@
-2026-03-26 20:35:59.243 [http-nio-8089-exec-2] INFO  c.o.a.service.MyUserDetailsService - Loading user details for email: test@gmail.com
-2026-03-26 20:35:59.914 [http-nio-8089-exec-2] INFO  c.o.a.service.MyUserDetailsService - User details loaded successfully for email: test@gmail.com
+2026-03-28 09:24:24.280 [http-nio-8089-exec-1] INFO  c.o.a.service.MyUserDetailsService - Loading user details for email: test@gmail.com
+2026-03-28 09:24:25.124 [http-nio-8089-exec-1] INFO  c.o.a.service.MyUserDetailsService - User details loaded successfully for email: test@gmail.com
+2026-03-28 09:32:03.267 [http-nio-8089-exec-3] INFO  c.o.a.service.MyUserDetailsService - Loading user details for email: nityamsalgotra900@gmail.com
+2026-03-28 09:32:03.271 [http-nio-8089-exec-3] INFO  c.o.a.service.MyUserDetailsService - User details loaded successfully for email: nityamsalgotra900@gmail.com
+2026-03-28 09:54:07.124 [http-nio-8089-exec-5] INFO  c.o.a.service.MyUserDetailsService - Loading user details for email: test@gmail.com
+2026-03-28 09:54:07.129 [http-nio-8089-exec-5] INFO  c.o.a.service.MyUserDetailsService - User details loaded successfully for email: test@gmail.com
