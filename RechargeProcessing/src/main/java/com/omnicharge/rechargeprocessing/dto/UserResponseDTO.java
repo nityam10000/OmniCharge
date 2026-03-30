@@ -3,7 +3,11 @@ package com.omnicharge.rechargeprocessing.dto;
 
 import java.io.Serializable;
 
+<<<<<<< HEAD
 import com.omnicharge.rechargeprocessing.enums.Roles;
+=======
+import com.omnicharge.usermanagement.enums.Roles;
+>>>>>>> origin/bhavik
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

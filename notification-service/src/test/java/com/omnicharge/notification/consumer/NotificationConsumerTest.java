@@ -16,8 +16,16 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class NotificationConsumerTest {
 
+<<<<<<< HEAD
     @Mock private EmailService emailService;
     @Mock private WhatsAppService whatsAppService;
+=======
+    @Mock
+    private EmailService emailService;
+
+    @Mock
+    private WhatsAppService whatsAppService;
+>>>>>>> origin/bhavik
 
     @InjectMocks
     private NotificationConsumer notificationConsumer;
@@ -26,6 +34,7 @@ class NotificationConsumerTest {
 
     @BeforeEach
     void setUp() {
+<<<<<<< HEAD
         event = new NotificationEvent(
                 "Your recharge of Rs.299 was successful!",
                 "rahul@example.com",
@@ -127,12 +136,105 @@ class NotificationConsumerTest {
     void consume_ShouldNotThrow_WhenBothFail() {
         doThrow(new RuntimeException("SMTP error"))
                 .when(emailService).sendEmail(anyString(), anyString());
+=======
+        event = new NotificationEvent();
+        event.setMessage("Your recharge of Rs.299 was successful!");
+        event.setEmail("rahul@example.com");
+        event.setPhoneNumber("9876543210");
+        event.setType("PAYMENT_SUCCESS");
+
+        // optional fields used in buildMessage
+        event.setRechargeId("RX123");
+        event.setAmount(299.0);
+        event.setMobile("9876543210");
+        event.setOperator("Jio");
+        event.setDate("2026-03-26");
+    }
+
+    // ✅ Happy path
+    @Test
+    @DisplayName("consume: should send email and WhatsApp when both present")
+    void consume_ShouldSendEmailAndWhatsApp() {
+
+        doNothing().when(emailService).sendEmail(anyString(), any(NotificationEvent.class));
+        doNothing().when(whatsAppService).sendWhatsAppMessage(anyString(), anyString());
+
+        notificationConsumer.consume(event);
+
+        verify(emailService).sendEmail(eq("rahul@example.com"), eq(event));
+
+        verify(whatsAppService).sendWhatsAppMessage(
+                eq("9876543210"),
+                anyString() // because buildMessage() generates it
+        );
+    }
+
+    // ✅ Phone null → only email
+    @Test
+    void consume_ShouldSendOnlyEmail_WhenPhoneNull() {
+        event.setPhoneNumber(null);
+
+        notificationConsumer.consume(event);
+
+        verify(emailService).sendEmail(eq("rahul@example.com"), eq(event));
+        verify(whatsAppService, never()).sendWhatsAppMessage(anyString(), anyString());
+    }
+
+    // ✅ Phone blank → only email
+    @Test
+    void consume_ShouldSendOnlyEmail_WhenPhoneBlank() {
+        event.setPhoneNumber("   ");
+
+        notificationConsumer.consume(event);
+
+        verify(emailService).sendEmail(eq("rahul@example.com"), eq(event));
+        verify(whatsAppService, never()).sendWhatsAppMessage(anyString(), anyString());
+    }
+
+    // ✅ Email fails → WhatsApp still works
+    @Test
+    void consume_ShouldStillSendWhatsApp_WhenEmailFails() {
+
+        doThrow(new RuntimeException("SMTP error"))
+                .when(emailService).sendEmail(anyString(), any(NotificationEvent.class));
+
+        notificationConsumer.consume(event);
+
+        verify(emailService).sendEmail(anyString(), any(NotificationEvent.class));
+        verify(whatsAppService).sendWhatsAppMessage(anyString(), anyString());
+    }
+
+    // ✅ WhatsApp fails → no crash
+    @Test
+    void consume_ShouldNotThrow_WhenWhatsAppFails() {
+
         doThrow(new RuntimeException("Twilio error"))
                 .when(whatsAppService).sendWhatsAppMessage(anyString(), anyString());
 
         notificationConsumer.consume(event);
 
+        verify(emailService).sendEmail(anyString(), any(NotificationEvent.class));
+        verify(whatsAppService).sendWhatsAppMessage(anyString(), anyString());
+    }
+
+    // ✅ Both fail → no crash
+    @Test
+    void consume_ShouldNotThrow_WhenBothFail() {
+
+        doThrow(new RuntimeException("SMTP error"))
+                .when(emailService).sendEmail(anyString(), any(NotificationEvent.class));
+
+>>>>>>> origin/bhavik
+        doThrow(new RuntimeException("Twilio error"))
+                .when(whatsAppService).sendWhatsAppMessage(anyString(), anyString());
+
+        notificationConsumer.consume(event);
+
+<<<<<<< HEAD
         verify(emailService).sendEmail(anyString(), anyString());
+=======
+        verify(emailService).sendEmail(anyString(), any(NotificationEvent.class));
+>>>>>>> origin/bhavik
         verify(whatsAppService).sendWhatsAppMessage(anyString(), anyString());
     }
 }

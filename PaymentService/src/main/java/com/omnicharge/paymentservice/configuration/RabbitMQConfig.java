@@ -3,8 +3,8 @@ package com.omnicharge.paymentservice.configuration;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
-import org.springframework.beans.factory.annotation.Qualifier;
+
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,7 +32,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding notificationBinding(@Qualifier("notificationQueue") Queue notificationQueue,
+
+    public Binding notificationBinding(Queue notificationQueue,
                                        DirectExchange notificationExchange) {
         return BindingBuilder.bind(notificationQueue)
                 .to(notificationExchange).with(ROUTING_KEY);
@@ -68,7 +69,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding sagaDlqBinding(@Qualifier("sagaDeadLetterQueue") Queue sagaDeadLetterQueue,
+
+    public Binding sagaDlqBinding(Queue sagaDeadLetterQueue,
                                   DirectExchange sagaDeadLetterExchange) {
         return BindingBuilder.bind(sagaDeadLetterQueue)
                 .to(sagaDeadLetterExchange).with(SAGA_DLQ);
@@ -91,14 +93,16 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding paymentSagaCompletedBinding(@Qualifier("paymentSagaQueue") Queue paymentSagaQueue,
+
+    public Binding paymentSagaCompletedBinding(Queue paymentSagaQueue,
                                                DirectExchange sagaExchange) {
         return BindingBuilder.bind(paymentSagaQueue)
                 .to(sagaExchange).with(SAGA_ROUTING_COMPLETED);
     }
 
     @Bean
-    public Binding paymentSagaFailedBinding(@Qualifier("paymentSagaQueue") Queue paymentSagaQueue,
+
+    public Binding paymentSagaFailedBinding(Queue paymentSagaQueue,
                                             DirectExchange sagaExchange) {
         return BindingBuilder.bind(paymentSagaQueue)
                 .to(sagaExchange).with(SAGA_ROUTING_FAILED);
@@ -111,7 +115,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding sagaReplyBinding(@Qualifier("sagaReplyQueue") Queue sagaReplyQueue,
+
+    public Binding sagaReplyBinding(Queue sagaReplyQueue,
                                     DirectExchange sagaExchange) {
         return BindingBuilder.bind(sagaReplyQueue)
                 .to(sagaExchange).with(SAGA_REPLY_ROUTING);
@@ -120,12 +125,12 @@ public class RabbitMQConfig {
     // ── Shared infra beans ────────────────────────────────────────
 
     @Bean
-    public JacksonJsonMessageConverter messageConverter() {
-        return new JacksonJsonMessageConverter();
+    public Jackson2JsonMessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
-                                         JacksonJsonMessageConverter messageConverter) {
+                                         Jackson2JsonMessageConverter messageConverter) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(messageConverter);
         return template;

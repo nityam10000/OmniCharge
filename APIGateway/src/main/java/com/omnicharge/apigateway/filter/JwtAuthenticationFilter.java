@@ -26,6 +26,10 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
     private static final List<String> PUBLIC_ENDPOINTS = List.of(
             "/auth/login",
+            "/auth/send-otp",
+            "/auth/verify-otp",
+            "/auth/forgot-password",
+            "/auth/reset-password",
             "/users/register"
     );
 
@@ -44,6 +48,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
             "/operators/metrics",
             "/plans/metrics",
             "/notifications/metrics"
+
     );
 
     private boolean isPublicPath(String path) {

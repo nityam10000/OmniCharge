@@ -3,7 +3,11 @@ package com.omnicharge.rechargeprocessing.configuration;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+<<<<<<< HEAD
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+=======
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+>>>>>>> origin/bhavik
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -71,13 +75,22 @@ public class RabbitMQConfig {
 
     // ── Shared infra ──────────────────────────────────────────────
     @Bean
+<<<<<<< HEAD
     public JacksonJsonMessageConverter messageConverter() {
         return new JacksonJsonMessageConverter();
+=======
+    public Jackson2JsonMessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
+>>>>>>> origin/bhavik
     }
 
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
+<<<<<<< HEAD
                                          JacksonJsonMessageConverter messageConverter) {
+=======
+                                         Jackson2JsonMessageConverter messageConverter) {
+>>>>>>> origin/bhavik
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(messageConverter);
         return template;
