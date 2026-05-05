@@ -1,0 +1,452 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init-multiple-dbs.sh:/docker-entrypoint-initdb.d/01-init-dbs.sh:ro
+      - ./init-data.sql:/docker-entrypoint-initdb.d/02-init-data.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - omnicharge
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - omnicharge
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 15s
+      timeout: 15s
+      retries: 20
+      start_period: 40s
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - omnicharge
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9411/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - omnicharge
+
+
+  eureka-server:
+    build:
+      context: .
+      dockerfile: ./EurekaServer/Dockerfile
+    container_name: eureka-server
+    environment:
+      EUREKA_HOST: eureka-server
+      EUREKA_PORT: 8761
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_REDIS_HOST: redis
+      SPRING_DATA_REDIS_HOST: redis
+      ZIPKIN_HOST: zipkin
+      ZIPKIN_PORT: 9411
+    depends_on:
+      zipkin:
+        condition: service_healthy
+    ports:
+      - "8761:8761"
+    networks:
+      - omnicharge
+
+  config-server:
+    build:
+      context: .
+      dockerfile: ./OmniCharge-config-server/Dockerfile
+    container_name: config-server
+    environment:
+      EUREKA_HOST: eureka-server
+      EUREKA_PORT: 8761
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_REDIS_HOST: redis
+      SPRING_DATA_REDIS_HOST: redis
+      EUREKA_INSTANCE_HOSTNAME: config-server
+      ZIPKIN_HOST: zipkin
+      ZIPKIN_PORT: 9411
+      CONFIG_GIT_URI: ${CONFIG_GIT_URI:-https://github.com/nityam10000/omniCharge-cloud-config.git}
+    depends_on:
+      eureka-server:
+        condition: service_started
+      zipkin:
+        condition: service_healthy
+    ports:
+      - "9999:9999"
+    networks:
+      - omnicharge
+
+  user-management:
+    build:
+      context: .
+      dockerfile: ./UserManagement/Dockerfile
+    container_name: user-management
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      EUREKA_HOST: eureka-server
+      EUREKA_PORT: 8761
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_REDIS_HOST: redis
+      SPRING_DATA_REDIS_HOST: redis
+      EUREKA_INSTANCE_HOSTNAME: user-management
+      CONFIG_HOST: config-server
+      CONFIG_PORT: 9999
+      CONFIG_SERVER_URI: http://config-server:9999/config
+      ZIPKIN_HOST: zipkin
+      ZIPKIN_PORT: 9411
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      zipkin:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    networks:
+      - omnicharge
+
+  recharge-processing:
+    build:
+      context: .
+      dockerfile: ./RechargeProcessing/Dockerfile
+    container_name: recharge-processing
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      EUREKA_HOST: eureka-server
+      EUREKA_PORT: 8761
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_REDIS_HOST: redis
+      SPRING_DATA_REDIS_HOST: redis
+      EUREKA_INSTANCE_HOSTNAME: recharge-processing
+      CONFIG_HOST: config-server
+      CONFIG_PORT: 9999
+      CONFIG_SERVER_URI: http://config-server:9999/config
+      ZIPKIN_HOST: zipkin
+      ZIPKIN_PORT: 9411
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      zipkin:
+        condition: service_healthy
+    ports:
+      - "8083:8083"
+    networks:
+      - omnicharge
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: ./PaymentService/Dockerfile
+    container_name: payment-service
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET}
+      EUREKA_HOST: eureka-server
+      EUREKA_PORT: 8761
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_REDIS_HOST: redis
+      SPRING_DATA_REDIS_HOST: redis
+      EUREKA_INSTANCE_HOSTNAME: payment-service
+      CONFIG_HOST: config-server
+      CONFIG_PORT: 9999
+      CONFIG_SERVER_URI: http://config-server:9999/config
+      ZIPKIN_HOST: zipkin
+      ZIPKIN_PORT: 9411
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      zipkin:
+        condition: service_healthy
+    ports:
+      - "8084:8084"
+    networks:
+      - omnicharge
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: ./notification-service/Dockerfile
+    container_name: notification-service
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_SMTP_AUTH: ${MAIL_SMTP_AUTH}
+      MAIL_SMTP_STARTTLS_ENABLE: ${MAIL_SMTP_STARTTLS_ENABLE}
+      MAIL_SMTP_STARTTLS_REQUIRED: ${MAIL_SMTP_STARTTLS_REQUIRED}
+      MAIL_SMTP_SSL_PROTOCOLS: ${MAIL_SMTP_SSL_PROTOCOLS}
+      EUREKA_HOST: eureka-server
+      EUREKA_PORT: 8761
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_REDIS_HOST: redis
+      SPRING_DATA_REDIS_HOST: redis
+      EUREKA_INSTANCE_HOSTNAME: notification-service
+      CONFIG_HOST: config-server
+      CONFIG_PORT: 9999
+      CONFIG_SERVER_URI: http://config-server:9999/config
+      ZIPKIN_HOST: zipkin
+      ZIPKIN_PORT: 9411
+    depends_on:
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      zipkin:
+        condition: service_healthy
+    ports:
+      - "8085:8085"
+    networks:
+      - omnicharge
+
+  operator-plan-management:
+    build:
+      context: .
+      dockerfile: ./OperatorPlanManagement/Dockerfile
+    container_name: operator-plan-management
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      EUREKA_HOST: eureka-server
+      EUREKA_PORT: 8761
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_REDIS_HOST: redis
+      SPRING_DATA_REDIS_HOST: redis
+      EUREKA_INSTANCE_HOSTNAME: operator-plan-management
+      CONFIG_HOST: config-server
+      CONFIG_PORT: 9999
+      CONFIG_SERVER_URI: http://config-server:9999/config
+      ZIPKIN_HOST: zipkin
+      ZIPKIN_PORT: 9411
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      zipkin:
+        condition: service_healthy
+    ports:
+      - "8086:8086"
+    networks:
+      - omnicharge
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./APIGateway/Dockerfile
+    container_name: api-gateway
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      EUREKA_HOST: eureka-server
+      EUREKA_PORT: 8761
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_REDIS_HOST: redis
+      SPRING_DATA_REDIS_HOST: redis
+      EUREKA_INSTANCE_HOSTNAME: api-gateway
+      CONFIG_HOST: config-server
+      CONFIG_PORT: 9999
+      CONFIG_SERVER_URI: http://config-server:9999/config
+      ZIPKIN_HOST: zipkin
+      ZIPKIN_PORT: 9411
+    depends_on:
+      redis:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      zipkin:
+        condition: service_healthy
+    ports:
+      - "8087:8087"
+    networks:
+      - omnicharge
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: ./AuthService/Dockerfile
+    container_name: auth-service
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      EUREKA_HOST: eureka-server
+      EUREKA_PORT: 8761
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_REDIS_HOST: redis
+      SPRING_DATA_REDIS_HOST: redis
+      EUREKA_INSTANCE_HOSTNAME: auth-service
+      CONFIG_HOST: config-server
+      CONFIG_PORT: 9999
+      CONFIG_SERVER_URI: http://config-server:9999/config
+      ZIPKIN_HOST: zipkin
+      ZIPKIN_PORT: 9411
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+      zipkin:
+        condition: service_healthy
+    ports:
+      - "8089:8089"
+    networks:
+      - omnicharge
+
+  sonarqube:
+    image: sonarqube:10-community
+    container_name: sonarqube
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://postgres:5432/sonarqube
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLED: "true"
+    ports:
+      - "9000:9000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9000/api/system/health || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+    networks:
+      - omnicharge
+
+networks:
+  omnicharge:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:

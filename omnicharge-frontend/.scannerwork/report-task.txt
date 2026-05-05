@@ -1,0 +1,6 @@
+projectKey=omnicharge-frontend
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=omnicharge-frontend
+ceTaskId=49d1e291-3ac0-4741-8c3e-539d19ceffd1
+ceTaskUrl=http://localhost:9000/api/ce/task?id=49d1e291-3ac0-4741-8c3e-539d19ceffd1

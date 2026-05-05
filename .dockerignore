@@ -1,0 +1,10 @@
+.git
+.idea
+**/target
+**/bin
+**/logs
+**/*.iml
+logs
+query
+test.html
+DOCKERIZATION_GUIDE.md
