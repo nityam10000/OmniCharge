@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS operator_entity (
 
 CREATE TABLE IF NOT EXISTS plan_entity (
     id BIGSERIAL PRIMARY KEY,
-    plan_name VARCHAR(255),
     amount DOUBLE PRECISION,
     validity VARCHAR(255),
     description VARCHAR(500),
@@ -32,12 +31,12 @@ INSERT INTO operator_entity (id, name) VALUES
 ON CONFLICT (id) DO NOTHING;
 
 -- Insert Plans
-INSERT INTO plan_entity (id, plan_name, amount, validity, description, operator_id) VALUES 
-(1, 'Jio Basic', 149, '28 days', 'Jio Basic Plan - 2GB/day', 1),
-(2, 'Jio Premium', 299, '56 days', 'Jio Premium Plan - 3GB/day', 1),
-(3, 'Airtel Basic', 99, '28 days', 'Airtel Basic Plan - 1.5GB/day', 2),
-(4, 'Vodafone 2GB', 199, '28 days', 'Vodafone Plan - 2GB/day', 3),
-(5, 'BSNL 1GB', 79, '28 days', 'BSNL Plan - 1GB/day', 4)
+INSERT INTO plan_entity (id, amount, validity, description, operator_id) VALUES 
+(1, 149, '28 days', 'Jio Basic Plan - 2GB/day', 1),
+(2, 299, '56 days', 'Jio Premium Plan - 3GB/day', 1),
+(3, 99, '28 days', 'Airtel Basic Plan - 1.5GB/day', 2),
+(4, 199, '28 days', 'Vodafone Plan - 2GB/day', 3),
+(5, 79, '28 days', 'BSNL Plan - 1GB/day', 4)
 ON CONFLICT (id) DO NOTHING;
 
 -- Insert Users (Password: Hashed with bcrypt - "password123")

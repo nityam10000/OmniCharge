@@ -38,9 +38,9 @@ class PlanServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        planEntity = new PlanEntity(1L, 299.0, "28 days", "Unlimited calls + 2GB/day", 1L);
-        requestDTO = new PlanRequestDTO(299.0, "28 days", "Unlimited calls + 2GB/day", 1L);
-        responseDTO = new PlanResponseDTO(1L, 1L, 299.0, "28 days", "Unlimited calls + 2GB/day");
+        planEntity = new PlanEntity(1L, null, 299.0, "28 days", "Unlimited calls + 2GB/day", 1L);
+        requestDTO = new PlanRequestDTO(299.0, "28 days", "Unlimited calls + 2GB/day", 1L, null);
+        responseDTO = new PlanResponseDTO(1L, 1L, 299.0, "28 days", "Unlimited calls + 2GB/day", null);
     }
 
     // ══════════════════════════════════════════════════════
@@ -69,8 +69,8 @@ class PlanServiceImplTest {
     @Test
     @DisplayName("getPlanList: should return list of all plans")
     void getPlanList_ShouldReturnAllPlans() {
-        PlanEntity plan2 = new PlanEntity(2L, 599.0, "84 days", "Unlimited + 3GB/day", 1L);
-        PlanResponseDTO resp2 = new PlanResponseDTO(2L, 1L, 599.0, "84 days", "Unlimited + 3GB/day");
+        PlanEntity plan2 = new PlanEntity(2L, null, 599.0, "84 days", "Unlimited + 3GB/day", 1L);
+        PlanResponseDTO resp2 = new PlanResponseDTO(2L, 1L, 599.0, "84 days", "Unlimited + 3GB/day", null);
         when(planRepo.findAll()).thenReturn(List.of(planEntity, plan2));
         when(mapper.planToDTO(planEntity)).thenReturn(responseDTO);
         when(mapper.planToDTO(plan2)).thenReturn(resp2);
@@ -126,10 +126,10 @@ class PlanServiceImplTest {
     @Test
     @DisplayName("updatePlan: should update all fields and return updated DTO")
     void updatePlan_ShouldUpdateAndReturn_WhenFound() {
-        PlanRequestDTO updateDTO = new PlanRequestDTO(399.0, "56 days", "Unlimited + 2.5GB/day", 1L);
+        PlanRequestDTO updateDTO = new PlanRequestDTO(399.0, "56 days", "Unlimited + 2.5GB/day", 1L, null);
         when(planRepo.findById(1L)).thenReturn(Optional.of(planEntity));
         when(planRepo.save(planEntity)).thenReturn(planEntity);
-        when(mapper.planToDTO(planEntity)).thenReturn(new PlanResponseDTO(1L, 1L, 399.0, "56 days", "Unlimited + 2.5GB/day"));
+        when(mapper.planToDTO(planEntity)).thenReturn(new PlanResponseDTO(1L, 1L, 399.0, "56 days", "Unlimited + 2.5GB/day", null));
 
         PlanResponseDTO result = planService.updatePlan(1L, updateDTO);
 

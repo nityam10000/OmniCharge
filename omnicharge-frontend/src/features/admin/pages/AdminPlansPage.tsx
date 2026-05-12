@@ -58,7 +58,7 @@ const AdminPlansPage: React.FC = () => {
   const openEdit = (p: PlanResponse) => {
     setEditItem(p);
     // Extract days from validity string (e.g., "28 days" -> 28)
-    const validityDays = p.validity ? parseInt(p.validity.split(' ')[0], 10) : 28;
+    const validityDays = p.validity ? (p.validity.match(/\d+/) ? p.validity.match(/\d+/)![0] : '') : '';
     reset({
       planName: p.planName || '',
       price: String(p.amount),
@@ -75,17 +75,19 @@ const AdminPlansPage: React.FC = () => {
       planName: data.planName,
       amount: parseFloat(data.price), // Backend expects "amount", not "price"
       validity: `${data.validity} days`, // Backend expects validity as string
-      description: data.description,
+      description: data.description || '',
       operatorId: parseInt(data.operatorId, 10),
     };
-    console.log('Plan creation payload:', JSON.stringify(payload, null, 2));
+    console.log('Target API:', editItem ? `UPDATE /plans/update/${editItem.id}` : 'CREATE /plans/create');
+    console.log('Payload:', JSON.stringify(payload, null, 2));
     try {
       if (editItem) {
-        await plansApi.update(editItem.id, payload);
+        const response = await plansApi.update(editItem.id, payload);
+        console.log('Plan updated successfully:', response.data);
         toast.success('Plan updated');
       } else {
         const response = await plansApi.create(payload);
-        console.log('Plan created successfully:', response);
+        console.log('Plan created successfully:', response.data);
         toast.success('Plan created');
       }
       setModalOpen(false);

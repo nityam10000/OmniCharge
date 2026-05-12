@@ -35,8 +35,8 @@ class PlanControllerTest {
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(planController).build();
         objectMapper = new ObjectMapper();
-        req = new PlanRequestDTO(299.0, "28 days", "Unlimited", 1L);
-        res = new PlanResponseDTO(1L, 1L, 299.0, "28 days", "Unlimited");
+        req = new PlanRequestDTO(299.0, "28 days", "Unlimited", 1L, null);
+        res = new PlanResponseDTO(1L, 1L, 299.0, "28 days", "Unlimited", null);
     }
 
     @Test

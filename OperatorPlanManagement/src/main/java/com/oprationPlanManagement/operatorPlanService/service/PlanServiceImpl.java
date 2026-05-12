@@ -93,20 +93,21 @@ public class PlanServiceImpl implements IPlanService {
                 @CacheEvict(value = "planListByOperator", allEntries = true)
     	    }
     	)
-
-    public PlanResponseDTO updatePlan(long id, PlanRequestDTO dto) {
-        log.info("Updating plan with ID: {} - New details: Operator ID: {}, Amount: {}, Validity: {}", 
-                 id, dto.getOperatorId(), dto.getAmount(), dto.getValidity());
+        public PlanResponseDTO updatePlan(long id, PlanRequestDTO dto) {
+        log.info("Updating plan with ID: {} - New details: Operator ID: {}, Name: {}, Amount: {}, Validity: {}", 
+                 id, dto.getOperatorId(), dto.getPlanName(), dto.getAmount(), dto.getValidity());
         PlanEntity entity = planRepo.findById(id)
                 .orElseThrow(() -> {
                     log.error("Plan not found with id: {} during update", id);
                     return new ResourceNotFoundException("Plan not found with id: " + id);
                 });
-        entity.setPlanName(dto.getPlanName());
-        entity.setAmount(dto.getAmount());
-        entity.setValidity(dto.getValidity());
-        entity.setDescription(dto.getDescription());
-        entity.setOperatorId(dto.getOperatorId());
+        
+        if (dto.getPlanName() != null) entity.setPlanName(dto.getPlanName());
+        if (dto.getAmount() != null) entity.setAmount(dto.getAmount());
+        if (dto.getValidity() != null) entity.setValidity(dto.getValidity());
+        if (dto.getDescription() != null) entity.setDescription(dto.getDescription());
+        if (dto.getOperatorId() != null) entity.setOperatorId(dto.getOperatorId());
+        
         PlanEntity updated = planRepo.save(entity);
         log.info("Plan updated successfully with ID: {}", id);
         return mapToResponse(updated);

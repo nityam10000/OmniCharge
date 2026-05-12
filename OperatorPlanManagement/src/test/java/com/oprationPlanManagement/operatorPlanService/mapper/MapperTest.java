@@ -30,7 +30,7 @@ class MapperTest {
 
     @Test
     void dtoToPlanEntity_MapsAllFields() {
-        PlanRequestDTO dto = new PlanRequestDTO(299.0, "28 days", "Unlimited", 2L);
+        PlanRequestDTO dto = new PlanRequestDTO(299.0, "28 days", "Unlimited", 2L, null);
         PlanEntity entity = mapper.dtoToPlanEntity(dto);
         assertEquals(299.0, entity.getAmount());
         assertEquals("28 days", entity.getValidity());
@@ -40,7 +40,7 @@ class MapperTest {
 
     @Test
     void planToDTO_MapsAllFields() {
-        PlanEntity entity = new PlanEntity(1L, 199.0, "14 days", "Basic", 1L);
+        PlanEntity entity = new PlanEntity(1L, null, 199.0, "14 days", "Basic", 1L);
         PlanResponseDTO dto = mapper.planToDTO(entity);
         assertEquals(199.0, dto.getAmount());
         assertEquals("14 days", dto.getValidity());
