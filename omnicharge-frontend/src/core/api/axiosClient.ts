@@ -9,7 +9,7 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-// ── Request interceptor: attach access token ─────────────────────────────────
+//Request interceptor: attach access token
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('accessToken');
@@ -21,7 +21,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// ── Response interceptor: handle 401, auto-refresh token ─────────────────────
+//Response interceptor: handle 401, auto-refresh token
 let isRefreshing = false;
 let failedQueue: Array<{ resolve: (v: string) => void; reject: (e: unknown) => void }> = [];
 

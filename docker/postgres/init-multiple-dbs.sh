@@ -18,7 +18,13 @@ create_database "operatorPlan"
 # Create SonarQube user and database
 echo "Creating SonarQube database..."
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres <<-EOSQL
-  CREATE USER IF NOT EXISTS sonar WITH ENCRYPTED PASSWORD 'sonar';
+  DO \$\$
+  BEGIN
+    IF NOT EXISTS (SELECT FROM pg_catalog.pg_user WHERE usename = 'sonar') THEN
+      CREATE USER sonar WITH ENCRYPTED PASSWORD 'sonar';
+    END IF;
+  END
+  \$\$;
   SELECT 'CREATE DATABASE "sonarqube" OWNER sonar'
   WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'sonarqube')\gexec
   ALTER DATABASE sonarqube OWNER TO sonar;
