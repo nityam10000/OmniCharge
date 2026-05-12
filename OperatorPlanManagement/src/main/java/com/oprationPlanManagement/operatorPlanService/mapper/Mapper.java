@@ -21,6 +21,7 @@ public class Mapper {
 	public PlanResponseDTO planToDTO(PlanEntity entity) {
 		PlanResponseDTO dto = new PlanResponseDTO();
 		dto.setId(entity.getId());
+		dto.setPlanName(entity.getPlanName());
 		dto.setOperatorId(entity.getOperatorId());
 		dto.setAmount(entity.getAmount());
 		dto.setValidity(entity.getValidity());
@@ -36,6 +37,7 @@ public class Mapper {
 
 	public PlanEntity dtoToPlanEntity(PlanRequestDTO dto ){
 		PlanEntity entity = new PlanEntity();
+		entity.setPlanName(dto.getPlanName());
 		entity.setAmount(dto.getAmount());
 		entity.setValidity(dto.getValidity());
 		entity.setDescription(dto.getDescription());

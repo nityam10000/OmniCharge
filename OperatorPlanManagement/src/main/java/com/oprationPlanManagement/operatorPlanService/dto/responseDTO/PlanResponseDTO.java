@@ -14,5 +14,6 @@ public class PlanResponseDTO implements Serializable{
         private Double amount;
         private String validity;
         private String description;
+        private String planName;
         
 }

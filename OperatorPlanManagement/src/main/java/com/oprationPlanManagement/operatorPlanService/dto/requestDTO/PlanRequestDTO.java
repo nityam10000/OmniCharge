@@ -30,4 +30,5 @@ public class PlanRequestDTO {
     @Positive(message = "Operator ID must be a positive number")
     private Long operatorId;
 	
+    private String planName;
 }

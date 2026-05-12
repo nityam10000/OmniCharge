@@ -102,6 +102,7 @@ public class PlanServiceImpl implements IPlanService {
                     log.error("Plan not found with id: {} during update", id);
                     return new ResourceNotFoundException("Plan not found with id: " + id);
                 });
+        entity.setPlanName(dto.getPlanName());
         entity.setAmount(dto.getAmount());
         entity.setValidity(dto.getValidity());
         entity.setDescription(dto.getDescription());
