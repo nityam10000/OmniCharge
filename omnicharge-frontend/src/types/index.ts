@@ -31,8 +31,8 @@ export interface OperatorRequest { name: string; description?: string; logoUrl?:
 export interface OperatorResponse { id: number; name: string; description?: string; logoUrl?: string; planCount?: number; }
 
 // ─── Plan ────────────────────────────────────────────────────────────────────
-export interface PlanRequest { amount: number; validity: string; description?: string; operatorId: number; }
-export interface PlanResponse { id: number; amount: number; validity: string; description?: string; operatorId: number; operatorName?: string; }
+export interface PlanRequest { planName: string; amount: number; validity: string; description?: string; operatorId: number; }
+export interface PlanResponse { id: number; planName: string; amount: number; validity: string; description?: string; operatorId: number; operatorName?: string; }
 
 // ─── Recharge ────────────────────────────────────────────────────────────────
 export type RechargeStatus = 'PENDING' | 'SUCCESS' | 'FAILED' | 'REFUNDED';

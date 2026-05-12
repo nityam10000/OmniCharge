@@ -9,7 +9,7 @@ import type { PlanResponse, OperatorResponse, PageResponse } from '../../../type
 import { PageHeader, Table, ConfirmDialog, Modal, FormField, Spinner, EmptyState, Pagination } from '../../../shared/components';
 
 const schema = z.object({
-  name: z.string().optional(),
+  planName: z.string().min(2, 'Plan name is required'),
   price: z.string().min(1, 'Price required'),
   validity: z.string().min(1, 'Validity required'),
   data: z.string().optional(),
@@ -54,13 +54,13 @@ const AdminPlansPage: React.FC = () => {
 
   useEffect(() => { load(page); }, [load, page, refreshTrigger]);
 
-  const openAdd = () => { setEditItem(null); reset({ name: '', price: '', validity: '', description: '', operatorId: '' }); setModalOpen(true); };
+  const openAdd = () => { setEditItem(null); reset({ planName: '', price: '', validity: '', description: '', operatorId: '' }); setModalOpen(true); };
   const openEdit = (p: PlanResponse) => {
     setEditItem(p);
     // Extract days from validity string (e.g., "28 days" -> 28)
     const validityDays = p.validity ? parseInt(p.validity.split(' ')[0], 10) : 28;
     reset({
-      name: p.description || '',
+      planName: p.planName || '',
       price: String(p.amount),
       validity: String(validityDays),
       description: p.description || '',
@@ -72,6 +72,7 @@ const AdminPlansPage: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     setSaving(true);
     const payload = {
+      planName: data.planName,
       amount: parseFloat(data.price), // Backend expects "amount", not "price"
       validity: `${data.validity} days`, // Backend expects validity as string
       description: data.description,
@@ -163,7 +164,7 @@ const AdminPlansPage: React.FC = () => {
             {filtered.map((p) => (
               <tr key={p.id} className="table-row">
                 <td className="px-4 py-3">
-                  <p className="text-white font-medium text-sm">{p.description}</p>
+                  <p className="text-white font-medium text-sm">{p.planName}</p>
                 </td>
                 <td className="px-4 py-3 text-slate-200 text-sm">
                   {p.operatorName || operators.find(o => o.id === p.operatorId)?.name || `#${p.operatorId}`}
@@ -209,7 +210,7 @@ const AdminPlansPage: React.FC = () => {
               {/* Header with plan name and operator */}
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
-                  <p className="text-white font-medium text-sm line-clamp-1">{p.description}</p>
+                  <p className="text-white font-medium text-sm line-clamp-1">{p.planName}</p>
                   <p className="text-slate-300 text-xs">
                     {p.operatorName || operators.find(o => o.id === p.operatorId)?.name || `#${p.operatorId}`}
                   </p>
@@ -253,8 +254,8 @@ const AdminPlansPage: React.FC = () => {
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={editItem ? 'Edit Plan' : 'Add Plan'} size="lg">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField label="Plan Name" error={errors.name?.message}>
-              <input {...register('name')} className="input-field text-sm" placeholder="e.g. Basic Plan" />
+            <FormField label="Plan Name" error={errors.planName?.message}>
+              <input {...register('planName')} className="input-field text-sm" placeholder="e.g. Basic Plan" />
             </FormField>
             <FormField label="Operator" error={errors.operatorId?.message}>
               <select {...register('operatorId')} className="input-field text-sm">
