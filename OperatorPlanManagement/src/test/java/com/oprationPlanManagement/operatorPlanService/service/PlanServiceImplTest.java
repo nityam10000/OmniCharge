@@ -43,10 +43,6 @@ class PlanServiceImplTest {
         responseDTO = new PlanResponseDTO(1L, 1L, 299.0, "28 days", "Unlimited calls + 2GB/day", null);
     }
 
-    // ══════════════════════════════════════════════════════
-    // addNewPlan()
-    // ══════════════════════════════════════════════════════
-
     @Test
     @DisplayName("addNewPlan: should save and return PlanResponseDTO")
     void addNewPlan_ShouldSaveAndReturn() {
@@ -61,10 +57,6 @@ class PlanServiceImplTest {
         assertEquals("28 days", result.getValidity());
         verify(planRepo).save(planEntity);
     }
-
-    // ══════════════════════════════════════════════════════
-    // getPlanList()
-    // ══════════════════════════════════════════════════════
 
     @Test
     @DisplayName("getPlanList: should return list of all plans")
@@ -94,10 +86,6 @@ class PlanServiceImplTest {
         assertTrue(result.isEmpty());
     }
 
-    // ══════════════════════════════════════════════════════
-    // getPlan()
-    // ══════════════════════════════════════════════════════
-
     @Test
     @DisplayName("getPlan: should return plan when found by ID")
     void getPlan_ShouldReturnPlan_WhenFound() {
@@ -118,10 +106,6 @@ class PlanServiceImplTest {
 
         assertThrows(RuntimeException.class, () -> planService.getPlan(99L));
     }
-
-    // ══════════════════════════════════════════════════════
-    // updatePlan()
-    // ══════════════════════════════════════════════════════
 
     @Test
     @DisplayName("updatePlan: should update all fields and return updated DTO")
@@ -150,10 +134,6 @@ class PlanServiceImplTest {
                 () -> planService.updatePlan(99L, requestDTO));
         verify(planRepo, never()).save(any());
     }
-
-    // ══════════════════════════════════════════════════════
-    // deletePlan()
-    // ══════════════════════════════════════════════════════
 
     @Test
     @DisplayName("deletePlan: should delete plan when it exists")

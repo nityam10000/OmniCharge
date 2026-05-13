@@ -2,10 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useAppSelector } from './redux';
 import { useAppContext } from '../../core/context/AppContext';
 
-/**
- * Clears all AppContext caches when user logs out or when user ID changes.
- * Prevents data from previous user being visible when new user logs in.
- */
+
 export const useCacheCleanup = () => {
   const { isAuthenticated, user } = useAppSelector((s) => s.auth);
   const { invalidateMyRecharges, invalidateMyTransactions, invalidateOperators } = useAppContext();

@@ -5,7 +5,7 @@ import type { RechargeResponse, UserResponse, TransactionResponse } from '../../
 import { Skeleton, ErrorState } from '../../../shared/components';
 import { useIntersectionObserver } from '../../../shared/hooks/useOptimizations';
 
-// OPTIMIZATION: lazy-load heavy Recharts bundle only when charts scroll into view
+
 const Charts = lazy(() => import('./AdminDashboardCharts'));
 
 interface StatCardProps {
@@ -61,7 +61,6 @@ const AdminDashboard: React.FC = () => {
     Promise.all([usersApi.getAllUsers(), rechargeApi.getAll(0, 100)])
       .then(([uRes, rRes]) => {
         setUsers(uRes.data);
-        // FIX: backend returns PageResponse — safely access .content
         setRecharges(rRes.data.content ?? []);
       })
       .catch(() => setError('Failed to load dashboard data'))

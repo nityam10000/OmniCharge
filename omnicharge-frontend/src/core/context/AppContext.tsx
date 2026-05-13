@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useCallback, useRef, type ReactNode } from 'react';
 import type { OperatorResponse, PlanResponse, RechargeResponse, TransactionResponse } from '../../types';
 
-// ── Cache entry with TTL ──────────────────────────────────────────────────────
+// ── Cache entry with TTL
 interface CacheEntry<T> {
   data: T;
   timestamp: number;
@@ -13,7 +13,7 @@ function isExpired<T>(entry: CacheEntry<T>): boolean {
   return Date.now() - entry.timestamp > CACHE_TTL;
 }
 
-// ── Context shape ─────────────────────────────────────────────────────────────
+// ── Context shape
 interface AppContextValue {
   // Operators
   operators: OperatorResponse[];
