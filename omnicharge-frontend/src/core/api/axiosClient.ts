@@ -9,7 +9,6 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-//Request interceptor: attach access token
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('accessToken');
@@ -21,7 +20,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-//Response interceptor: handle 401, auto-refresh token
 let isRefreshing = false;
 let failedQueue: Array<{ resolve: (v: string) => void; reject: (e: unknown) => void }> = [];
 
@@ -35,7 +33,6 @@ const processQueue = (error: unknown, token: string | null = null) => {
 
 const redirectToLogin = () => {
   localStorage.clear();
-  // FIX: Use replace() to avoid back-navigation loop after logout/expiry
   window.location.replace('/login');
 };
 
@@ -44,7 +41,6 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-    // FIX: Skip refresh for auth routes to prevent infinite 401 loops
     const isAuthEndpoint = originalRequest?.url?.includes('/auth/');
 
     if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint) {

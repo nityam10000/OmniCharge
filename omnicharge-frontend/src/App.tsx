@@ -6,12 +6,7 @@ import { AppRouter } from './routes';
 import { AppContextProvider } from './core/context/AppContext';
 import { fetchProfileThunk } from './store/slices/authSlice';
 import { useCacheCleanup } from './shared/hooks/useCacheCleanup';
-
-// FIX: Bootstrap profile on app start if tokens exist in localStorage.
-// Without this, page refreshes leave user as null (isAuthenticated=true, user=null)
-// causing AdminRoute to flash-redirect authenticated admins to /dashboard.
 function AppBootstrap() {
-  // Clear caches when user logs out
   useCacheCleanup();
 
   useEffect(() => {
