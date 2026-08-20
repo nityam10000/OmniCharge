@@ -31,7 +31,7 @@ public class SecurityConfig {
                 		.requestMatchers("/actuator/health", "/actuator/info", "/actuator/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(headerAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // 🔥 IMPORTANT
+                .addFilterBefore(headerAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) //IMPORTANT
 
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable());
