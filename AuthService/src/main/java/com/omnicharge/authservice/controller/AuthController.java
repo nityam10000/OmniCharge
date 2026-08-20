@@ -64,28 +64,7 @@ public class AuthController {
         }
     }
 
-
-    //  OTP LOGIN  (send → verify → JWT)
-    @PostMapping("/send-otp")
-    public ResponseEntity<?> sendOtp(@Valid @RequestBody EmailRequestDTO request) {
-        if (!userRepo.existsByEmail(request.getEmail())) {
-            throw new UserNotFoundException("No account found for " + request.getEmail());
-        }
-        otpService.sendOtp(request.getEmail());
-        return ResponseEntity.ok(Map.of("message", "OTP sent to " + request.getEmail()));
-    }
-
-
-    @PostMapping("/verify-otp")
-    public ResponseEntity<?> verifyOtp(@Valid @RequestBody VerifyOtpRequestDTO request) {
-        if (!otpService.verifyOtp(request.getEmail(), request.getOtp())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", "Invalid or expired OTP"));
-        }
-        UserEntity user = userRepo.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + request.getEmail()));
-        return ResponseEntity.ok(createAndStoreTokens(user));
-    }
+   
 
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(@Valid @RequestBody RefreshTokenRequestDTO request) {
