@@ -73,49 +73,6 @@ class AuthControllerTest {
     }
 
     @Test
-    void sendOtp_WithValidEmail_ShouldReturnOk() {
-        EmailRequestDTO request = new EmailRequestDTO();
-        request.setEmail("test@test.com");
-
-        when(userRepo.existsByEmail(anyString())).thenReturn(true);
-
-        ResponseEntity<?> response = authController.sendOtp(request);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(otpService).sendOtp("test@test.com");
-    }
-
-    @Test
-    void verifyOtp_WithValidOtp_ShouldReturnTokens() {
-        VerifyOtpRequestDTO request = new VerifyOtpRequestDTO();
-        request.setEmail("test@test.com");
-        request.setOtp("123456");
-
-        when(otpService.verifyOtp(anyString(), anyString())).thenReturn(true);
-        when(userRepo.findByEmail(anyString())).thenReturn(Optional.of(user));
-        when(jwtUtil.generateAccessToken(anyString(), anyString(), anyLong())).thenReturn("access-token");
-        when(jwtUtil.generateRefreshToken(anyString(), anyString(), anyLong())).thenReturn("refresh-token");
-        when(jwtUtil.getRefreshTokenExpirationMs()).thenReturn(3600000L);
-
-        ResponseEntity<?> response = authController.verifyOtp(request);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
-    void verifyOtp_WithInvalidOtp_ShouldReturnUnauthorized() {
-        VerifyOtpRequestDTO request = new VerifyOtpRequestDTO();
-        request.setEmail("test@test.com");
-        request.setOtp("123456");
-
-        when(otpService.verifyOtp(anyString(), anyString())).thenReturn(false);
-
-        ResponseEntity<?> response = authController.verifyOtp(request);
-
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-    }
-
-    @Test
     void refreshToken_WithValidToken_ShouldReturnNewTokens() {
         RefreshTokenRequestDTO request = new RefreshTokenRequestDTO();
         request.setRefreshToken("old-refresh-token");
@@ -130,55 +87,5 @@ class AuthControllerTest {
         ResponseEntity<?> response = authController.refreshToken(request);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
-    void forgotPassword_WithValidEmail_ShouldReturnOk() {
-        EmailRequestDTO request = new EmailRequestDTO();
-        request.setEmail("test@test.com");
-
-        when(userRepo.existsByEmail(anyString())).thenReturn(true);
-
-        ResponseEntity<?> response = authController.forgotPassword(request);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(otpService).sendForgotPasswordOtp("test@test.com");
-    }
-
-    @Test
-    void resetPassword_WithValidOtp_ShouldReturnOk() {
-        ResetPasswordRequestDTO request = new ResetPasswordRequestDTO();
-        request.setEmail("test@test.com");
-        request.setOtp("123456");
-        request.setNewPassword("new-password");
-
-        when(otpService.verifyForgotPasswordOtp(anyString(), anyString())).thenReturn(true);
-        when(userRepo.findByEmail(anyString())).thenReturn(Optional.of(user));
-        when(passwordEncoder.encode(anyString())).thenReturn("encoded-password");
-
-        ResponseEntity<?> response = authController.resetPassword(request);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(userRepo).save(user);
-    }
-
-    @Test
-    void sendOtp_WithUserNotFound_ShouldThrowException() {
-        EmailRequestDTO request = new EmailRequestDTO();
-        request.setEmail("notfound@test.com");
-
-        when(userRepo.existsByEmail(anyString())).thenReturn(false);
-
-        assertThrows(UserNotFoundException.class, () -> authController.sendOtp(request));
-    }
-
-    @Test
-    void forgotPassword_WithUserNotFound_ShouldThrowException() {
-        EmailRequestDTO request = new EmailRequestDTO();
-        request.setEmail("notfound@test.com");
-
-        when(userRepo.existsByEmail(anyString())).thenReturn(false);
-
-        assertThrows(UserNotFoundException.class, () -> authController.forgotPassword(request));
     }
 }

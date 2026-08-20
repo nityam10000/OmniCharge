@@ -4,7 +4,6 @@ import com.omnicharge.authservice.dto.LoginRequestDTO;
 import com.omnicharge.authservice.dto.LoginResponseDTO;
 import com.omnicharge.authservice.dto.RefreshTokenRequestDTO;
 import com.omnicharge.authservice.dto.ResetPasswordRequestDTO;
-import com.omnicharge.authservice.dto.VerifyOtpRequestDTO;
 import com.omnicharge.authservice.entity.UserEntity;
 import com.omnicharge.authservice.exception.UserNotFoundException;
 import com.omnicharge.authservice.repository.IUserRepository;
@@ -90,37 +89,6 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(createAndStoreTokens(user));
-    }
-
-
-    @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@Valid @RequestBody EmailRequestDTO request) {
-        if (!userRepo.existsByEmail(request.getEmail())) {
-            throw new UserNotFoundException("No account found for " + request.getEmail());
-        }
-        otpService.sendForgotPasswordOtp(request.getEmail());
-        log.info("Forgot-password OTP triggered for {}", request.getEmail());
-        return ResponseEntity.ok(Map.of("message",
-                "Password-reset OTP sent to " + request.getEmail() + ". Valid for 5 minutes."));
-    }
-
-
-    @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequestDTO request) {
-        if (!otpService.verifyForgotPasswordOtp(request.getEmail(), request.getOtp())) {
-            log.warn("Invalid/expired forgot-password OTP for {}", request.getEmail());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", "Invalid or expired OTP"));
-        }
-
-        UserEntity user = userRepo.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UserNotFoundException("User not found: " + request.getEmail()));
-
-        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        userRepo.save(user);
-
-        log.info("Password reset successfully for {}", request.getEmail());
-        return ResponseEntity.ok(Map.of("message", "Password updated successfully. Please log in."));
     }
 
     private LoginResponseDTO createAndStoreTokens(UserEntity user) {
