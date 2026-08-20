@@ -56,3 +56,13 @@ docker-compose-new.yml
 
 # Backup files
 *.backup
+
+# Ignored documentation and SQL scripts
+OmniCharge_Frontend_Documentation.docx
+db-migration-recharge-timestamp.sql
+init-data.sql
+plans.sql
+
+# IDE and SonarLint
+.sonarlint/
+.vscode/
