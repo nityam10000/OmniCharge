@@ -21,7 +21,7 @@ public class NotificationController {
     public String sendNotification(@RequestBody NotificationEvent event) {
 
         // Debug logs (VERY IMPORTANT for testing)
-        System.out.println("📥 Notification Request Received:");
+        System.out.println("Notification Request Received:");
         System.out.println("Message: " + event.getMessage());
         System.out.println("Email: " + event.getEmail());
         System.out.println("Phone: " + event.getPhoneNumber());
@@ -31,21 +31,11 @@ public class NotificationController {
 
         return "Notification sent successfully!";
     }
-
-    @PostMapping("/email/otp")
-    public String sendOtpEmail(@RequestBody NotificationEvent event) {
-        return sendEmailByType(event, "OTP_LOGIN", "OTP email sent successfully!");
-    }
-
     @PostMapping("/email/register")
     public String sendRegisterEmail(@RequestBody NotificationEvent event) {
         return sendEmailByType(event, "WELCOME", "Registration email sent successfully!");
     }
 
-    @PostMapping("/email/refund")
-    public String sendRefundEmail(@RequestBody NotificationEvent event) {
-        return sendEmailByType(event, "PAYMENT_REFUND", "Refund email sent successfully!");
-    }
 
     @PostMapping("/email/transaction/success")
     public String sendTransactionSuccessEmail(@RequestBody NotificationEvent event) {
