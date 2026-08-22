@@ -60,14 +60,8 @@ public class EmailService {
         if (hasValue(event.getRechargeId())) {
             return buildRechargeContent(event, message);
         }
-        if ("OTP_LOGIN".equals(type) || "OTP_FORGOT_PASSWORD".equals(type)) {
-            return buildOtpContent(event, message, type);
-        }
         if ("WELCOME".equals(type) || "REGISTER".equals(type)) {
             return buildRegistrationContent(event, message);
-        }
-        if ("PAYMENT_REFUND".equals(type)) {
-            return buildRefundContent(event, message);
         }
         if ("PAYMENT_SUCCESS".equals(type)) {
             return buildTransactionSuccessContent(event, message);
@@ -76,28 +70,6 @@ public class EmailService {
             return buildTransactionFailedContent(event, message);
         }
         return buildGenericContent(event, message);
-    }
-
-    private EmailContent buildOtpContent(NotificationEvent event, String message, String type) {
-        Map<String, String> variables = baseVariables(
-                "OTP_FORGOT_PASSWORD".equals(type) ? "Password Reset OTP" : "Login OTP",
-                "OTP_FORGOT_PASSWORD".equals(type)
-                        ? "Use this OTP to reset your OmniCharge password."
-                        : "Use this OTP to complete your OmniCharge sign-in.",
-                message,
-                "#1d4ed8",
-                "#2563eb"
-        );
-        variables.put("card_title", "One-Time Password");
-        variables.put("card_bg", "#eff6ff");
-        variables.put("card_border", "#93c5fd");
-        variables.put("card_text", "#1e3a8a");
-
-        return new EmailContent(
-                firstNonBlank(event.getSubject(), "OmniCharge OTP Verification"),
-                "templates/otp-email.html",
-                variables
-        );
     }
 
     private EmailContent buildRegistrationContent(NotificationEvent event, String message) {
@@ -120,25 +92,6 @@ public class EmailService {
         );
     }
 
-    private EmailContent buildRefundContent(NotificationEvent event, String message) {
-        Map<String, String> variables = baseVariables(
-                "Refund Update",
-                "A refund has been initiated for your OmniCharge payment.",
-                message,
-                "#b45309",
-                "#f59e0b"
-        );
-        variables.put("card_title", "Refund Details");
-        variables.put("card_bg", "#fffbeb");
-        variables.put("card_border", "#fcd34d");
-        variables.put("card_text", "#78350f");
-
-        return new EmailContent(
-                firstNonBlank(event.getSubject(), "Refund Initiated - OmniCharge"),
-                "templates/refund-email.html",
-                variables
-        );
-    }
 
     private EmailContent buildTransactionSuccessContent(NotificationEvent event, String message) {
         Map<String, String> variables = baseVariables(

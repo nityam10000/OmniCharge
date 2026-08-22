@@ -47,6 +47,5 @@ public class Transaction {
         this.timestamp = LocalDateTime.now();
     }
 
-    private String razorpayOrderId;
-    private String razorpayPaymentId;
+
 }

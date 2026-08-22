@@ -25,8 +25,6 @@ class MapperTest {
         transaction.setAmount(100.0);
         transaction.setPaymentMethod(PaymentMethod.UPI);
         transaction.setStatus(TransactionStatus.SUCCESS);
-        transaction.setRazorpayOrderId("order_789");
-        transaction.setRazorpayPaymentId("pay_012");
         transaction.setTimestamp(LocalDateTime.now());
 
         TransactionResponseDTO dto = mapper.toTransactionResponseDTO(transaction);
@@ -37,8 +35,6 @@ class MapperTest {
         assertEquals(100.0, dto.getAmount());
         assertEquals(PaymentMethod.UPI, dto.getPaymentMethod());
         assertEquals(TransactionStatus.SUCCESS, dto.getStatus());
-        assertEquals("order_789", dto.getRazorpayOrderId());
-        assertEquals("pay_012", dto.getRazorpayPaymentId());
         assertNotNull(dto.getCreatedAt());
     }
 }

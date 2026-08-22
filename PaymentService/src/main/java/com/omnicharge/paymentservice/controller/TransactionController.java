@@ -40,15 +40,14 @@ public class TransactionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/create-order")
-    public ResponseEntity<RazorpayOrderResponseDTO> createOrder(
-            @Valid @RequestBody RazorpayOrderRequestDTO dto) {
-        return ResponseEntity.ok(transactionService.createOrder(dto));
-    }
-
-    @PostMapping("/verify")
-    public ResponseEntity<TransactionResponseDTO> verifyPayment(
-            @Valid @RequestBody PaymentVerifyRequestDTO dto) {
-        return ResponseEntity.ok(transactionService.verifyPayment(dto));
+    /**
+     * Process a payment using custom simple logic.
+     * Send paymentResponse as "pass" for a successful payment,
+     * or "fail" to simulate a payment failure.
+     */
+    @PostMapping("/process")
+    public ResponseEntity<TransactionResponseDTO> processPayment(
+            @Valid @RequestBody CustomPaymentRequestDTO dto) {
+        return ResponseEntity.ok(transactionService.processPayment(dto));
     }
 }

@@ -21,7 +21,5 @@ public class TransactionResponseDTO {
     private Double amount;
     private PaymentMethod paymentMethod;
     private TransactionStatus status;
-    private String razorpayOrderId;
-    private String razorpayPaymentId;
     private LocalDateTime createdAt;
 }

@@ -1,8 +1,5 @@
 package com.omnicharge.paymentservice.controller;
 
-import com.omnicharge.paymentservice.dto.PaymentVerifyRequestDTO;
-import com.omnicharge.paymentservice.dto.RazorpayOrderRequestDTO;
-import com.omnicharge.paymentservice.dto.RazorpayOrderResponseDTO;
 import com.omnicharge.paymentservice.dto.TransactionResponseDTO;
 import com.omnicharge.paymentservice.enums.PaymentMethod;
 import com.omnicharge.paymentservice.enums.TransactionStatus;
@@ -44,8 +41,6 @@ class TransactionControllerTest {
                 .amount(299.0)
                 .paymentMethod(PaymentMethod.UPI)
                 .status(TransactionStatus.SUCCESS)
-                .razorpayOrderId("order_123")
-                .razorpayPaymentId("pay_123")
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -83,23 +78,14 @@ class TransactionControllerTest {
     }
 
     @Test
-    void createOrder_ShouldReturnOrderResponse() {
-        RazorpayOrderRequestDTO requestDTO = new RazorpayOrderRequestDTO(5L, "upi");
-        RazorpayOrderResponseDTO responseDTO = new RazorpayOrderResponseDTO("rzp_test_key", "order_1", 299.0, "INR");
-        when(transactionService.createOrder(requestDTO)).thenReturn(responseDTO);
 
-        ResponseEntity<RazorpayOrderResponseDTO> response = controller.createOrder(requestDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertSame(responseDTO, response.getBody());
     }
 
     @Test
-    void verifyPayment_ShouldReturnTransactionResponse() {
-        PaymentVerifyRequestDTO requestDTO = new PaymentVerifyRequestDTO("order_1", "pay_1", "sig");
-        when(transactionService.verifyPayment(requestDTO)).thenReturn(transactionResponseDTO);
 
-        ResponseEntity<TransactionResponseDTO> response = controller.verifyPayment(requestDTO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertSame(transactionResponseDTO, response.getBody());

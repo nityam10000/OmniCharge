@@ -20,6 +20,6 @@ public interface ITransactionRepository extends JpaRepository<Transaction, UUID>
     @Query(value = "SELECT t FROM Transaction t WHERE t.rechargeId = :rechargeId ORDER BY t.timestamp DESC LIMIT 1")
     Optional<Transaction> findByRechargeId(@Param("rechargeId") Long rechargeId);
     
-    Optional<Transaction> findByRazorpayOrderId(String razorpayOrderId);
+    
 }
 

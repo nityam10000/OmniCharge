@@ -1,6 +1,5 @@
 package com.omnicharge.paymentservice.mapper;
 
-import com.omnicharge.paymentservice.dto.TransactionRequestDTO;
 import com.omnicharge.paymentservice.dto.TransactionResponseDTO;
 import com.omnicharge.paymentservice.entity.Transaction;
 import org.springframework.stereotype.Component;
@@ -16,8 +15,6 @@ public class Mapper {
                 .amount(transaction.getAmount())
                 .paymentMethod(transaction.getPaymentMethod())
                 .status(transaction.getStatus())
-                .razorpayOrderId(transaction.getRazorpayOrderId())
-                .razorpayPaymentId(transaction.getRazorpayPaymentId())
                 .createdAt(transaction.getTimestamp())
                 .build();
     }

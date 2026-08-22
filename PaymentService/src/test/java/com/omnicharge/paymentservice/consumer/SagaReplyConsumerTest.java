@@ -50,7 +50,6 @@ class SagaReplyConsumerTest {
         transaction.setTransactionId(transactionId);
         transaction.setRechargeId(5L);
         transaction.setStatus(TransactionStatus.SUCCESS);
-        transaction.setRazorpayPaymentId("pay_123");
         when(transactionRepository.findById(transactionId)).thenReturn(Optional.of(transaction));
 
         consumer.onSagaDeadLetter(event);
@@ -65,7 +64,6 @@ class SagaReplyConsumerTest {
         transaction.setTransactionId(transactionId);
         transaction.setRechargeId(5L);
         transaction.setStatus(TransactionStatus.SUCCESS);
-        transaction.setRazorpayPaymentId("");
         when(transactionRepository.findById(transactionId)).thenReturn(Optional.of(transaction));
 
         consumer.onSagaDeadLetter(event);

@@ -1,9 +1,6 @@
 package com.omnicharge.paymentservice.service.implementation;
 
-import com.omnicharge.paymentservice.dto.PaymentVerifyRequestDTO;
 import com.omnicharge.paymentservice.dto.PlanResponseDTO;
-import com.omnicharge.paymentservice.dto.RazorpayOrderRequestDTO;
-import com.omnicharge.paymentservice.dto.RazorpayOrderResponseDTO;
 import com.omnicharge.paymentservice.dto.RechargeResponseDTO;
 import com.omnicharge.paymentservice.dto.NotificationEvent;
 import com.omnicharge.paymentservice.dto.PaymentSagaEvent;
@@ -19,9 +16,7 @@ import com.omnicharge.paymentservice.feignClient.IRechargeClient;
 import com.omnicharge.paymentservice.feignClient.IUserClient;
 import com.omnicharge.paymentservice.mapper.Mapper;
 import com.omnicharge.paymentservice.repository.ITransactionRepository;
-import com.omnicharge.paymentservice.service.RazorpayRefundService;
 import com.omnicharge.paymentservice.support.AuthenticatedUserContext;
-import com.omnicharge.paymentservice.support.RazorpayGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,9 +56,7 @@ class TransactionServiceTest {
     @Mock private IOperatorPlanClient operatorPlanClient;
     @Mock private IUserClient userClient;
     @Mock private org.springframework.amqp.rabbit.core.RabbitTemplate rabbitTemplate;
-    @Mock private RazorpayRefundService razorpayRefundService;
     @Mock private AuthenticatedUserContext authenticatedUserContext;
-    @Mock private RazorpayGateway razorpayGateway;
 
     @InjectMocks
     private TransactionService transactionService;
@@ -82,7 +75,6 @@ class TransactionServiceTest {
         transaction.setUserContactNo("9876543210");
         transaction.setPaymentMethod(PaymentMethod.UPI);
         transaction.setStatus(TransactionStatus.PENDING);
-        transaction.setRazorpayOrderId("order_ABC123");
         transaction.setTimestamp(LocalDateTime.now());
 
         responseDTO = TransactionResponseDTO.builder()
@@ -92,13 +84,9 @@ class TransactionServiceTest {
                 .amount(299.0)
                 .paymentMethod(PaymentMethod.UPI)
                 .status(TransactionStatus.PENDING)
-                .razorpayOrderId("order_ABC123")
-                .razorpayPaymentId(null)
                 .createdAt(transaction.getTimestamp())
                 .build();
 
-        setField("razorpayKeyId", "test_key");
-        setField("razorpayKeySecret", "test_secret");
     }
 
     @Test
@@ -156,9 +144,7 @@ class TransactionServiceTest {
     }
 
     @Test
-    void createOrder_ShouldCreatePendingTransaction() throws Exception {
         mockAuthenticatedUser();
-        RazorpayOrderRequestDTO dto = new RazorpayOrderRequestDTO(5L, "upi");
         RechargeResponseDTO recharge = new RechargeResponseDTO(5L, "PENDING", 299.0, 7L, "PENDING", 10L);
         PlanResponseDTO plan = new PlanResponseDTO(1L, 299.0, "28 days", "Unlimited");
         UserResponseDTO user = UserResponseDTO.builder().contactNo("9876543210").build();
@@ -166,13 +152,10 @@ class TransactionServiceTest {
         when(rechargeClient.getRechargeById("ROLE_USER", "rahul@example.com", 5L)).thenReturn(recharge);
         when(operatorPlanClient.getPlanById("ROLE_USER", "rahul@example.com", 7L)).thenReturn(plan);
         when(userClient.getUserByEmail("ROLE_USER", "rahul@example.com", "rahul@example.com")).thenReturn(user);
-        when(razorpayGateway.createOrderId(299.0, "recharge_5", "test_key", "test_secret"))
                 .thenReturn("order_999");
         when(transactionRepository.save(any(Transaction.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        RazorpayOrderResponseDTO result = transactionService.createOrder(dto);
 
-        assertEquals("order_999", result.getRazorpayOrderId());
         assertEquals(299.0, result.getAmount());
 
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
@@ -181,40 +164,29 @@ class TransactionServiceTest {
         assertEquals(TransactionStatus.PENDING, saved.getStatus());
         assertEquals(PaymentMethod.UPI, saved.getPaymentMethod());
         assertEquals("9876543210", saved.getUserContactNo());
-        assertEquals("order_999", saved.getRazorpayOrderId());
     }
 
     @Test
-    void createOrder_ShouldThrow_WhenRechargeNotFound() {
         mockAuthenticatedUser();
-        RazorpayOrderRequestDTO dto = new RazorpayOrderRequestDTO(5L, "upi");
         when(rechargeClient.getRechargeById("ROLE_USER", "rahul@example.com", 5L)).thenReturn(null);
 
         RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> transactionService.createOrder(dto));
 
-        assertEquals("Razorpay order creation failed: Recharge not found for id: 5", ex.getMessage());
         verify(transactionRepository, never()).save(any());
     }
 
     @Test
-    void createOrder_ShouldThrow_WhenRechargeOwnedByAnotherUser() {
         mockAuthenticatedUser();
-        RazorpayOrderRequestDTO dto = new RazorpayOrderRequestDTO(5L, "upi");
         RechargeResponseDTO recharge = new RechargeResponseDTO(5L, "PENDING", 299.0, 7L, "PENDING", 22L);
         when(rechargeClient.getRechargeById("ROLE_USER", "rahul@example.com", 5L)).thenReturn(recharge);
 
         RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> transactionService.createOrder(dto));
 
-        assertEquals("Razorpay order creation failed: Access denied: recharge does not belong to the current user.",
                 ex.getMessage());
     }
 
     @Test
-    void createOrder_ShouldThrow_WhenPlanAmountMissing() {
         mockAuthenticatedUser();
-        RazorpayOrderRequestDTO dto = new RazorpayOrderRequestDTO(5L, "upi");
         RechargeResponseDTO recharge = new RechargeResponseDTO(5L, "PENDING", 299.0, 7L, "PENDING", 10L);
 
         when(rechargeClient.getRechargeById("ROLE_USER", "rahul@example.com", 5L)).thenReturn(recharge);
@@ -222,16 +194,12 @@ class TransactionServiceTest {
                 .thenReturn(new PlanResponseDTO(1L, null, "28 days", "Unlimited"));
 
         RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> transactionService.createOrder(dto));
 
-        assertEquals("Razorpay order creation failed: Plan not found or has no amount for planId: 7",
                 ex.getMessage());
     }
 
     @Test
-    void createOrder_ShouldContinue_WhenContactLookupFails() throws Exception {
         mockAuthenticatedUser();
-        RazorpayOrderRequestDTO dto = new RazorpayOrderRequestDTO(5L, "card");
         RechargeResponseDTO recharge = new RechargeResponseDTO(5L, "PENDING", 299.0, 7L, "PENDING", 10L);
         PlanResponseDTO plan = new PlanResponseDTO(1L, 299.0, "28 days", "Unlimited");
 
@@ -239,13 +207,10 @@ class TransactionServiceTest {
         when(operatorPlanClient.getPlanById("ROLE_USER", "rahul@example.com", 7L)).thenReturn(plan);
         when(userClient.getUserByEmail("ROLE_USER", "rahul@example.com", "rahul@example.com"))
                 .thenThrow(new RuntimeException("user service down"));
-        when(razorpayGateway.createOrderId(299.0, "recharge_5", "test_key", "test_secret"))
                 .thenReturn("order_contact_fail");
         when(transactionRepository.save(any(Transaction.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        RazorpayOrderResponseDTO result = transactionService.createOrder(dto);
 
-        assertEquals("order_contact_fail", result.getRazorpayOrderId());
         ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
         verify(transactionRepository).save(captor.capture());
         assertNull(captor.getValue().getUserContactNo());
@@ -253,9 +218,7 @@ class TransactionServiceTest {
     }
 
     @Test
-    void createOrderFallback_ShouldSaveAuditTransaction_AndThrow() {
         mockAuthenticatedUserIdAndEmail();
-        RazorpayOrderRequestDTO dto = new RazorpayOrderRequestDTO(5L, "upi");
         Transaction failed = new Transaction();
         failed.setTransactionId(UUID.randomUUID());
         failed.setRechargeId(5L);
@@ -266,7 +229,6 @@ class TransactionServiceTest {
         when(transactionRepository.save(any(Transaction.class))).thenReturn(failed);
 
         RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> transactionService.createOrderFallback(dto, new RuntimeException("down")));
 
         assertEquals(
                 "Order creation failed - RechargeProcessing is unavailable. Your recharge has been cancelled. Please try again later.",
@@ -277,13 +239,10 @@ class TransactionServiceTest {
     }
 
     @Test
-    void createOrderFallback_ShouldStillThrow_WhenAuditSaveFails() {
         mockAuthenticatedUserIdAndEmail();
-        RazorpayOrderRequestDTO dto = new RazorpayOrderRequestDTO(5L, "upi");
         when(transactionRepository.save(any(Transaction.class))).thenThrow(new RuntimeException("db down"));
 
         RuntimeException ex = assertThrows(RuntimeException.class,
-                () -> transactionService.createOrderFallback(dto, new RuntimeException("down")));
 
         assertEquals(
                 "Order creation failed - RechargeProcessing is unavailable. Your recharge has been cancelled. Please try again later.",
@@ -292,78 +251,54 @@ class TransactionServiceTest {
     }
 
     @Test
-    void verifyPayment_ShouldSetSuccess_WhenSignatureValid() throws Exception {
         String orderId = "order_ABC123";
         String paymentId = "pay_XYZ789";
         String signature = computeHmac("test_secret", orderId + "|" + paymentId);
 
-        PaymentVerifyRequestDTO dto = new PaymentVerifyRequestDTO(orderId, paymentId, signature);
 
-        when(transactionRepository.findByRazorpayOrderId(orderId)).thenReturn(Optional.of(transaction));
         when(transactionRepository.save(any(Transaction.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(mapper.toTransactionResponseDTO(any(Transaction.class))).thenReturn(responseDTO);
 
-        TransactionResponseDTO result = transactionService.verifyPayment(dto);
 
         assertNotNull(result);
         assertEquals(TransactionStatus.SUCCESS, transaction.getStatus());
         verify(rabbitTemplate).convertAndSend(anyString(), anyString(), any(PaymentSagaEvent.class));
         verify(rabbitTemplate).convertAndSend(anyString(), anyString(), any(NotificationEvent.class));
-        verify(razorpayRefundService, never()).refundAndNotify(any(), anyString());
     }
 
     @Test
-    void verifyPayment_ShouldSetFailed_AndRefund_WhenSignatureInvalid() {
-        PaymentVerifyRequestDTO dto =
-                new PaymentVerifyRequestDTO("order_ABC123", "pay_XYZ789", "wrong_sig");
 
-        when(transactionRepository.findByRazorpayOrderId("order_ABC123")).thenReturn(Optional.of(transaction));
         when(transactionRepository.save(any(Transaction.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(mapper.toTransactionResponseDTO(any(Transaction.class))).thenReturn(responseDTO);
 
-        transactionService.verifyPayment(dto);
 
         assertEquals(TransactionStatus.FAILED, transaction.getStatus());
-        verify(razorpayRefundService).refundAndNotify(
                 any(Transaction.class),
                 org.mockito.ArgumentMatchers.contains("Signature mismatch")
         );
     }
 
     @Test
-    void verifyPayment_ShouldSetFailed_WithoutRefund_WhenPaymentIdMissing() {
-        PaymentVerifyRequestDTO dto =
-                new PaymentVerifyRequestDTO("order_ABC123", "", "wrong_sig");
 
-        when(transactionRepository.findByRazorpayOrderId("order_ABC123")).thenReturn(Optional.of(transaction));
         when(transactionRepository.save(any(Transaction.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(mapper.toTransactionResponseDTO(any(Transaction.class))).thenReturn(responseDTO);
 
-        transactionService.verifyPayment(dto);
 
         assertEquals(TransactionStatus.FAILED, transaction.getStatus());
-        verify(razorpayRefundService, never()).refundAndNotify(any(), anyString());
     }
 
     @Test
-    void verifyPayment_ShouldSkip_WhenAlreadyProcessed() {
         transaction.setStatus(TransactionStatus.SUCCESS);
-        when(transactionRepository.findByRazorpayOrderId("order_ABC123")).thenReturn(Optional.of(transaction));
         when(mapper.toTransactionResponseDTO(transaction)).thenReturn(responseDTO);
 
-        TransactionResponseDTO result = transactionService.verifyPayment(
-                new PaymentVerifyRequestDTO("order_ABC123", "pay", "sig"));
 
         assertNotNull(result);
         verify(transactionRepository, never()).save(any());
     }
 
     @Test
-    void verifyPayment_ShouldThrow_WhenOrderNotFound() {
-        when(transactionRepository.findByRazorpayOrderId("order_X")).thenReturn(Optional.empty());
 
         assertThrows(TransactionNotFoundException.class,
-                () -> transactionService.verifyPayment(new PaymentVerifyRequestDTO("order_X", "pay", "sig")));
     }
 
     @Test
@@ -377,19 +312,15 @@ class TransactionServiceTest {
     }
 
     @Test
-    void verifyPayment_ShouldIgnoreNotificationPublishFailure() throws Exception {
         String orderId = "order_ABC123";
         String paymentId = "pay_XYZ789";
         String signature = computeHmac("test_secret", orderId + "|" + paymentId);
 
-        when(transactionRepository.findByRazorpayOrderId(orderId)).thenReturn(Optional.of(transaction));
         when(transactionRepository.save(any(Transaction.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(mapper.toTransactionResponseDTO(any(Transaction.class))).thenReturn(responseDTO);
         doThrow(new RuntimeException("amqp down"))
                 .when(rabbitTemplate).convertAndSend(anyString(), anyString(), any(NotificationEvent.class));
 
-        TransactionResponseDTO result = transactionService.verifyPayment(
-                new PaymentVerifyRequestDTO(orderId, paymentId, signature));
 
         assertNotNull(result);
         assertEquals(TransactionStatus.SUCCESS, transaction.getStatus());

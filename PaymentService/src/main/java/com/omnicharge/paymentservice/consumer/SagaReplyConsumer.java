@@ -1,14 +1,15 @@
 package com.omnicharge.paymentservice.consumer;
 
 import com.omnicharge.paymentservice.configuration.RabbitMQConfig;
+import com.omnicharge.paymentservice.dto.NotificationEvent;
 import com.omnicharge.paymentservice.dto.PaymentSagaEvent;
 import com.omnicharge.paymentservice.entity.Transaction;
 import com.omnicharge.paymentservice.enums.TransactionStatus;
 import com.omnicharge.paymentservice.repository.ITransactionRepository;
-import com.omnicharge.paymentservice.service.RazorpayRefundService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -22,8 +23,8 @@ import java.util.UUID;
  *
  * 2. saga.dead.letter.queue
  *    Compensation path — a saga event failed all retries and landed
- *    in the DLQ. We mark the transaction FAILED, issue a real Razorpay
- *    refund, and send a refund email notification to the user.
+ *    in the DLQ. We mark the transaction FAILED and send a failure
+ *    notification to the user.
  */
 @Slf4j
 @Component
@@ -31,23 +32,19 @@ import java.util.UUID;
 public class SagaReplyConsumer {
 
     private final ITransactionRepository transactionRepository;
-    private final RazorpayRefundService razorpayRefundService; // ← NEW
+    private final RabbitTemplate rabbitTemplate;
 
-
-    //  Happy path reply — unchanged
-
-
+    // Happy path reply — saga completed successfully
     @RabbitListener(queues = RabbitMQConfig.SAGA_REPLY_QUEUE)
     public void onRechargeUpdated(PaymentSagaEvent event) {
         log.info("SAGA COMPLETE — sagaId={}, rechargeId={}, eventType={}",
                 event.getSagaId(), event.getRechargeId(), event.getEventType());
     }
 
-    //  Compensation — DLQ handler (UPDATED: real refund + notification)
-
+    // Compensation — DLQ handler
     @RabbitListener(queues = RabbitMQConfig.SAGA_DLQ)
     public void onSagaDeadLetter(PaymentSagaEvent event) {
-        log.error("💀 SAGA COMPENSATION TRIGGERED — sagaId={}, rechargeId={}, reason: landed in DLQ",
+        log.error("SAGA COMPENSATION TRIGGERED — sagaId={}, rechargeId={}, reason: landed in DLQ",
                 event.getSagaId(), event.getRechargeId());
 
         try {
@@ -60,22 +57,13 @@ public class SagaReplyConsumer {
 
                     txn.setStatus(TransactionStatus.FAILED);
                     txn.setFailureReason(
-                            "Saga compensation: recharge activation failed after all retries. Refund initiated.");
+                            "Saga compensation: recharge activation failed after all retries.");
                     transactionRepository.save(txn);
 
-                    log.warn("Transaction {} rolled back to FAILED during saga compensation",
-                            transactionId);
+                    log.warn("Transaction {} rolled back to FAILED during saga compensation", transactionId);
 
-                    // Issue real Razorpay refund + send refund email
-                    if (txn.getRazorpayPaymentId() != null && !txn.getRazorpayPaymentId().isBlank()) {
-                        razorpayRefundService.refundAndNotify(
-                                txn,
-                                "Saga compensation: recharge activation failed for rechargeId=" + txn.getRechargeId()
-                        );
-                    } else {
-                        log.error("🚨 CRITICAL: Transaction {} has no razorpayPaymentId — " +
-                                "cannot issue automatic refund. Manual refund required.", transactionId);
-                    }
+                    // Notify the user about the failure
+                    sendCompensationNotification(txn);
 
                 } else {
                     log.info("Transaction {} already in status={} — no compensation needed",
@@ -89,6 +77,19 @@ public class SagaReplyConsumer {
             log.error("CRITICAL: Saga compensation handler failed for sagaId={}. " +
                             "Manual intervention required. Error: {}",
                     event.getSagaId(), e.getMessage(), e);
+        }
+    }
+
+    private void sendCompensationNotification(Transaction txn) {
+        try {
+            NotificationEvent event = new NotificationEvent(
+                    "Your recharge of Rs." + txn.getAmount() + " could not be activated due to a system error. " +
+                            "Transaction ID: " + txn.getTransactionId() + ". Please contact support.",
+                    txn.getUserEmail(), txn.getUserContactNo(), "PAYMENT_FAILED");
+            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, event);
+        } catch (Exception e) {
+            log.error("Failed to send compensation notification for transactionId={}: {}",
+                    txn.getTransactionId(), e.getMessage());
         }
     }
 }
