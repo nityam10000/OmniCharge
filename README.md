@@ -9,7 +9,7 @@ Build and start the full stack:
 
 ```bash
 docker compose up --build
-```
+```rbtbyhj
 
 Important notes:
 
